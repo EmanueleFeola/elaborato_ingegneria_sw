@@ -13,7 +13,7 @@
   <key attr.name="description" attr.type="string" for="edge" id="d9"/>
   <key for="edge" id="d10" yfiles.type="edgegraphics"/>
   <graph edgedefault="directed" id="G">
-    <data key="d0"/>
+    <data key="d0" xml:space="preserve"/>
     <node id="n0" yfiles.foldertype="group">
       <data key="d4" xml:space="preserve"/>
       <data key="d6">
@@ -53,7 +53,7 @@
                   <y:Geometry height="425.15625" width="714.7662037037035" x="-562.1963234197096" y="24.244618055555748"/>
                   <y:Fill color="#F5F5F5" transparent="false"/>
                   <y:BorderStyle color="#000000" type="line" width="1.0"/>
-                  <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#CCFFCC" borderDistance="0.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="17.96875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="714.7662037037035" x="0.0" xml:space="preserve" y="0.0">[While Cliente vuole aggiungere prodotti]</y:NodeLabel>
+                  <y:NodeLabel alignment="center" autoSizePolicy="node_width" backgroundColor="#CCFFCC" borderDistance="0.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="17.96875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="714.7662037037035" x="0.0" xml:space="preserve" y="0.0">[While Utente vuole aggiungere prodotti]</y:NodeLabel>
                   <y:Shape type="roundrectangle"/>
                   <y:State closed="false" closedHeight="50.0" closedWidth="50.0" innerGraphDisplayEnabled="false"/>
                   <y:NodeBounds considerNodeLabelSize="true"/>
@@ -202,7 +202,7 @@
           <y:Geometry height="53.02245585123697" width="31.338973882673127" x="-474.52683647837307" y="-55.04357853642239"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#FFFFFF" fontFamily="Dialog" fontSize="13" fontStyle="plain" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="eight_pos" modelPosition="n" textColor="#000000" verticalTextPosition="bottom" visible="true" width="54.01318359375" x="-11.337104855538428" xml:space="preserve" y="-23.1328125">:Cliente</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#FFFFFF" fontFamily="Dialog" fontSize="13" fontStyle="plain" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="eight_pos" modelPosition="n" textColor="#000000" verticalTextPosition="bottom" visible="true" width="52.32470703125" x="-10.492866574288428" xml:space="preserve" y="-23.1328125">:Utente</y:NodeLabel>
           <y:SVGNodeProperties usingVisualBounds="false"/>
           <y:SVGModel svgBoundsPolicy="0">
             <y:SVGContent refid="1"/>
@@ -240,7 +240,6 @@
       </data>
     </node>
     <node id="n4">
-      <data key="d5"/>
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="1.0" width="654.7662037037035" x="-532.1963234197096" y="217.91649305555575"/>
@@ -259,7 +258,6 @@
       </data>
     </node>
     <node id="n5">
-      <data key="d5"/>
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="1.0" width="684.7662037037035" x="-547.1963234197096" y="298.82274305555575"/>
@@ -288,7 +286,6 @@
       </data>
     </edge>
     <edge id="n0::n0::n0::e0" source="n0::n0::n0::n1" target="n0::n0::n0::n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="-40.46399511555552" tx="0.0" ty="-52.46399511555552">
@@ -303,7 +300,6 @@ disponibilità<y:LabelModel><y:SmartEdgeLabelModel autoRotationEnabled="false" d
       </data>
     </edge>
     <edge id="e1" source="n2" target="n0::n0::n0::n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -314,7 +310,6 @@ disponibilità<y:LabelModel><y:SmartEdgeLabelModel autoRotationEnabled="false" d
       </data>
     </edge>
     <edge id="e2" source="n3" target="n0::n0::n0::n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="5.512309300389006" sy="-73.1831912094337" tx="-5.5221927839941145" ty="-73.18319120943372"/>
@@ -326,7 +321,6 @@ disponibilità<y:LabelModel><y:SmartEdgeLabelModel autoRotationEnabled="false" d
       </data>
     </edge>
     <edge id="n0::n0::e0" source="n0::n0::n0" target="n0::n0::n0::n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="287.966044538833" sy="-140.8292566998201" tx="4.205119716006038" ty="52.59019795521321"/>
@@ -337,7 +331,6 @@ disponibilità<y:LabelModel><y:SmartEdgeLabelModel autoRotationEnabled="false" d
       </data>
     </edge>
     <edge id="n0::n0::e1" source="n0::n0::n0" target="n0::n0::n0::n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="262.2278518518517" sy="-144.32902477442443" tx="5.483029727373953" ty="-35.7719724585788"/>
@@ -350,7 +343,6 @@ disponibilità<y:LabelModel><y:SmartEdgeLabelModel autoRotationEnabled="false" d
       </data>
     </edge>
     <edge id="e3" source="n0::n0::n0::n1" target="n3">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="-5.52818980364788" sy="16.198933984214904" tx="5.521412037036498" ty="16.198933984214904"/>
@@ -362,7 +354,6 @@ disponibilità<y:LabelModel><y:SmartEdgeLabelModel autoRotationEnabled="false" d
       </data>
     </edge>
     <edge id="e4" source="n0::n0::n0::n1" target="n3">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="-5.498994338636292" sy="63.29944602654274" tx="5.521412037036498" ty="63.29944602654274"/>
@@ -374,7 +365,6 @@ disponibilità<y:LabelModel><y:SmartEdgeLabelModel autoRotationEnabled="false" d
       </data>
     </edge>
     <edge id="n0::n0::n0::e1" source="n0::n0::n0::n2" target="n0::n0::n0::n3">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="5.501575147008168" sy="-30.46432359406913" tx="-5.48946649999948" ty="-30.46432359406913"/>
@@ -386,7 +376,6 @@ disponibilità<y:LabelModel><y:SmartEdgeLabelModel autoRotationEnabled="false" d
       </data>
     </edge>
     <edge id="n0::n0::n0::e2" source="n0::n0::n0::n3" target="n0::n0::n0::n2">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="-5.487010551066399" sy="16.19880940584352" tx="5.5234375" ty="16.19880940584352"/>
@@ -398,7 +387,6 @@ disponibilità<y:LabelModel><y:SmartEdgeLabelModel autoRotationEnabled="false" d
       </data>
     </edge>
     <edge id="e5" source="n3" target="n0::n0::n0::n2">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -409,7 +397,6 @@ disponibilità<y:LabelModel><y:SmartEdgeLabelModel autoRotationEnabled="false" d
       </data>
     </edge>
     <edge id="n0::n0::n0::e3" source="n0::n0::n0::n1" target="n0::n0::n0::n3">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>

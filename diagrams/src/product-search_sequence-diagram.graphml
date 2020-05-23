@@ -13,7 +13,7 @@
   <key attr.name="description" attr.type="string" for="edge" id="d9"/>
   <key for="edge" id="d10" yfiles.type="edgegraphics"/>
   <graph edgedefault="directed" id="G">
-    <data key="d0"/>
+    <data key="d0" xml:space="preserve"/>
     <node id="n0" yfiles.foldertype="group">
       <data key="d4" xml:space="preserve"/>
       <data key="d6">
@@ -193,7 +193,7 @@
           <y:Geometry height="53.02245585123697" width="31.338973882673127" x="580.4731635216269" y="359.4564214635776"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#FFFFFF" fontFamily="Dialog" fontSize="13" fontStyle="plain" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="eight_pos" modelPosition="n" textColor="#000000" verticalTextPosition="bottom" visible="true" width="54.01318359375" x="-11.337104855538428" xml:space="preserve" y="-23.1328125">:Cliente</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#FFFFFF" fontFamily="Dialog" fontSize="13" fontStyle="plain" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="eight_pos" modelPosition="n" textColor="#000000" verticalTextPosition="bottom" visible="true" width="52.32470703125" x="-10.492866574288428" xml:space="preserve" y="-23.1328125">:Utente</y:NodeLabel>
           <y:SVGNodeProperties usingVisualBounds="false"/>
           <y:SVGModel svgBoundsPolicy="0">
             <y:SVGContent refid="1"/>
@@ -213,7 +213,6 @@
       </data>
     </node>
     <node id="n3">
-      <data key="d5"/>
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="1.0" width="714.7662037037035" x="492.80367658029036" y="575.5211863425924"/>
@@ -232,7 +231,6 @@
       </data>
     </node>
     <node id="n4">
-      <data key="d5"/>
       <data key="d6">
         <y:ShapeNode>
           <y:Geometry height="1.0" width="714.7662037037035" x="492.80367658029036" y="689.2765682870366"/>
@@ -251,7 +249,6 @@
       </data>
     </node>
     <edge id="n0::n0::e0" source="n0::n0::n0" target="n0::n0::n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="5.501575147008168" sy="-23.595155983806936" tx="-5.48946649999948" ty="-23.595155983806933"/>
@@ -263,7 +260,6 @@
       </data>
     </edge>
     <edge id="n0::n0::e1" source="n0::n0::n1" target="n0::n0::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="-5.487010551066399" sy="12.546263615623063" tx="5.5234375" ty="12.546263615623067"/>
@@ -305,7 +301,6 @@
       </data>
     </edge>
     <edge id="n0::n0::e2" source="n0::n0::n2" target="n0::n0::n3">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="5.501575147008168" sy="-23.595155983806936" tx="-5.48946649999948" ty="-23.595155983806933"/>
@@ -317,7 +312,6 @@
       </data>
     </edge>
     <edge id="n0::n0::e3" source="n0::n0::n3" target="n0::n0::n2">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="-5.487010551066399" sy="12.546263615623063" tx="5.5234375" ty="12.546263615623067"/>
@@ -329,7 +323,6 @@
       </data>
     </edge>
     <edge id="n0::n0::e4" source="n0::n0::n4" target="n0::n0::n5">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="5.501575147008168" sy="-23.595155983806936" tx="-5.48946649999948" ty="-23.595155983806933"/>
@@ -341,7 +334,6 @@
       </data>
     </edge>
     <edge id="n0::n0::e5" source="n0::n0::n5" target="n0::n0::n4">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="-5.487010551066399" sy="12.546263615623063" tx="5.5234375" ty="12.546263615623067"/>
