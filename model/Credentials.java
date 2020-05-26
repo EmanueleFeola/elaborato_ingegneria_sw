@@ -42,11 +42,11 @@ public class Credentials implements Serializable{
         } 
     }
     
-	public String getuser() {
+	public String getUser() {
 		return user;
 	}
 
-	public void setuser(String user) {
+	public void setUser(String user) {
 		this.user = user;
 	}
 
