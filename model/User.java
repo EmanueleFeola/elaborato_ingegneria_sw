@@ -2,6 +2,7 @@ package elaborato_ing_sw.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 // NB: per l utente la mail è memorizzata nel campo user del campo Credentials
 
@@ -19,6 +20,19 @@ public class User extends Person implements Serializable{
 		this.telNum = telNum;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		User other = (User)obj;
+		
+		return other.getCredentials().getUser() == this.getCredentials().getUser() ? true : false;
+	}
+	
+	@Override
+	public int hashCode(){
+		// NB: hash code computation should not include any field that is not used for equality checks --> credentials are unique 
+		return Objects.hash(getCredentials().getUser(), getCredentials().getMd5Pwd());
+	}
+	
 	public String getAddress() {
 		return address;
 	}
@@ -50,13 +64,12 @@ public class User extends Person implements Serializable{
 	public void setTelNum(String telNum) {
 		this.telNum = telNum;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "User [address=" + address + ", city=" + city + ", postalCode=" + postalCode + ", telNum=" + telNum
 				+ ", name=" + name + ", surname=" + surname + ", dateOfBirth=" + dateOfBirth + ", credentials="
 				+ credentials + "]";
 	}
-
 	
 }

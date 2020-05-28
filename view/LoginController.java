@@ -1,11 +1,10 @@
 package elaborato_ing_sw.view;
 
 import java.io.IOException;
-import java.util.Date;
 
 import elaborato_ing_sw.MainApp;
+import elaborato_ing_sw.dataManager.UserDaoImpl;
 import elaborato_ing_sw.model.Credentials;
-import elaborato_ing_sw.model.Person;
 import elaborato_ing_sw.model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +25,8 @@ public class LoginController {
     private RadioButton loginAsManagerRB;
     
     private MainApp mainApp;
+    
+	private UserDaoImpl userDao = UserDaoImpl.getUserDaoImpl();
 
     /**
      * The constructor.
@@ -65,7 +66,7 @@ public class LoginController {
 
     	boolean found = false;
     	
-    	for(User u : mainApp.getUsers()) {
+    	for(User u : userDao.getAllUsers()) {
     		if(u.getCredentials().getUser().equals(user) && u.getCredentials().getMd5Pwd().equals(Credentials.getMd5(pwd)))
     			found = true;
     	}
