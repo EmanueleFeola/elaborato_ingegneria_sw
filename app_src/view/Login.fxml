@@ -20,9 +20,9 @@
          <items>
             <AnchorPane prefHeight="398.0" prefWidth="403.0">
                <children>
-                  <ImageView fitHeight="224.0" fitWidth="200.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="99.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="99.0">
+                  <ImageView fitHeight="224.0" fitWidth="200.0" layoutX="6.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="99.60464477539062" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="99.0">
                      <image>
-                        <Image url="@../../../images/logo.png" />
+                        <Image url="@images/logo.png" />
                      </image>
                   </ImageView>
                </children>
@@ -48,9 +48,9 @@
                         <RadioButton fx:id="loginAsManagerRB" mnemonicParsing="false" text="Login As Manager" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
-                  <Button layoutX="153.0" layoutY="226.0" mnemonicParsing="false" onAction="#handleLogin" text="LOGIN" />
+                  <Button fx:id="loginButton" layoutX="153.0" layoutY="226.0" mnemonicParsing="false" onAction="#handleLogin" text="LOGIN" />
                   <Label layoutX="42.0" layoutY="308.0" text="If you haven't registered yet, click on the button" />
-                  <Button layoutX="142.0" layoutY="342.0" mnemonicParsing="false" text="REGISTER" />
+                  <Button layoutX="142.0" layoutY="342.0" mnemonicParsing="false" onAction="#handleRegister" text="REGISTER" />
                   <Line endX="306.0" layoutX="53.0" layoutY="286.0" startX="-51.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
                </children>
             </AnchorPane>

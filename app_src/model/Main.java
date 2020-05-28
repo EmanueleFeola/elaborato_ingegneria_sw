@@ -19,7 +19,6 @@ public class Main {
 		Credentials cred1 = new Credentials("efeola99@gmail.com", "pwd");
 		
 		User u1 = new User("emanuele", "feola", LocalDate.of(2014, 2, 14), cred1, "via antonio varisco, 6", "Bussolengo", 37012, "+39123456");
-
 		
 		System.out.println(u1);
 		
