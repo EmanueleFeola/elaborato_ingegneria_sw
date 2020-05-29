@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.LoginController">
+   <children>
+      <SplitPane dividerPositions="0.39464882943143814" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <items>
+            <AnchorPane prefHeight="398.0" prefWidth="403.0">
+               <children>
+                  <ImageView fitHeight="224.0" fitWidth="200.0" layoutX="6.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="99.60464477539062" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="99.0">
+                     <image>
+                        <Image url="@images/logo.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="398.0" prefWidth="217.0">
+               <children>
+                  <Label alignment="CENTER" layoutX="73.0" layoutY="32.0" prefHeight="18.0" prefWidth="214.0" text="Welcome, perform signin or signup" AnchorPane.bottomAnchor="348.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="32.0" />
+                  <GridPane hgap="10.0" layoutX="79.0" layoutY="93.0" vgap="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="93.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Serial Number or Email" />
+                        <Label text="Password" GridPane.rowIndex="1" />
+                        <TextField fx:id="usernameTextField" GridPane.columnIndex="1" />
+                        <PasswordField fx:id="passwordTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <RadioButton fx:id="loginAsManagerRB" mnemonicParsing="false" text="Login As Manager" GridPane.rowIndex="2" />
+                     </children>
+                  </GridPane>
+                  <Button fx:id="loginButton" layoutX="153.0" layoutY="226.0" mnemonicParsing="false" onAction="#handleLogin" text="LOGIN" />
+                  <Label layoutX="42.0" layoutY="308.0" text="If you haven't registered yet, click on the button" />
+                  <Button layoutX="142.0" layoutY="342.0" mnemonicParsing="false" onAction="#handleRegister" text="REGISTER" />
+                  <Line endX="306.0" layoutX="53.0" layoutY="286.0" startX="-51.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+               </children>
+            </AnchorPane>
+         </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
