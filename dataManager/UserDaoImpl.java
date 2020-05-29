@@ -123,8 +123,8 @@ public class UserDaoImpl implements UserDao{
 	public boolean updateSource() {
 		// NB: da richiamare quando l utente esce dall app, in modo da salvare i dati correnti su file
 		try{  
-			FileOutputStream fout=new FileOutputStream(filepath);  
-			ObjectOutputStream out=new ObjectOutputStream(fout);  
+			FileOutputStream fout = new FileOutputStream(filepath);  
+			ObjectOutputStream out = new ObjectOutputStream(fout);  
 	  
 			for(User u : users)
 				out.writeObject(u);  				  
