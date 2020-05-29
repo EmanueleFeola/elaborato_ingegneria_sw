@@ -1,7 +1,7 @@
 package elaborato_ing_sw.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 // NB: per l utente la mail è memorizzata nel campo user del campo Credentials
@@ -12,7 +12,7 @@ public class User extends Person implements Serializable{
 	private int postalCode; // CAP
 	private String telNum;
 	
-	public User(String name, String surname, Date dateOfBirth, Credentials credentials, String address, String city, int postalCode, String telNum) {
+	public User(String name, String surname, LocalDate dateOfBirth, Credentials credentials, String address, String city, int postalCode, String telNum) {
 		super(name, surname, dateOfBirth, credentials);
 		this.address = address;
 		this.city = city;

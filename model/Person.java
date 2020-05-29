@@ -1,15 +1,15 @@
 package elaborato_ing_sw.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 public abstract class Person implements Serializable{
 	protected String name;
 	protected String surname;
-	protected Date dateOfBirth;
+	protected LocalDate dateOfBirth;
 	protected Credentials credentials;
 	
-	public Person(String name, String surname, Date dateOfBirth, Credentials credentials) {
+	public Person(String name, String surname, LocalDate dateOfBirth, Credentials credentials) {
 		this.name = name;
 		this.surname = surname;
 		this.dateOfBirth = dateOfBirth;
@@ -32,11 +32,11 @@ public abstract class Person implements Serializable{
 		this.surname = surname;
 	}
 
-	public Date getDateOfBirth() {
+	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(Date dateOfBirth) {
+	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
