@@ -5,6 +5,7 @@ import java.io.IOException;
 import elaborato_ing_sw.dataManager.UserDaoImpl;
 import elaborato_ing_sw.view.LoginController;
 import elaborato_ing_sw.view.RegisterUserController;
+import elaborato_ing_sw.view.UserPageController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -30,7 +31,7 @@ public class MainApp extends Application {
         System.out.println(userDao.getAllUsers());
         
         initRootLayout();
-        showLoginView();
+        showRegisterUserDialog();
     }
     
     /**
@@ -59,10 +60,10 @@ public class MainApp extends Application {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/Login.fxml"));
-            AnchorPane personOverview = (AnchorPane) loader.load();
+            AnchorPane login = (AnchorPane) loader.load();
             
             // Set person overview into the center of root layout.
-            rootLayout.setCenter(personOverview);
+            rootLayout.setCenter(login);
 
             // Give the controller access to the main app.
             LoginController controller = loader.getController();
@@ -76,13 +77,16 @@ public class MainApp extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/UserPage.fxml"));
-			AnchorPane root = (AnchorPane) loader.load();
+			AnchorPane userPage = (AnchorPane) loader.load();
 
+            rootLayout.setCenter(userPage);
+
+            /*
 			Stage userPage = new Stage();
 			userPage.setTitle("UserPage");
 			userPage.setScene(new Scene(root));
 			userPage.show();
-
+			*/
 		} catch (IOException e) {
 			System.out.println("Cannot open user page\n");
 		}
@@ -94,7 +98,10 @@ public class MainApp extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/RegisterUser.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
+			
+            rootLayout.setCenter(page);
 
+			/*
 			// Create the dialog Stage.
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Sign up");
@@ -102,12 +109,14 @@ public class MainApp extends Application {
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
-
+			*/
+            
 			RegisterUserController controller = loader.getController();
-			controller.setDialogStage(dialogStage);
+			controller.setDialogStage(primaryStage);
 
 			// Show the dialog and wait until the user closes it
-			dialogStage.showAndWait();
+			// primaryStage.showAndWait();
+		
 
 		} catch (IOException e) {
 			System.out.println("Cannot open sign up page\n");
