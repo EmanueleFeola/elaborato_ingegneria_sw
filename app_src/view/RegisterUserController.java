@@ -3,7 +3,7 @@ package elaborato_ing_sw.view;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import elaborato_ing_sw.MainApp;
+import elaborato_ing_sw.dataManager.UserDaoImpl;
 import elaborato_ing_sw.model.Credentials;
 import elaborato_ing_sw.model.User;
 import javafx.fxml.FXML;
@@ -13,11 +13,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-/**
- * Dialog to edit details of a person.
- * 
- * @author Marco Jakob
- */
 public class RegisterUserController {
 
 	@FXML
@@ -42,8 +37,9 @@ public class RegisterUserController {
 
 	private boolean okClicked = false;
 	private Stage dialogStage;
-	private MainApp mainApp;
 
+	private UserDaoImpl userDao = UserDaoImpl.getUserDaoImpl();
+	
 	/**
 	 * Initializes the controller class. This method is automatically called after
 	 * the fxml file has been loaded.
@@ -59,15 +55,6 @@ public class RegisterUserController {
 	 */
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
-	}
-
-	/**
-	 * Is called by the main application to give a reference back to itself.
-	 * 
-	 * @param mainApp
-	 */
-	public void setMainApp(MainApp mainApp) {
-		this.mainApp = mainApp;
 	}
 
 	/**
@@ -93,9 +80,10 @@ public class RegisterUserController {
 			User u = new User(firstNameField.getText(), lastNameField.getText(), dob, c, streetField.getText(),
 					cityField.getText(), Integer.parseInt(postalCodeField.getText()), telNumberField.getText());
 			
-			mainApp.getUsers().add(u);
+			userDao.addUser(u);
 			
-			mainApp.getFileUtils().serializeArrayList(mainApp.getUsers());
+			if (!userDao.updateSource())
+				System.out.println("User non registered");
 
 			okClicked = true;
 			dialogStage.close();

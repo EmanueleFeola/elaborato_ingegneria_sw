@@ -1,17 +1,14 @@
 package elaborato_ing_sw;
 
-import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
 
-import elaborato_ing_sw.dataManager.FileUtils;
-import elaborato_ing_sw.model.Credentials;
-import elaborato_ing_sw.model.User;
+import elaborato_ing_sw.dataManager.UserDaoImpl;
+
 import elaborato_ing_sw.view.LoginController;
 import elaborato_ing_sw.view.RegisterUserController;
+import elaborato_ing_sw.model.User;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -24,30 +21,16 @@ public class MainApp extends Application {
 	private Stage primaryStage;
 	private BorderPane rootLayout;
 
-	private ObservableList<User> users = FXCollections.observableArrayList();
-	private FileUtils fu = new FileUtils();
+	private UserDaoImpl userDao = UserDaoImpl.getUserDaoImpl();
 
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Shopping Online");
 
-		Credentials c1 = new Credentials("timo", "ciao");
-		User u1 = new User("Robert", "Timofte", LocalDate.of(1999, 6, 6), c1, "Via Provinciale, 22", "Vago di Lavagno",
-				37030, "+393209585288");
-		
-		File tmp = new File("users.ser");
-		boolean exists = tmp.exists();
-		
-		if (!exists) {
-			users.add(u1);
-			fu.serializeArrayList(users);
-		}
-		
-		// read file --> get from db
-		for (User u : fu.getUsers()) {
-				users.add(u);
-		}
+		System.out.println("Users from file: ");
+		for (User u : userDao.getAllUsers())
+			System.out.println(u);
 
 		initRootLayout();
 		showLoginView();
@@ -86,8 +69,6 @@ public class MainApp extends Application {
 
 			// Give the controller access to the main app.
 			LoginController controller = loader.getController();
-			// System.out.println(loader);
-			// System.out.println(controller);
 			controller.setMainApp(this);
 
 		} catch (IOException e) {
@@ -110,23 +91,10 @@ public class MainApp extends Application {
 			System.out.println("Cannot open user page\n");
 		}
 	}
-	
+
 	public void showRegisterUserDialog() {
 		try {
-			/*FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/RegisterUser.fxml"));
-			AnchorPane root = (AnchorPane) loader.load();
 
-			RegisterUserController controller = loader.getController();
-			// System.out.println(loader);
-			// System.out.println(controller);
-			controller.setMainApp(this);
-			
-			Stage userPage = new Stage();
-			userPage.setTitle("Sign Up");
-			userPage.setScene(new Scene(root));
-			userPage.show();*/
-			
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/RegisterUser.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
@@ -139,27 +107,15 @@ public class MainApp extends Application {
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
 
-			// Set the person into the controller.
 			RegisterUserController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
-			controller.setMainApp(this);
 
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
 
-			//return controller.isOkClicked();
-
 		} catch (IOException e) {
 			System.out.println("Cannot open sign up page\n");
 		}
-	}
-
-	public ObservableList<User> getUsers() {
-		return users;
-	}
-	
-	public FileUtils getFileUtils() {
-		return fu;
 	}
 
 	/**

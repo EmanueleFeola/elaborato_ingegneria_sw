@@ -3,6 +3,7 @@ package elaborato_ing_sw.view;
 import java.io.IOException;
 
 import elaborato_ing_sw.MainApp;
+import elaborato_ing_sw.dataManager.UserDaoImpl;
 import elaborato_ing_sw.model.Credentials;
 import elaborato_ing_sw.model.User;
 import javafx.fxml.FXML;
@@ -26,6 +27,8 @@ public class LoginController {
 
 	@FXML
 	public Button loginButton;
+
+	private UserDaoImpl userDao = UserDaoImpl.getUserDaoImpl();
 
 	private MainApp mainApp;
 
@@ -64,19 +67,10 @@ public class LoginController {
 
 		boolean found = false;
 
-		for (User u : mainApp.getUsers()) {
-
-			// System.out.println(u);
-
-			if ((u.getCredentials().getUser()).equals(user)
-					&& (u.getCredentials().getMd5Pwd()).equals(Credentials.getMd5(pwd))) {
+		for (User u : userDao.getAllUsers()) {
+			if (u.getCredentials().getUser().equals(user)
+					&& u.getCredentials().getMd5Pwd().equals(Credentials.getMd5(pwd)))
 				found = true;
-			}
-
-			/*
-			 * if (u.getCredentials().getUser().equals(user) &&
-			 * u.getCredentials().getMd5Pwd().equals(Credentials.getMd5(pwd))) found = true;
-			 */
 		}
 
 		if (!found) {
