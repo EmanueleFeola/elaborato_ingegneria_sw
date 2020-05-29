@@ -6,6 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Credentials implements Serializable{
+	
 	protected String user;
 	protected String md5Pwd;
 	
