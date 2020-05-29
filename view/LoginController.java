@@ -55,37 +55,40 @@ public class LoginController {
     }
     
     /**
+     * Shows the person overview inside the root layout.
+     */
+    public void showHomeView() {
+        try {
+	        FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(MainApp.class.getResource("view/Home.fxml"));
+	        AnchorPane home = (AnchorPane) loader.load();
+	        
+	        // Set person overview into the center of root layout.
+	        mainApp.getRootLayout().setCenter(home);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
      * @throws IOException 
      * Called when the user clicks on the delete button.
      * @throws  
      */
     @FXML
     private void handleLogin() throws IOException{
-    	String user = usernameTextField.getText();
-    	String pwd = passwordTextField.getText();
+    	String userTextField = usernameTextField.getText();
+    	String pwdTextField = passwordTextField.getText();
 
-    	boolean found = false;
-    	
-    	for(User u : userDao.getAllUsers()) {
-    		if(u.getCredentials().getUser().equals(user) && u.getCredentials().getMd5Pwd().equals(Credentials.getMd5(pwd)))
-    			found = true;
-    	}
-    	
-    	if(!found) {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.initOwner(mainApp.getPrimaryStage());
-            alert.setTitle("Login Failed");
-            alert.setHeaderText("Please correct invalid fields");
-            
-            alert.showAndWait();    		
-    	}
+    	User user = (User)userDao.getUser(userTextField);
+    	if(user != null && user.getCredentials().getMd5Pwd().equals(Credentials.getMd5(pwdTextField)))
+    		showHomeView();
     	else {
-	        FXMLLoader loader = new FXMLLoader();
-	        loader.setLocation(MainApp.class.getResource("view/Home.fxml"));
-	        AnchorPane personOverview = (AnchorPane) loader.load();
-	        
-	        // Set person overview into the center of root layout.
-	        mainApp.getRootLayout().setCenter(personOverview);
+		    Alert alert = new Alert(AlertType.ERROR);
+		    alert.initOwner(mainApp.getPrimaryStage());
+		    alert.setTitle("Login Failed");
+		    alert.setHeaderText("Please correct invalid fields");
+		    alert.showAndWait();    		
     	}
     }
     

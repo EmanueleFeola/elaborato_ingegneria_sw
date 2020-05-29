@@ -5,13 +5,11 @@ import java.io.IOException;
 import elaborato_ing_sw.dataManager.UserDaoImpl;
 import elaborato_ing_sw.view.LoginController;
 import elaborato_ing_sw.view.RegisterUserController;
-import elaborato_ing_sw.view.UserPageController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
@@ -31,7 +29,7 @@ public class MainApp extends Application {
         System.out.println(userDao.getAllUsers());
         
         initRootLayout();
-        showRegisterUserDialog();
+        showLoginView();
     }
     
     /**
@@ -100,7 +98,9 @@ public class MainApp extends Application {
 			AnchorPane page = (AnchorPane) loader.load();
 			
             rootLayout.setCenter(page);
-
+			RegisterUserController controller = loader.getController();
+			controller.setDialogStage(primaryStage);
+			
 			/*
 			// Create the dialog Stage.
 			Stage dialogStage = new Stage();
@@ -109,17 +109,16 @@ public class MainApp extends Application {
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
-			*/
-            
+
 			RegisterUserController controller = loader.getController();
-			controller.setDialogStage(primaryStage);
+			controller.setDialogStage(dialogStage);
 
 			// Show the dialog and wait until the user closes it
-			// primaryStage.showAndWait();
-		
+			dialogStage.showAndWait();
+			*/
 
 		} catch (IOException e) {
-			System.out.println("Cannot open sign up page\n");
+            e.printStackTrace();
 		}
 	}
     

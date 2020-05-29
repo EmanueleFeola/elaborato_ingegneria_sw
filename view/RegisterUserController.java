@@ -1,8 +1,6 @@
 package elaborato_ing_sw.view;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import elaborato_ing_sw.dataManager.UserDaoImpl;
 import elaborato_ing_sw.model.Credentials;
 import elaborato_ing_sw.model.User;
@@ -10,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -26,7 +25,7 @@ public class RegisterUserController {
 	@FXML
 	private TextField cityField;
 	@FXML
-	private TextField birthdayField;
+	private DatePicker birthdayField;
 	@FXML
 	private TextField telNumberField;
 
@@ -74,9 +73,11 @@ public class RegisterUserController {
 		if (isInputValid()) {
 			Credentials c = new Credentials(usernameField.getText(), passwordField.getText());
 			
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-			LocalDate dob = LocalDate.parse(birthdayField.getText(), formatter);
+			// DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			// LocalDate dob = LocalDate.parse(birthdayField.getText(), formatter);
 			
+            LocalDate dob = birthdayField.getValue(); 
+            
 			User u = new User(firstNameField.getText(), lastNameField.getText(), dob, c, streetField.getText(),
 					cityField.getText(), Integer.parseInt(postalCodeField.getText()), telNumberField.getText());
 			
@@ -131,7 +132,7 @@ public class RegisterUserController {
 			errorMessage += "No valid city!\n";
 		}
 
-		if (birthdayField.getText() == null || birthdayField.getText().length() == 0) {
+		if (birthdayField.getValue() == null) {
 			errorMessage += "No valid birthday!\n";
 		}
 
