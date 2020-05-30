@@ -2,30 +2,42 @@ package elaborato_ing_sw.model;
 
 import java.time.LocalDate;
 
+import elaborato_ing_sw.utils.WriteableObjectProperty;
+
+
 public class Manager extends Person{
-	private int serialNumber;
-	private Role role;
+	private WriteableObjectProperty<Role> role;
+	private WriteableObjectProperty<Integer> serialNumber;
 	
-	public Manager(String name, String surname, LocalDate dateOfBirth, Credentials credentials, int serialNumber, Role role) {
-		super(name, surname, dateOfBirth, credentials);
-		this.serialNumber = serialNumber;
-		this.role = role;
+	// NB: lo username di accesso al sistema per il manager è il serialNumber, perchè identifica già in maniera univoca un manager
+	public Manager(String name, String surname, LocalDate dateOfBirth, String pwd, int serialNumber, Role role) {
+		super(name, surname, dateOfBirth, new Credentials(String.valueOf(serialNumber), pwd));
+		this.serialNumber = new WriteableObjectProperty<Integer>(serialNumber);
+		this.role = new WriteableObjectProperty<Role>(role);
+	}
+	
+	public Manager() {
+		super(null, null, null, null);
 	}
 
 	public int getSerialNumber() {
-		return serialNumber;
+		return serialNumber.get();
 	}
-
+	
 	public void setSerialNumber(int serialNumber) {
-		this.serialNumber = serialNumber;
+		this.serialNumber.set(serialNumber);
 	}
 
 	public Role getRole() {
+		return role.get();
+	}
+
+	public WriteableObjectProperty<Role> getRoleProperty() {
 		return role;
 	}
 
 	public void setRole(Role role) {
-		this.role = role;
+		this.role.set(role);
 	}
 
 	@Override

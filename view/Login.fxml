@@ -50,7 +50,7 @@
                   </GridPane>
                   <Button layoutX="153.0" layoutY="226.0" mnemonicParsing="false" onAction="#handleLogin" text="LOGIN" />
                   <Label layoutX="42.0" layoutY="308.0" text="If you haven't registered yet, click on the button" />
-                  <Button layoutX="142.0" layoutY="342.0" mnemonicParsing="false" text="REGISTER" />
+                  <Button layoutX="142.0" layoutY="342.0" mnemonicParsing="false" onAction="#handleRegistration" text="REGISTER" />
                   <Line endX="306.0" layoutX="53.0" layoutY="286.0" startX="-51.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
                </children>
             </AnchorPane>

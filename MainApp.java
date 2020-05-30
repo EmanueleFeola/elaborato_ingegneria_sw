@@ -1,35 +1,50 @@
 package elaborato_ing_sw;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
+import elaborato_ing_sw.dataManager.ManagerDaoImpl;
 import elaborato_ing_sw.dataManager.UserDaoImpl;
+import elaborato_ing_sw.model.Manager;
+import elaborato_ing_sw.model.Role;
+import elaborato_ing_sw.utils.ShowView;
 import elaborato_ing_sw.view.LoginController;
-import elaborato_ing_sw.view.RegisterUserController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
 	
-    private Stage primaryStage;
-    private BorderPane rootLayout;
+    private static Stage primaryStage;
+    private static BorderPane rootLayout;
 
 	private UserDaoImpl userDao = UserDaoImpl.getUserDaoImpl();
-	
+	private ManagerDaoImpl managerDao = ManagerDaoImpl.getManagerDaoImpl();
+
     @Override
     public void start(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Shopping Online");
+        MainApp.primaryStage = primaryStage;
+        MainApp.primaryStage.setTitle("Shopping Online");
 
-        
         System.out.println("Users from file: ");
         System.out.println(userDao.getAllUsers());
+
+        /*
+        Manager m1 = new Manager("man", "ager", LocalDate.of(1999, 8, 30), "pwd", 12356, Role.ADMIN);
+        System.out.println(m1);
+        managerDao.addUser(m1);
+        managerDao.updateSource();
+        */
+        
+        System.out.println("Managers from file: ");
+        System.out.println(managerDao.getAllUsers());
         
         initRootLayout();
-        showLoginView();
+    	ShowView.showView("view/ManagerDashboard.fxml");
+
+        // showLoginView();
     }
     
     /**
@@ -51,83 +66,25 @@ public class MainApp extends Application {
         }
     }
     
-    /**
-     * Shows the person overview inside the root layout.
-     */
     public void showLoginView() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/Login.fxml"));
-            AnchorPane login = (AnchorPane) loader.load();
-            
-            // Set person overview into the center of root layout.
-            rootLayout.setCenter(login);
-
-            // Give the controller access to the main app.
-            LoginController controller = loader.getController();
-            controller.setMainApp(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    	FXMLLoader loader = ShowView.showView("view/Login.fxml");
+    	
+        LoginController controller = loader.getController();
+        
+        // a cosa serve sta riga che funziona anche se viene tolta?
+        //controller.setMainApp(this);
     }
     
 	public void showUserPageDialog() {
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/UserPage.fxml"));
-			AnchorPane userPage = (AnchorPane) loader.load();
-
-            rootLayout.setCenter(userPage);
-
-            /*
-			Stage userPage = new Stage();
-			userPage.setTitle("UserPage");
-			userPage.setScene(new Scene(root));
-			userPage.show();
-			*/
-		} catch (IOException e) {
-			System.out.println("Cannot open user page\n");
-		}
-	}
-
-	public void showRegisterUserDialog() {
-		try {
-
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/RegisterUser.fxml"));
-			AnchorPane page = (AnchorPane) loader.load();
-			
-            rootLayout.setCenter(page);
-			RegisterUserController controller = loader.getController();
-			controller.setDialogStage(primaryStage);
-			
-			/*
-			// Create the dialog Stage.
-			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Sign up");
-			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.initOwner(primaryStage);
-			Scene scene = new Scene(page);
-			dialogStage.setScene(scene);
-
-			RegisterUserController controller = loader.getController();
-			controller.setDialogStage(dialogStage);
-
-			// Show the dialog and wait until the user closes it
-			dialogStage.showAndWait();
-			*/
-
-		} catch (IOException e) {
-            e.printStackTrace();
-		}
+		ShowView.showView("view/UserPage.fxml");
 	}
     
-    public BorderPane getRootLayout() {
-    	return rootLayout;
+    public static BorderPane getRootLayout() {
+    	return MainApp.rootLayout;
     }
     
-	public Stage getPrimaryStage() {
-		return primaryStage;
+	public static Stage getPrimaryStage() {
+		return MainApp.primaryStage;
 	}
 	
 	public static void main(String[] args) {

@@ -14,31 +14,30 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public abstract class PersonDaoImpl implements PersonDao{
-	private ObservableList<Person> users;
+	private ObservableList<Person> people;
 	private String filepath; // filepath per storage 
-	protected static PersonDaoImpl instance;
 	
 	protected PersonDaoImpl(String filepath) {
 		this.filepath = filepath;
 		
-		users = FXCollections.observableArrayList();
+		people = FXCollections.observableArrayList();
 	
-		Person u;
+		Person p;
 		boolean eof = false;
 		
 		try{  
 		  ObjectInputStream in = new ObjectInputStream(new FileInputStream(filepath));  
 		  
 		  while(!eof) {
-			  u = (Person)in.readObject();  
+			  p = (Person)in.readObject();  
 
-			  if(u != null)
-				  users.add(u);			  
+			  if(p != null)
+				  people.add(p);			  
 			  else
 				  eof = true;
 		  }
 		  
-		  System.out.println(users);  
+		  System.out.println(people);  
 		  
 		  in.close();  
 		  
@@ -67,50 +66,53 @@ public abstract class PersonDaoImpl implements PersonDao{
 	
 	@Override
 	public ObservableList<Person> getAllUsers() {
-		return users;
+		return people;
 	}
 
 	@Override
 	public Person getUser(String user) {
-    	for(Person u : users)
-    		if(u.getCredentials().getUser().equals(user))
-    			return u;
+    	for(Person p : people)
+    		if(p.getCredentials().getUser().equals(user))
+    			return p;
     	
     	return null;
 	}
 
 	@Override
 	public boolean updateUser(Person user) {
-		if(!users.contains(user))
+		if(!people.contains(user))
 			return false;
 		
-		for(int i = 0; i < users.size(); i++)
-			if(users.get(i).equals(user))
-				users.set(i, user);
+		for(int i = 0; i < people.size(); i++)
+			if(people.get(i).equals(user))
+				people.set(i, user);
+		
+		updateSource();
 		
 		return true;
 	}
 
 	@Override
 	public boolean deleteUser(Person user) {
-		if(!users.contains(user))
+		if(!people.contains(user))
 			return false;
 		
-		for(int i = 0; i < users.size(); i++)
-			if(users.get(i).equals(user))
-				users.remove(i);
-		
+		people.remove(user);
+
+		updateSource();
+
 		return true;
-		
 	}
 
 	@Override
 	public boolean addUser(Person user) {
-		if(users.contains(user))
+		if(people.contains(user))
 			return false;
 		
-		users.add(user);
+		people.add(user);
 		
+		updateSource();
+
 		return true;
 	}
 
@@ -121,8 +123,8 @@ public abstract class PersonDaoImpl implements PersonDao{
 			FileOutputStream fout = new FileOutputStream(filepath);  
 			ObjectOutputStream out = new ObjectOutputStream(fout);  
 	  
-			for(Person u : users)
-				out.writeObject(u);  				  
+			for(Person p : people)
+				out.writeObject(p);  				  
 	  
 		    out.flush();  
 		    out.close();  
