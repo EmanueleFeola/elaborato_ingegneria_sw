@@ -8,23 +8,24 @@ import java.io.Serializable;
 import javafx.beans.property.SimpleObjectProperty;
 
 public class WriteableObjectProperty<T> extends SimpleObjectProperty<T> implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    public WriteableObjectProperty () {
-        super();
-    }
+	public WriteableObjectProperty() {
+		super();
+	}
 
-    public WriteableObjectProperty (T obj) {
-        super(obj);
-    }
+	public WriteableObjectProperty(T obj) {
+		super(obj);
+	}
 
+	private void writeObject(ObjectOutputStream s) throws IOException {
+		s.defaultWriteObject();
+		s.writeObject(get());
+	}
 
-    private void writeObject (ObjectOutputStream s) throws IOException {
-        s.defaultWriteObject();
-        s.writeObject(get());
-    }
-
-    private void readObject (ObjectInputStream s) throws IOException, ClassNotFoundException {
-        s.defaultReadObject();
-        set((T) s.readObject());
-    }
+	@SuppressWarnings("unchecked")
+	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
+		s.defaultReadObject();
+		set((T) s.readObject());
+	}
 }

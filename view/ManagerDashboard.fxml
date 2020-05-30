@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.ManagerDashboardController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.ManagerDashboardController">
    <children>
       <SplitPane dividerPositions="0.5" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
@@ -55,11 +55,11 @@
                         <Label fx:id="roleLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
-                  <ButtonBar buttonMinWidth="35.0" layoutX="9.0" layoutY="344.0" prefHeight="40.0" prefWidth="192.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
+                  <ButtonBar buttonMinWidth="35.0" layoutX="9.0" layoutY="344.0" prefHeight="40.0" prefWidth="258.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="10.0">
                     <buttons>
-                      <Button mnemonicParsing="false" onAction="#handleNewManager" text="New" />
+                      <Button mnemonicParsing="false" onAction="#handleNewManager" prefHeight="26.0" text="New" />
                         <Button mnemonicParsing="false" onAction="#handleEditManager" text="Edit" />
-                        <Button mnemonicParsing="false" onAction="#handleDeleteManager" text="Delete" />
+                        <Button mnemonicParsing="false" onAction="#handleDeleteManager" prefHeight="26.0" prefWidth="72.0" text="Delete" />
                     </buttons>
                   </ButtonBar>
                </children></AnchorPane>

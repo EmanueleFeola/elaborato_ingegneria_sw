@@ -1,18 +1,22 @@
 package elaborato_ing_sw;
 
 import java.io.IOException;
-import java.time.LocalDate;
+//import java.time.LocalDate;
 
 import elaborato_ing_sw.dataManager.ManagerDaoImpl;
 import elaborato_ing_sw.dataManager.UserDaoImpl;
 import elaborato_ing_sw.model.Manager;
-import elaborato_ing_sw.model.Role;
-import elaborato_ing_sw.utils.ShowView;
+//import elaborato_ing_sw.model.Role;
 import elaborato_ing_sw.view.LoginController;
+import elaborato_ing_sw.view.ManagerDashboardController;
+import elaborato_ing_sw.view.ManagerEditDialogController;
+//import elaborato_ing_sw.view.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
@@ -30,21 +34,18 @@ public class MainApp extends Application {
 
         System.out.println("Users from file: ");
         System.out.println(userDao.getAllUsers());
-
-        /*
-        Manager m1 = new Manager("man", "ager", LocalDate.of(1999, 8, 30), "pwd", 12356, Role.ADMIN);
-        System.out.println(m1);
-        managerDao.addUser(m1);
-        managerDao.updateSource();
-        */
         
+        //Manager m1 = new Manager("man", "ager", LocalDate.of(1999, 8, 30), "pwd", 12356, Role.ADMIN);
+        //System.out.println(m1);
+        //managerDao.addUser(m1);
+        //managerDao.updateSource();
+          
         System.out.println("Managers from file: ");
         System.out.println(managerDao.getAllUsers());
         
         initRootLayout();
-    	ShowView.showView("view/ManagerDashboard.fxml");
 
-        // showLoginView();
+        showLoginView();
     }
     
     /**
@@ -67,16 +68,71 @@ public class MainApp extends Application {
     }
     
     public void showLoginView() {
-    	FXMLLoader loader = ShowView.showView("view/Login.fxml");
-    	
-        LoginController controller = loader.getController();
-        
-        // a cosa serve sta riga che funziona anche se viene tolta?
-        //controller.setMainApp(this);
+    	try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/Login.fxml"));
+			AnchorPane loginView = (AnchorPane) loader.load();
+	
+			// Set person overview into the center of root layout.
+			rootLayout.setCenter(loginView);
+	
+			// Give the controller access to the main app.
+			LoginController controller = loader.getController();
+			controller.setMainApp(this);
+    	} catch (IOException e) {
+			e.printStackTrace();
+		}
+
     }
     
-	public void showUserPageDialog() {
-		ShowView.showView("view/UserPage.fxml");
+    public void showManagerDashboard() {
+		try {
+			// Load person overview.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/ManagerDashboard.fxml"));
+			AnchorPane managerDashboard = (AnchorPane) loader.load();
+
+			// Set person overview into the center of root layout.
+			rootLayout.setCenter(managerDashboard);
+
+			// Give the controller access to the main app.
+			ManagerDashboardController controller = loader.getController();
+			controller.setMainApp(this);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+    
+    public boolean showManagerEditDialog(Manager manager, int mode) {
+		try {
+			// Load the fxml file and create a new stage for the popup dialog.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/ManagerEditDialog.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			// Create the dialog Stage.
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Edit Manager");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+			
+			// Set the person into the controller.
+			ManagerEditDialogController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMode(mode);
+			controller.setManager(manager);
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+			return controller.isOkClicked();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
     
     public static BorderPane getRootLayout() {

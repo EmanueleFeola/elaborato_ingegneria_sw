@@ -6,10 +6,12 @@ import elaborato_ing_sw.utils.WriteableObjectProperty;
 
 
 public class Manager extends Person{
+	private static final long serialVersionUID = 1L;
+	
 	private WriteableObjectProperty<Role> role;
 	private WriteableObjectProperty<Integer> serialNumber;
 	
-	// NB: lo username di accesso al sistema per il manager è il serialNumber, perchè identifica già in maniera univoca un manager
+	// NB: lo username di accesso al sistema per il manager ï¿½ il serialNumber, perchï¿½ identifica giï¿½ in maniera univoca un manager
 	public Manager(String name, String surname, LocalDate dateOfBirth, String pwd, int serialNumber, Role role) {
 		super(name, surname, dateOfBirth, new Credentials(String.valueOf(serialNumber), pwd));
 		this.serialNumber = new WriteableObjectProperty<Integer>(serialNumber);
@@ -37,7 +39,7 @@ public class Manager extends Person{
 	}
 
 	public void setRole(Role role) {
-		this.role.set(role);
+		this.role.set(role); // ? NullPointerException ? 
 	}
 
 	@Override

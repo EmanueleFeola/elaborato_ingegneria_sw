@@ -6,7 +6,9 @@ import java.time.LocalDate;
 import elaborato_ing_sw.utils.WriteableObjectProperty;
 
 public abstract class Person implements Serializable{
-	// SimpleObjectProperty non è serializzabile, quindi usiamo questo workaround finchè non implementiamo il DB
+	private static final long serialVersionUID = 1L;
+	
+	// SimpleObjectProperty non ï¿½ serializzabile, quindi usiamo questo workaround finchï¿½ non implementiamo il DB
 	protected WriteableObjectProperty<String> name;
 	protected WriteableObjectProperty<String> surname;
 	protected WriteableObjectProperty<LocalDate> dateOfBirth;
