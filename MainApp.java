@@ -1,16 +1,13 @@
 package elaborato_ing_sw;
 
 import java.io.IOException;
-//import java.time.LocalDate;
-
 import elaborato_ing_sw.dataManager.ManagerDaoImpl;
 import elaborato_ing_sw.dataManager.UserDaoImpl;
 import elaborato_ing_sw.model.Manager;
-//import elaborato_ing_sw.model.Role;
+import elaborato_ing_sw.utils.ShowView;
 import elaborato_ing_sw.view.LoginController;
 import elaborato_ing_sw.view.ManagerDashboardController;
 import elaborato_ing_sw.view.ManagerEditDialogController;
-//import elaborato_ing_sw.view.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -35,17 +32,20 @@ public class MainApp extends Application {
         System.out.println("Users from file: ");
         System.out.println(userDao.getAllUsers());
         
-        //Manager m1 = new Manager("man", "ager", LocalDate.of(1999, 8, 30), "pwd", 12356, Role.ADMIN);
-        //System.out.println(m1);
-        //managerDao.addUser(m1);
-        //managerDao.updateSource();
+//        User u1 = new User("test", "test", LocalDate.of(1999, 8, 30), new Credentials("test", "test"), "street", "city", 123, "456");
+//        userDao.addUser(u1);
+        
+//        Manager m1 = new Manager("man", "ager", LocalDate.of(1999, 8, 30), "pwd", 12356, Role.ADMIN);
+//        System.out.println(m1);
+//        managerDao.addUser(m1);
           
         System.out.println("Managers from file: ");
         System.out.println(managerDao.getAllUsers());
         
         initRootLayout();
 
-        showLoginView();
+//        showLoginView();
+        showManagerDashboard();
     }
     
     /**
@@ -68,43 +68,18 @@ public class MainApp extends Application {
     }
     
     public void showLoginView() {
-    	try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/Login.fxml"));
-			AnchorPane loginView = (AnchorPane) loader.load();
-	
-			// Set person overview into the center of root layout.
-			rootLayout.setCenter(loginView);
-	
-			// Give the controller access to the main app.
-			LoginController controller = loader.getController();
-			controller.setMainApp(this);
-    	} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+		FXMLLoader loader = ShowView.showView("view/Login.fxml");
+		LoginController controller = loader.getController();
+		controller.setMainApp(this);
     }
     
     public void showManagerDashboard() {
-		try {
-			// Load person overview.
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/ManagerDashboard.fxml"));
-			AnchorPane managerDashboard = (AnchorPane) loader.load();
-
-			// Set person overview into the center of root layout.
-			rootLayout.setCenter(managerDashboard);
-
-			// Give the controller access to the main app.
-			ManagerDashboardController controller = loader.getController();
-			controller.setMainApp(this);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		FXMLLoader loader = ShowView.showView("view/ManagerDashboard.fxml");
+		ManagerDashboardController controller = loader.getController();
+		controller.setMainApp(this);
 	}
     
-    public boolean showManagerEditDialog(Manager manager, int mode) {
+    public boolean showManagerEditDialog(Manager manager) {
 		try {
 			// Load the fxml file and create a new stage for the popup dialog.
 			FXMLLoader loader = new FXMLLoader();
@@ -122,7 +97,6 @@ public class MainApp extends Application {
 			// Set the person into the controller.
 			ManagerEditDialogController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
-			controller.setMode(mode);
 			controller.setManager(manager);
 
 			// Show the dialog and wait until the user closes it

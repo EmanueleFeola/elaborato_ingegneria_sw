@@ -115,16 +115,14 @@ public class ManagerDashboardController {
 	 */
 	@FXML
 	private void handleNewManager() {
-		/*Manager m = new Manager();
-		boolean okClicked = mainApp.showManagerEditDialog(m, 1);
+		boolean okClicked = mainApp.showManagerEditDialog(null);
 
-		// quando sono qua vuol dire che la finestra si è chiusa
 		if (okClicked) {
 			System.out.println("Hai cliccato OK");
-			managerDao.addUser(m);
+			managerDao.addUser(ManagerEditDialogController.getManager());
 		} else {
 			System.out.println("Hai cliccato Cancel");
-		}*/
+		}
 	}
 
 	/**
@@ -136,11 +134,11 @@ public class ManagerDashboardController {
 		Manager selectedManager = (Manager) managerTable.getSelectionModel().getSelectedItem();
 		//System.out.println(selectedManager);
 		if (selectedManager != null) {
-			boolean okClicked = mainApp.showManagerEditDialog(selectedManager, 0);
+			boolean okClicked = mainApp.showManagerEditDialog(selectedManager);
 			
 			if (okClicked) {
-				managerDao.updateUser(selectedManager);
-				showManagerDetails(selectedManager);
+				managerDao.updateUser(ManagerEditDialogController.getManager());
+				showManagerDetails(ManagerEditDialogController.getManager());
 			}
 			
 		} else {

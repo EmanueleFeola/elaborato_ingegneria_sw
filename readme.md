@@ -5,3 +5,4 @@ TODO:
 - le properties di javafx non sono serializzabili
     - ho aggiunto una classe (copiato da internet) che permette di serializzarle facendo qualche magia
     - va bene finchè non implementiamo il db 
+- la classe ShowView serve per visualizzare una view che deve stare in primo piano come Login e ManagerDashboard
