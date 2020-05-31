@@ -62,6 +62,7 @@
                         <Button mnemonicParsing="false" onAction="#handleDeleteManager" prefHeight="26.0" prefWidth="72.0" text="Delete" />
                     </buttons>
                   </ButtonBar>
+                  <Button fx:id="logoutBtn" layoutX="223.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
                </children></AnchorPane>
          </items>
       </SplitPane>
