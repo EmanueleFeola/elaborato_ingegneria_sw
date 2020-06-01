@@ -10,6 +10,8 @@ import elaborato_ing_sw.view.HomeController;
 import elaborato_ing_sw.view.LoginController;
 import elaborato_ing_sw.view.ManagerDashboardController;
 import elaborato_ing_sw.view.ManagerEditDialogController;
+import elaborato_ing_sw.view.ShoppingCartController;
+import elaborato_ing_sw.view.UserProfileController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -86,12 +88,63 @@ public class MainApp extends Application {
 		GroceryShoppingController controller = loader.getController();
 		controller.setMainApp(this);
     }
+    
+    public void showShoppingCartView() {
+    	try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/ShoppingCartView.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Shopping Cart");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+			
+			ShoppingCartController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+    	} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
        
     public void showManagerDashboard() {
 		FXMLLoader loader = ShowView.showView("view/ManagerDashboard.fxml");
 		ManagerDashboardController controller = loader.getController();
 		controller.setMainApp(this);
 	}
+    
+    public void showUserProfileView() {
+		try {
+			// Load the fxml file and create a new stage for the popup dialog.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/UserProfile.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			// Create the dialog Stage.
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Edit User");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+			
+			// Set the person into the controller.
+			UserProfileController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}    	
+    }
+    
     
     public boolean showManagerEditDialog(Manager manager) {
 		try {

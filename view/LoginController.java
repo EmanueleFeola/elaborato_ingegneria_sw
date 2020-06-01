@@ -9,7 +9,6 @@ import elaborato_ing_sw.model.Credentials;
 import elaborato_ing_sw.model.Manager;
 import elaborato_ing_sw.model.Person;
 import elaborato_ing_sw.model.User;
-import elaborato_ing_sw.utils.ShowView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -76,6 +75,6 @@ public class LoginController {
 
 	@FXML
 	private void handleRegistration() throws IOException {
-		ShowView.showView("view/RegisterUser.fxml");
+		mainApp.showUserProfileView();
 	}
 }

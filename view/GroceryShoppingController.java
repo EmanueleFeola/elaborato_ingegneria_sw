@@ -16,6 +16,11 @@ public class GroceryShoppingController {
 		System.out.println("Logged out successfully");
 	}
 	
+	@FXML
+	private void handleShoppingCart() {
+		mainApp.showShoppingCartView();
+	}
+	
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}

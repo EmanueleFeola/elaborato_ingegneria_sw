@@ -14,5 +14,6 @@
             <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#handleLogout" text="Logout" translateX="-10.0" />
         </buttons>
       </ButtonBar>
+      <Button layoutX="254.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleYourProfile" text="Your Profile" />
    </children>
 </AnchorPane>

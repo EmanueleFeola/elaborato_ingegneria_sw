@@ -23,6 +23,11 @@ public class HomeController {
 		System.out.println("Logged out successfully");
 	}
 	
+	@FXML
+	private void handleYourProfile() {
+		mainApp.showUserProfileView();
+	}
+	
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}
