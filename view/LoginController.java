@@ -58,7 +58,8 @@ public class LoginController {
 			if (lam) {
 				mainApp.showManagerDashboard();
 			} else {
-				mainApp.showHomeView();
+				mainApp.showHomeView((User)p);
+				
 			}
 		} else {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -75,6 +76,6 @@ public class LoginController {
 
 	@FXML
 	private void handleRegistration() throws IOException {
-		mainApp.showUserProfileView();
+		mainApp.showUserProfileView(null);
 	}
 }

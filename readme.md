@@ -6,3 +6,4 @@ TODO:
     - ho aggiunto una classe (copiato da internet) che permette di serializzarle facendo qualche magia
     - va bene finchè non implementiamo il db 
 - la classe ShowView serve per visualizzare una view che deve stare in primo piano come Login e ManagerDashboard
+- quando l utente modifica il suo profilo bisogna dire al dao di ricaricare la lista di utenti con le robe nuove aggiornate

@@ -26,7 +26,7 @@ public class User extends Person implements Serializable{
 	public boolean equals(Object obj) {
 		User other = (User)obj;
 		
-		return other.getCredentials().getUser() == this.getCredentials().getUser() ? true : false;
+		return other.getCredentials().getUser().equals(this.getCredentials().getUser());
 	}
 	
 	@Override

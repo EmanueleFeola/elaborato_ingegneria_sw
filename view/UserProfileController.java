@@ -37,9 +37,11 @@ public class UserProfileController {
 	private Stage dialogStage;
 	private boolean okClicked = false;
 	private UserDaoImpl userDao = UserDaoImpl.getUserDaoImpl();
+	private User loggedUser;
 
 	@FXML
 	private void initialize() {
+		
 	}
 
 	public boolean isOkClicked() {
@@ -50,23 +52,50 @@ public class UserProfileController {
 		this.dialogStage = dialogStage;
 	}
 	
-	public void setUser(User u) {
-		// TODO: implementare per usare il dialog come edit
+	public void setLoggedUser(User user){
+		this.loggedUser = user;
+		showUserDetails();
 	}
 
+	private void showUserDetails() {
+		if (loggedUser != null) {
+			firstNameField.setText(loggedUser.getName());
+			lastNameField.setText(loggedUser.getSurname());
+			streetField.setText(loggedUser.getAddress());
+			cityField.setText(loggedUser.getCity());
+			telNumberField.setText(loggedUser.getTelNum());
+			postalCodeField.setText(String.valueOf(loggedUser.getPostalCode()));
+			passwordField.setText("hidden");
+			birthdayField.setPromptText(loggedUser.getDateOfBirth().toString());
+			usernameField.setText(loggedUser.getCredentials().getUser());
+			usernameField.setDisable(true);
+		} else {
+			firstNameField.setText("");
+			lastNameField.setText("");
+			streetField.setText("");
+			cityField.setText("");
+			telNumberField.setText("");
+			postalCodeField.setText("");
+			passwordField.setText("hidden");
+			birthdayField.setPromptText("");
+			usernameField.setText("");
+			usernameField.setDisable(false);
+		}
+	}
+	
 	@FXML
 	private void handleOk() {
 		if(!isInputValid())
 			return;
 		
-		Credentials c = new Credentials(usernameField.getText(), passwordField.getText());
-		
-        LocalDate dob = birthdayField.getValue(); 
-        
-		User u = new User(firstNameField.getText(), lastNameField.getText(), dob, c, streetField.getText(),
+		Credentials c = new Credentials(usernameField.getText(), passwordField.getText());        
+		User u = new User(firstNameField.getText(), lastNameField.getText(), birthdayField.getValue(), c, streetField.getText(),
 				cityField.getText(), Integer.parseInt(postalCodeField.getText()), telNumberField.getText());
-		
-		userDao.addUser(u);
+				
+		if(loggedUser == null)
+			userDao.addUser(u);			
+		else
+			userDao.updateUser(u);
 		
 		if (!userDao.updateSource())
 			System.out.println("User non registered");

@@ -4,6 +4,7 @@ import java.io.IOException;
 import elaborato_ing_sw.dataManager.ManagerDaoImpl;
 import elaborato_ing_sw.dataManager.UserDaoImpl;
 import elaborato_ing_sw.model.Manager;
+import elaborato_ing_sw.model.User;
 import elaborato_ing_sw.utils.ShowView;
 import elaborato_ing_sw.view.GroceryShoppingController;
 import elaborato_ing_sw.view.HomeController;
@@ -77,10 +78,11 @@ public class MainApp extends Application {
 		controller.setMainApp(this);
     }
     
-    public void showHomeView() {
+    public void showHomeView(User loggedUser) {
 		FXMLLoader loader = ShowView.showView("view/Home.fxml");
 		HomeController controller = loader.getController();
 		controller.setMainApp(this);
+		controller.setLoggedUser(loggedUser);
     }
     
     public void showGroceryShoppingView() {
@@ -118,7 +120,7 @@ public class MainApp extends Application {
 		controller.setMainApp(this);
 	}
     
-    public void showUserProfileView() {
+    public void showUserProfileView(User user) {
 		try {
 			// Load the fxml file and create a new stage for the popup dialog.
 			FXMLLoader loader = new FXMLLoader();
@@ -135,6 +137,7 @@ public class MainApp extends Application {
 			
 			// Set the person into the controller.
 			UserProfileController controller = loader.getController();
+			controller.setLoggedUser(user);
 			controller.setDialogStage(dialogStage);
 
 			// Show the dialog and wait until the user closes it

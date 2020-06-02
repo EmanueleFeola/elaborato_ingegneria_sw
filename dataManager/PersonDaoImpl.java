@@ -42,7 +42,7 @@ public abstract class PersonDaoImpl implements PersonDao {
 			in.close();
 
 		} catch (EOFException e) {
-			// non � un errore, � giusto che arrivi alla fine del file
+			// no error, giusto che arrivi alla fine del file
 			System.out.println("Read successfully");
 		} catch (FileNotFoundException e) {
 			// se il file ancora non esiste, lo creo
