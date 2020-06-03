@@ -2,6 +2,7 @@ package elaborato_ing_sw;
 
 import java.io.IOException;
 import elaborato_ing_sw.dataManager.ManagerDaoImpl;
+import elaborato_ing_sw.dataManager.ProductDao;
 import elaborato_ing_sw.dataManager.UserDaoImpl;
 import elaborato_ing_sw.model.Manager;
 import elaborato_ing_sw.model.User;
@@ -28,6 +29,7 @@ public class MainApp extends Application {
 
 	private UserDaoImpl userDao = UserDaoImpl.getUserDaoImpl();
 	private ManagerDaoImpl managerDao = ManagerDaoImpl.getManagerDaoImpl();
+	private ProductDao productDao = new ProductDao("products");
 
     @Override
     public void start(Stage primaryStage) {
@@ -47,10 +49,18 @@ public class MainApp extends Application {
         System.out.println("Managers from file: ");
         System.out.println(managerDao.getAllUsers());
         
+//        Product p1 = new Product("pasta alla cazzo", "barilla", Section.GRAIN_FOODS, 100, 1.50, "img", true);
+//        Product p2 = new Product("banane", "fruttilandia", Section.FRUIT, 3, 1.00, "img", true);
+        
+//        productDao.addProduct(p1);
+//        productDao.addProduct(p2);
+        
+        System.out.println("Products from file: ");
+        System.out.println(productDao.getAllProducts());
+        
         initRootLayout();
 
         showLoginView();
-//        showManagerDashboard();
     }
     
     /**
@@ -86,9 +96,28 @@ public class MainApp extends Application {
     }
     
     public void showGroceryShoppingView() {
-		FXMLLoader loader = ShowView.showView("view/GroceryShopping.fxml");
-		GroceryShoppingController controller = loader.getController();
-		controller.setMainApp(this);
+    	try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/GroceryShopping.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Grocery Shopping");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+			
+			GroceryShoppingController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMainApp(this);
+			
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+    	} catch (IOException e) {
+			e.printStackTrace();
+		}    	
+    	
     }
     
     public void showShoppingCartView() {

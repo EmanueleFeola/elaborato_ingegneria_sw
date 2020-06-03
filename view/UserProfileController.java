@@ -1,6 +1,5 @@
 package elaborato_ing_sw.view;
 
-import java.time.LocalDate;
 
 import elaborato_ing_sw.MainApp;
 import elaborato_ing_sw.dataManager.UserDaoImpl;
@@ -65,8 +64,8 @@ public class UserProfileController {
 			cityField.setText(loggedUser.getCity());
 			telNumberField.setText(loggedUser.getTelNum());
 			postalCodeField.setText(String.valueOf(loggedUser.getPostalCode()));
-			passwordField.setText("hidden");
-			birthdayField.setPromptText(loggedUser.getDateOfBirth().toString());
+			//passwordField.setText("hidden");
+			birthdayField.setValue(loggedUser.getDateOfBirth());
 			usernameField.setText(loggedUser.getCredentials().getUser());
 			usernameField.setDisable(true);
 		} else {
@@ -76,7 +75,7 @@ public class UserProfileController {
 			cityField.setText("");
 			telNumberField.setText("");
 			postalCodeField.setText("");
-			passwordField.setText("hidden");
+			passwordField.setText("");
 			birthdayField.setPromptText("");
 			usernameField.setText("");
 			usernameField.setDisable(false);

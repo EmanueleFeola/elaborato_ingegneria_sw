@@ -4,44 +4,106 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.GroceryShoppingController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.GroceryShoppingController">
    <children>
-      <SplitPane dividerPositions="0.431438127090301" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.4348370927318296" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
             <AnchorPane prefHeight="398.0" prefWidth="240.0">
                <children>
-                  <TabPane layoutX="48.0" layoutY="106.0" prefHeight="398.0" prefWidth="296.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TabPane layoutX="48.0" layoutY="106.0" prefHeight="598.0" prefWidth="458.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <tabs>
                       <Tab text="Vegetables">
                         <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="365.0" prefWidth="258.0" />
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="565.0" prefWidth="538.0">
+                                 <children>
+                                    <TableView layoutX="21.0" layoutY="46.0" prefHeight="565.0" prefWidth="412.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <columns>
+                                        <TableColumn prefWidth="75.0" text="Name" />
+                                        <TableColumn prefWidth="75.0" text="Brand" />
+                                          <TableColumn prefWidth="110.0" text="Pcs per Pack" />
+                                          <TableColumn prefWidth="81.0" text="Price" />
+                                      </columns>
+                                    </TableView>
+                                 </children></AnchorPane>
                         </content>
                       </Tab>
                         <Tab text="Fruit">
                           <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TableView prefHeight="565.0" prefWidth="343.0">
+                                       <columns>
+                                          <TableColumn prefWidth="75.0" text="Name" />
+                                          <TableColumn prefWidth="75.0" text="Brand" />
+                                          <TableColumn prefWidth="110.0" text="Pcs per Pack" />
+                                          <TableColumn prefWidth="81.0" text="Price" />
+                                       </columns>
+                                    </TableView>
+                                 </children></AnchorPane>
                           </content>
                         </Tab>
                         <Tab text="Meat &amp; Fish">
                           <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TableView prefHeight="565.0" prefWidth="343.0">
+                                       <columns>
+                                          <TableColumn prefWidth="75.0" text="Name" />
+                                          <TableColumn prefWidth="75.0" text="Brand" />
+                                          <TableColumn prefWidth="110.0" text="Pcs per Pack" />
+                                          <TableColumn prefWidth="81.0" text="Price" />
+                                       </columns>
+                                    </TableView>
+                                 </children></AnchorPane>
                           </content>
                         </Tab>
                         <Tab text="Grain foods">
                           <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TableView prefHeight="565.0" prefWidth="343.0">
+                                       <columns>
+                                          <TableColumn prefWidth="75.0" text="Name" />
+                                          <TableColumn prefWidth="75.0" text="Brand" />
+                                          <TableColumn prefWidth="110.0" text="Pcs per Pack" />
+                                          <TableColumn prefWidth="81.0" text="Price" />
+                                       </columns>
+                                    </TableView>
+                                 </children></AnchorPane>
                           </content>
                         </Tab>
                       <Tab text="Dairy products">
                         <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TableView prefHeight="565.0" prefWidth="343.0">
+                                       <columns>
+                                          <TableColumn prefWidth="75.0" text="Name" />
+                                          <TableColumn prefWidth="75.0" text="Brand" />
+                                          <TableColumn prefWidth="110.0" text="Pcs per Pack" />
+                                          <TableColumn prefWidth="81.0" text="Price" />
+                                       </columns>
+                                    </TableView>
+                                 </children></AnchorPane>
                         </content>
                       </Tab>
                         <Tab text="Beverages">
                           <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TableView prefHeight="565.0" prefWidth="343.0">
+                                       <columns>
+                                          <TableColumn prefWidth="75.0" text="Name" />
+                                          <TableColumn prefWidth="75.0" text="Brand" />
+                                          <TableColumn prefWidth="110.0" text="Pcs per Pack" />
+                                          <TableColumn prefWidth="81.0" text="Price" />
+                                       </columns>
+                                    </TableView>
+                                 </children></AnchorPane>
                           </content>
                         </Tab>
                     </tabs>
@@ -50,8 +112,8 @@
             </AnchorPane>
             <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="398.0" prefWidth="316.0">
                <children>
-                  <Button fx:id="logoutBtn" layoutX="259.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
-                  <Button layoutX="211.0" layoutY="358.0" mnemonicParsing="false" onAction="#handleShoppingCart" text="Shopping Cart" />
+                  <Button fx:id="logoutBtn" layoutX="370.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
+                  <Button layoutX="322.0" layoutY="558.0" mnemonicParsing="false" onAction="#handleShoppingCart" text="Shopping Cart" />
                </children></AnchorPane>
          </items>
       </SplitPane>
