@@ -65,7 +65,7 @@ public class ManagerDashboardController {
 			showManagerDetails((Manager) newValue);
 		});
 
-		managerTable.setItems(managerDao.getAllUsers());
+		managerTable.setItems(managerDao.getAllItems());
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class ManagerDashboardController {
 	private void handleDeleteManager() {
 		int selectedIndex = managerTable.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
-			managerDao.deleteUser(managerTable.getItems().get(selectedIndex));
+			managerDao.deleteItem(managerTable.getItems().get(selectedIndex));
 		} else {
 			// Nothing selected.
 			Alert alert = new Alert(AlertType.WARNING);
@@ -122,7 +122,7 @@ public class ManagerDashboardController {
 
 		if (okClicked) {
 			System.out.println("Hai cliccato OK");
-			managerDao.addUser(ManagerEditDialogController.getManager());
+			managerDao.addItem(ManagerEditDialogController.getManager());
 		} else {
 			System.out.println("Hai cliccato Cancel");
 		}
@@ -140,7 +140,7 @@ public class ManagerDashboardController {
 			boolean okClicked = mainApp.showManagerEditDialog(selectedManager);
 			
 			if (okClicked) {
-				managerDao.updateUser(ManagerEditDialogController.getManager());
+				managerDao.updateItem(ManagerEditDialogController.getManager());
 				showManagerDetails(ManagerEditDialogController.getManager());
 			}
 			

@@ -1,6 +1,6 @@
 package elaborato_ing_sw.dataManager;
 
-public class ManagerDaoImpl extends PersonDaoImpl{
+public class ManagerDaoImpl extends PersonDaoAbstract{
 	private static ManagerDaoImpl instance;
 	private static String managerFilename = "managers";
 	

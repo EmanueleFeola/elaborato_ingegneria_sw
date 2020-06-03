@@ -50,9 +50,9 @@ public class LoginController {
 
 		Person p;
 		if (lam)
-			p = (Manager) managerDao.getUser(userTextField);
+			p = (Manager) managerDao.getItem(userTextField);
 		else
-			p = (User) userDao.getUser(userTextField);
+			p = (User) userDao.getItem(userTextField);
 
 		if (p != null && p.getCredentials().getMd5Pwd().equals(Credentials.getMd5(pwdTextField))) {
 			if (lam) {

@@ -92,9 +92,9 @@ public class UserProfileController {
 				cityField.getText(), Integer.parseInt(postalCodeField.getText()), telNumberField.getText());
 				
 		if(loggedUser == null)
-			userDao.addUser(u);			
+			userDao.addItem(u);			
 		else
-			userDao.updateUser(u);
+			userDao.updateItem(u);
 		
 		if (!userDao.updateSource())
 			System.out.println("User non registered");

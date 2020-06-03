@@ -56,7 +56,7 @@ public class RegisterUserController {
 		User u = new User(firstNameField.getText(), lastNameField.getText(), dob, c, streetField.getText(),
 				cityField.getText(), Integer.parseInt(postalCodeField.getText()), telNumberField.getText());
 		
-		userDao.addUser(u);
+		userDao.addItem(u);
 		
 		if (!userDao.updateSource())
 			System.out.println("User non registered");

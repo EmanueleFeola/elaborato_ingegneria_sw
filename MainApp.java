@@ -2,9 +2,11 @@ package elaborato_ing_sw;
 
 import java.io.IOException;
 import elaborato_ing_sw.dataManager.ManagerDaoImpl;
-import elaborato_ing_sw.dataManager.ProductDao;
+import elaborato_ing_sw.dataManager.ProductDaoImpl;
 import elaborato_ing_sw.dataManager.UserDaoImpl;
 import elaborato_ing_sw.model.Manager;
+import elaborato_ing_sw.model.Product;
+import elaborato_ing_sw.model.Section;
 import elaborato_ing_sw.model.User;
 import elaborato_ing_sw.utils.ShowView;
 import elaborato_ing_sw.view.GroceryShoppingController;
@@ -29,7 +31,7 @@ public class MainApp extends Application {
 
 	private UserDaoImpl userDao = UserDaoImpl.getUserDaoImpl();
 	private ManagerDaoImpl managerDao = ManagerDaoImpl.getManagerDaoImpl();
-	private ProductDao productDao = new ProductDao("products");
+	private ProductDaoImpl productDao = ProductDaoImpl.getProductDaoImpl();
 
     @Override
     public void start(Stage primaryStage) {
@@ -37,7 +39,7 @@ public class MainApp extends Application {
         MainApp.primaryStage.setTitle("Shopping Online");
 
         System.out.println("Users from file: ");
-        System.out.println(userDao.getAllUsers());
+        System.out.println(userDao.getAllItems());
         
 //        User u1 = new User("test", "test", LocalDate.of(1999, 8, 30), new Credentials("test", "test"), "street", "city", 123, "456");
 //        userDao.addUser(u1);
@@ -47,16 +49,16 @@ public class MainApp extends Application {
 //        managerDao.addUser(m1);
           
         System.out.println("Managers from file: ");
-        System.out.println(managerDao.getAllUsers());
+        System.out.println(managerDao.getAllItems());
         
-//        Product p1 = new Product("pasta alla cazzo", "barilla", Section.GRAIN_FOODS, 100, 1.50, "img", true);
-//        Product p2 = new Product("banane", "fruttilandia", Section.FRUIT, 3, 1.00, "img", true);
+        Product p1 = new Product("pasta alla cazzo", "barilla", Section.GRAIN_FOODS, 100, 1.50, "img", true);
+        Product p2 = new Product("banane", "fruttilandia", Section.FRUIT, 3, 1.00, "img", true);
         
-//        productDao.addProduct(p1);
-//        productDao.addProduct(p2);
+        productDao.addItem(p1);
+        productDao.addItem(p2);
         
         System.out.println("Products from file: ");
-        System.out.println(productDao.getAllProducts());
+        System.out.println(productDao.getAllItems());
         
         initRootLayout();
 

@@ -9,35 +9,34 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import elaborato_ing_sw.model.Person;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public abstract class PersonDaoImpl implements PersonDao {
-	private ObservableList<Person> people;
-	private String filepath; // filepath per storage
-
-	protected PersonDaoImpl(String filepath) {
+public abstract class DaoImpl<T> implements Dao<T>{
+	protected ObservableList<T> objs;
+	protected String filepath; // filepath per storage
+	
+	protected DaoImpl(String filepath){
 		this.filepath = filepath;
 
-		people = FXCollections.observableArrayList();
+		objs = FXCollections.observableArrayList();
 
-		Person p;
+		T p;
 		boolean eof = false;
 
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(filepath));
 
 			while (!eof) {
-				p = (Person) in.readObject();
+				p = (T) in.readObject();
 
 				if (p != null)
-					people.add(p);
+					objs.add(p);
 				else
 					eof = true;
 			}
 
-			System.out.println(people);
+			System.out.println(objs);
 
 			in.close();
 
@@ -59,29 +58,22 @@ public abstract class PersonDaoImpl implements PersonDao {
 			System.out.println(e);
 		}
 	}
-
+	
 	@Override
-	public ObservableList<Person> getAllUsers() {
-		return people;
+	public ObservableList<T> getAllItems() {
+		return objs;
 	}
 
 	@Override
-	public Person getUser(String user) {
-		for (Person p : people)
-			if (p.getCredentials().getUser().equals(user))
-				return p;
-
-		return null;
-	}
+	// NB: l implementazione e diversa se sto trattando un Person oppure un Product
+	public abstract T getItem(String objId);
 
 	@Override
-	public boolean updateUser(Person user) {
-		if (!people.contains(user))
+	public boolean addItem(T item) {
+		if (objs.contains(item))
 			return false;
 
-		for (int i = 0; i < people.size(); i++)
-			if (people.get(i).equals(user))
-				people.set(i, user);
+		objs.add(item);
 
 		updateSource();
 
@@ -89,11 +81,13 @@ public abstract class PersonDaoImpl implements PersonDao {
 	}
 
 	@Override
-	public boolean deleteUser(Person user) {
-		if (!people.contains(user))
+	public boolean updateItem(T item) {
+		if (!objs.contains(item))
 			return false;
 
-		people.remove(user);
+		for (int i = 0; i < objs.size(); i++)
+			if (objs.get(i).equals(item))
+				objs.set(i, item);
 
 		updateSource();
 
@@ -101,11 +95,11 @@ public abstract class PersonDaoImpl implements PersonDao {
 	}
 
 	@Override
-	public boolean addUser(Person user) {
-		if (people.contains(user))
+	public boolean deleteItem(T item) {
+		if (!objs.contains(item))
 			return false;
 
-		people.add(user);
+		objs.remove(item);
 
 		updateSource();
 
@@ -120,7 +114,7 @@ public abstract class PersonDaoImpl implements PersonDao {
 			FileOutputStream fout = new FileOutputStream(filepath);
 			ObjectOutputStream out = new ObjectOutputStream(fout);
 
-			for (Person p : people)
+			for (T p : objs)
 				out.writeObject(p);
 
 			out.flush();

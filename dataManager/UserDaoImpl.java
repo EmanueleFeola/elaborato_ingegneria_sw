@@ -1,6 +1,6 @@
 package elaborato_ing_sw.dataManager;
 
-public class UserDaoImpl extends PersonDaoImpl{
+public class UserDaoImpl extends PersonDaoAbstract{
 	private static UserDaoImpl instance;
 	private static String userFilename = "users";
 	
