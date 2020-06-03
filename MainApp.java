@@ -10,7 +10,6 @@ import elaborato_ing_sw.model.Section;
 import elaborato_ing_sw.model.User;
 import elaborato_ing_sw.utils.ShowView;
 import elaborato_ing_sw.view.GroceryShoppingController;
-import elaborato_ing_sw.view.HomeController;
 import elaborato_ing_sw.view.LoginController;
 import elaborato_ing_sw.view.ManagerDashboardController;
 import elaborato_ing_sw.view.ManagerEditDialogController;
@@ -90,14 +89,7 @@ public class MainApp extends Application {
 		controller.setMainApp(this);
     }
     
-    public void showHomeView(User loggedUser) {
-		FXMLLoader loader = ShowView.showView("view/Home.fxml");
-		HomeController controller = loader.getController();
-		controller.setMainApp(this);
-		controller.setLoggedUser(loggedUser);
-    }
-    
-    public void showGroceryShoppingView() {
+    public void showGroceryShoppingView(User user) {
     	try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/GroceryShopping.fxml"));
@@ -113,6 +105,7 @@ public class MainApp extends Application {
 			GroceryShoppingController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(this);
+			controller.setLoggedUser(user);
 			
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
@@ -179,6 +172,9 @@ public class MainApp extends Application {
 		}    	
     }
     
+    public void showAllExpensesView(User user) {
+    	ShowView.showView("view/AllExpanses.fxml");
+    }
     
     public boolean showManagerEditDialog(Manager manager) {
 		try {

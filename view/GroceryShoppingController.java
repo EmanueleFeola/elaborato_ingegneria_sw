@@ -1,16 +1,14 @@
 package elaborato_ing_sw.view;
 
 import elaborato_ing_sw.MainApp;
+import elaborato_ing_sw.model.User;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class GroceryShoppingController {
-	@FXML
-	private Button logoutBtn;
-	
 	private MainApp mainApp;
 	private Stage dialogStage;
+	private User loggedUser;
 	
 	@FXML
 	private void handleLogout() {
@@ -22,6 +20,20 @@ public class GroceryShoppingController {
 	@FXML
 	private void handleShoppingCart() {
 		mainApp.showShoppingCartView();
+	}
+	
+	@FXML
+	private void handleProfile() {
+		mainApp.showUserProfileView(loggedUser);
+	}
+	
+	@FXML
+	private void handleAllExpenses() {
+		mainApp.showAllExpensesView(loggedUser);
+	}
+	
+	public void setLoggedUser(User loggedUser) {
+		this.loggedUser = loggedUser;
 	}
 	
 	public void setMainApp(MainApp mainApp) {

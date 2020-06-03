@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -8,9 +11,9 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.GroceryShoppingController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.GroceryShoppingController">
    <children>
-      <SplitPane dividerPositions="0.4348370927318296" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.5" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
             <AnchorPane prefHeight="398.0" prefWidth="240.0">
                <children>
@@ -112,8 +115,22 @@
             </AnchorPane>
             <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="398.0" prefWidth="316.0">
                <children>
-                  <Button fx:id="logoutBtn" layoutX="370.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
-                  <Button layoutX="322.0" layoutY="558.0" mnemonicParsing="false" onAction="#handleShoppingCart" text="Shopping Cart" />
+                  <ButtonBar layoutX="35.0" layoutY="299.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
+                     <buttons>
+                        <ButtonBar prefHeight="38.0" prefWidth="454.0">
+                           <buttons>
+                              <MenuButton mnemonicParsing="false" text="Shopping">
+                                <items>
+                                  <MenuItem mnemonicParsing="false" onAction="#handleShoppingCart" text="Shopping Cart" />
+                                  <MenuItem mnemonicParsing="false" onAction="#handleAllExpenses" text="All expenses" />
+                                </items>
+                              </MenuButton>
+                              <Button mnemonicParsing="false" onAction="#handleProfile" text="Profile" />
+                              <Button mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
+                           </buttons>
+                        </ButtonBar>
+                     </buttons>
+                  </ButtonBar>
                </children></AnchorPane>
          </items>
       </SplitPane>

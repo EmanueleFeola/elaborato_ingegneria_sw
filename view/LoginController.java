@@ -55,12 +55,10 @@ public class LoginController {
 			p = (User) userDao.getItem(userTextField);
 
 		if (p != null && p.getCredentials().getMd5Pwd().equals(Credentials.getMd5(pwdTextField))) {
-			if (lam) {
+			if (lam)
 				mainApp.showManagerDashboard();
-			} else {
-				mainApp.showHomeView((User)p);
-				
-			}
+			else
+				mainApp.showGroceryShoppingView((User)p);
 		} else {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.initOwner(MainApp.getPrimaryStage());
