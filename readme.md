@@ -17,3 +17,5 @@ NOTE:
 - la get di un prodotto viene fatta in base al campo name, mentre la get di una persona viene fatta in base al campo user del campo credentials (credentials.getUser())
     - quindi sono stati implementati due getItem diversi 
  
+TODO documentazione finale
+- sezione con possibili miglioramenti del progetto

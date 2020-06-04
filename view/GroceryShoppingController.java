@@ -1,5 +1,8 @@
 package elaborato_ing_sw.view;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.function.Predicate;
 
 import elaborato_ing_sw.MainApp;
@@ -8,193 +11,136 @@ import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.Section;
 import elaborato_ing_sw.model.User;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class GroceryShoppingController {
 	@FXML
-	private TableView<Product> vegetablesTable;
-	@FXML
-	private TableView<Product> fruitTable;
-	@FXML
-	private TableView<Product> meat_fishTable;
-	@FXML
-	private TableView<Product> grain_foodsTable;
-	@FXML
-	private TableView<Product> dairy_productsTable;
-	@FXML
-	private TableView<Product> beveragesTable;
+	private TableView<Product> vegetablesTable, fruitTable, meat_fishTable, grain_foodsTable, dairy_productsTable, beveragesTable;
 
 	@FXML
-	private TableColumn<Product, String> n0;
-	@FXML
-	private TableColumn<Product, String> n1;
-	@FXML
-	private TableColumn<Product, String> n2;
-	@FXML
-	private TableColumn<Product, String> n3;
-	@FXML
-	private TableColumn<Product, String> n4;
-	@FXML
-	private TableColumn<Product, String> n5;
+	private TableColumn<Product, String> n0, n1, n2, n3, n4, n5;
 
 	@FXML
-	private TableColumn<Product, String> b0;
-	@FXML
-	private TableColumn<Product, String> b1;
-	@FXML
-	private TableColumn<Product, String> b2;
-	@FXML
-	private TableColumn<Product, String> b3;
-	@FXML
-	private TableColumn<Product, String> b4;
-	@FXML
-	private TableColumn<Product, String> b5;
+	private TableColumn<Product, String> b0, b1, b2, b3, b4, b5;
 
 	@FXML
-	private TableColumn<Product, Integer> pc0;
-	@FXML
-	private TableColumn<Product, Integer> pc1;
-	@FXML
-	private TableColumn<Product, Integer> pc2;
-	@FXML
-	private TableColumn<Product, Integer> pc3;
-	@FXML
-	private TableColumn<Product, Integer> pc4;
-	@FXML
-	private TableColumn<Product, Integer> pc5;
+	private TableColumn<Product, Double> pr0, pr1, pr2, pr3, pr4, pr5;
 
 	@FXML
-	private TableColumn<Product, Double> pr0;
+	private Label nameLabel;
+	
 	@FXML
-	private TableColumn<Product, Double> pr1;
+	private Label brandLabel;
+	
 	@FXML
-	private TableColumn<Product, Double> pr2;
+	private Label priceLabel;
+	
 	@FXML
-	private TableColumn<Product, Double> pr3;
+	private Label npcsLabel;
+	
 	@FXML
-	private TableColumn<Product, Double> pr4;
+	private Label isAvailable;
+
 	@FXML
-	private TableColumn<Product, Double> pr5;
+	private ImageView image;
 
 	private ProductDaoImpl productDao = ProductDaoImpl.getProductDaoImpl();
-
 	private MainApp mainApp;
 	private Stage dialogStage;
 	private User loggedUser;
+
+	private File standardLogoFile = new File("src/elaborato_ing_sw/view/logo.png");
+	private Image standardLogoImage = new Image(standardLogoFile.toURI().toString());
 
 	@FXML
 	private void initialize() {
 
 	}
 
-	@FXML
-	private void handleVegetables() {
-		n0.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
-		b0.setCellValueFactory(cellData -> cellData.getValue().getBrandProperty());
-		pc0.setCellValueFactory(cellData -> cellData.getValue().getPcsProperty());
-		pr0.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
-
-		vegetablesTable.setItems(productDao.getAllItems().filtered(new Predicate<Product>() {
+	private void handleSection
+		(
+			TableColumn<Product, String> f0,
+			TableColumn<Product, String> f1,
+			TableColumn<Product, Double> f2,
+			TableView<Product> tv,
+			Section section
+		)
+	{
+		f0.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
+		f1.setCellValueFactory(cellData -> cellData.getValue().getBrandProperty());
+		f2.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
+		
+		tv.setItems(productDao.getAllItems().filtered(new Predicate<Product>() {
 
 			@Override
 			public boolean test(Product p) {
-				if (p.getSection().equals(Section.VEGETABLES))
+				if (p.getSection().equals(section))
 					return true;
 				return false;
 			}
 		}));
+		
+		tv.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			showProductDetails((Product) newValue);
+		});
+	}
+	
+	private void showProductDetails(Product product) {
+		if (product != null) {
+			nameLabel.setText(product.getName());
+			brandLabel.setText(product.getBrand());
+			priceLabel.setText(String.valueOf(product.getPrice()) + " $");
+			isAvailable.setText(product.isAvailable() ? "Yes" : "No");
+			npcsLabel.setText(String.valueOf(product.getPcsPerPack()));
+			
+			File fileImage = new File(product.getIconPath());
+			Image icon = new Image(fileImage.toURI().toString());
+			image.setImage(icon);
+		} else {
+			// Person is null, remove all the text.
+			nameLabel.setText("");
+			brandLabel.setText("");
+			priceLabel.setText("");
+			isAvailable.setText("");
+			npcsLabel.setText("");
+			image.setImage(standardLogoImage);
+		}
+	}
+	
+	@FXML
+	private void handleVegetables() {
+		handleSection(n0, b0, pr0, vegetablesTable, Section.VEGETABLES);
 	}
 
 	@FXML
 	private void handleFruit() {
-		n1.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
-		b1.setCellValueFactory(cellData -> cellData.getValue().getBrandProperty());
-		pc1.setCellValueFactory(cellData -> cellData.getValue().getPcsProperty());
-		pr1.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
-
-		fruitTable.setItems(productDao.getAllItems().filtered(new Predicate<Product>() {
-
-			@Override
-			public boolean test(Product p) {
-				if (p.getSection().equals(Section.FRUIT))
-					return true;
-				return false;
-			}
-		}));
+		handleSection(n1, b1, pr1, fruitTable, Section.FRUIT);
 	}
 
 	@FXML
 	private void handleMeatFish() {
-		n2.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
-		b2.setCellValueFactory(cellData -> cellData.getValue().getBrandProperty());
-		pc2.setCellValueFactory(cellData -> cellData.getValue().getPcsProperty());
-		pr2.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
-
-		meat_fishTable.setItems(productDao.getAllItems().filtered(new Predicate<Product>() {
-
-			@Override
-			public boolean test(Product p) {
-				if (p.getSection().equals(Section.MEAT_FISH))
-					return true;
-				return false;
-			}
-		}));
+		handleSection(n2, b2, pr2, meat_fishTable, Section.MEAT_FISH);
 	}
 
 	@FXML
 	private void handleGrainFoods() {
-		n3.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
-		b3.setCellValueFactory(cellData -> cellData.getValue().getBrandProperty());
-		pc3.setCellValueFactory(cellData -> cellData.getValue().getPcsProperty());
-		pr3.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
-
-		grain_foodsTable.setItems(productDao.getAllItems().filtered(new Predicate<Product>() {
-
-			@Override
-			public boolean test(Product p) {
-				if (p.getSection().equals(Section.GRAIN_FOODS))
-					return true;
-				return false;
-			}
-		}));
+		handleSection(n3, b3, pr3, grain_foodsTable, Section.GRAIN_FOODS);
 	}
 
 	@FXML
 	private void handleDairyProducts() {
-		n4.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
-		b4.setCellValueFactory(cellData -> cellData.getValue().getBrandProperty());
-		pc4.setCellValueFactory(cellData -> cellData.getValue().getPcsProperty());
-		pr4.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
-
-		dairy_productsTable.setItems(productDao.getAllItems().filtered(new Predicate<Product>() {
-
-			@Override
-			public boolean test(Product p) {
-				if (p.getSection().equals(Section.DAIRY_PRODUCTS))
-					return true;
-				return false;
-			}
-		}));
+		handleSection(n4, b4, pr4, dairy_productsTable, Section.DAIRY_PRODUCTS);
 	}
 
 	@FXML
 	private void handleBeverages() {
-		n5.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
-		b5.setCellValueFactory(cellData -> cellData.getValue().getBrandProperty());
-		pc5.setCellValueFactory(cellData -> cellData.getValue().getPcsProperty());
-		pr5.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
-
-		beveragesTable.setItems(productDao.getAllItems().filtered(new Predicate<Product>() {
-
-			@Override
-			public boolean test(Product p) {
-				if (p.getSection().equals(Section.BEVERAGES))
-					return true;
-				return false;
-			}
-		}));
+		handleSection(n5, b5, pr5, beveragesTable, Section.BEVERAGES);
 	}
 
 	@FXML
