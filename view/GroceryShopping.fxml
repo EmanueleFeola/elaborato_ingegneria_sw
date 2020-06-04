@@ -11,99 +11,99 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.GroceryShoppingController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.GroceryShoppingController">
    <children>
-      <SplitPane dividerPositions="0.5" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.4348370927318296" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
             <AnchorPane prefHeight="398.0" prefWidth="240.0">
                <children>
                   <TabPane layoutX="48.0" layoutY="106.0" prefHeight="598.0" prefWidth="458.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <tabs>
-                      <Tab text="Vegetables">
+                      <Tab onSelectionChanged="#handleVegetables" text="Vegetables">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="565.0" prefWidth="538.0">
                                  <children>
-                                    <TableView layoutX="21.0" layoutY="46.0" prefHeight="565.0" prefWidth="412.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <TableView fx:id="vegetablesTable" layoutX="21.0" layoutY="46.0" prefHeight="565.0" prefWidth="412.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <columns>
-                                        <TableColumn prefWidth="75.0" text="Name" />
-                                        <TableColumn prefWidth="75.0" text="Brand" />
-                                          <TableColumn prefWidth="110.0" text="Pcs per Pack" />
-                                          <TableColumn prefWidth="81.0" text="Price" />
+                                        <TableColumn fx:id="n0" prefWidth="118.0" text="Name" />
+                                        <TableColumn fx:id="b0" prefWidth="111.0" text="Brand" />
+                                          <TableColumn fx:id="pc0" prefWidth="58.0" text="Pcs" />
+                                          <TableColumn fx:id="pr0" prefWidth="54.0" text="Price" />
                                       </columns>
                                     </TableView>
                                  </children></AnchorPane>
                         </content>
                       </Tab>
-                        <Tab text="Fruit">
+                        <Tab onSelectionChanged="#handleFruit" text="Fruit">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TableView prefHeight="565.0" prefWidth="343.0">
+                                    <TableView fx:id="fruitTable" prefHeight="565.0" prefWidth="343.0">
                                        <columns>
-                                          <TableColumn prefWidth="75.0" text="Name" />
-                                          <TableColumn prefWidth="75.0" text="Brand" />
-                                          <TableColumn prefWidth="110.0" text="Pcs per Pack" />
-                                          <TableColumn prefWidth="81.0" text="Price" />
+                                          <TableColumn fx:id="n1" prefWidth="118.0" text="Name" />
+                                          <TableColumn fx:id="b1" prefWidth="111.0" text="Brand" />
+                                          <TableColumn fx:id="pc1" prefWidth="58.0" text="Pcs" />
+                                          <TableColumn fx:id="pr1" prefWidth="54.0" text="Price" />
                                        </columns>
                                     </TableView>
                                  </children></AnchorPane>
                           </content>
                         </Tab>
-                        <Tab text="Meat &amp; Fish">
+                        <Tab onSelectionChanged="#handleMeatFish" text="Meat &amp; Fish">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TableView prefHeight="565.0" prefWidth="343.0">
+                                    <TableView fx:id="meat_fishTable" prefHeight="565.0" prefWidth="343.0">
                                        <columns>
-                                          <TableColumn prefWidth="75.0" text="Name" />
-                                          <TableColumn prefWidth="75.0" text="Brand" />
-                                          <TableColumn prefWidth="110.0" text="Pcs per Pack" />
-                                          <TableColumn prefWidth="81.0" text="Price" />
+                                          <TableColumn fx:id="n2" prefWidth="118.0" text="Name" />
+                                          <TableColumn fx:id="b2" prefWidth="111.0" text="Brand" />
+                                          <TableColumn fx:id="pc2" prefWidth="58.0" text="Pcs" />
+                                          <TableColumn fx:id="pr2" prefWidth="54.0" text="Price" />
                                        </columns>
                                     </TableView>
                                  </children></AnchorPane>
                           </content>
                         </Tab>
-                        <Tab text="Grain foods">
+                        <Tab onSelectionChanged="#handleGrainFoods" text="Grain foods">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TableView prefHeight="565.0" prefWidth="343.0">
+                                    <TableView fx:id="grain_foodsTable" prefHeight="565.0" prefWidth="343.0">
                                        <columns>
-                                          <TableColumn prefWidth="75.0" text="Name" />
-                                          <TableColumn prefWidth="75.0" text="Brand" />
-                                          <TableColumn prefWidth="110.0" text="Pcs per Pack" />
-                                          <TableColumn prefWidth="81.0" text="Price" />
+                                          <TableColumn fx:id="n3" prefWidth="118.0" text="Name" />
+                                          <TableColumn fx:id="b3" prefWidth="111.0" text="Brand" />
+                                          <TableColumn fx:id="pc3" prefWidth="58.0" text="Pcs" />
+                                          <TableColumn fx:id="pr3" prefWidth="54.0" text="Price" />
                                        </columns>
                                     </TableView>
                                  </children></AnchorPane>
                           </content>
                         </Tab>
-                      <Tab text="Dairy products">
+                      <Tab onSelectionChanged="#handleDairyProducts" text="Dairy products">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TableView prefHeight="565.0" prefWidth="343.0">
+                                    <TableView fx:id="dairy_productsTable" prefHeight="565.0" prefWidth="343.0">
                                        <columns>
-                                          <TableColumn prefWidth="75.0" text="Name" />
-                                          <TableColumn prefWidth="75.0" text="Brand" />
-                                          <TableColumn prefWidth="110.0" text="Pcs per Pack" />
-                                          <TableColumn prefWidth="81.0" text="Price" />
+                                          <TableColumn fx:id="n4" prefWidth="118.0" text="Name" />
+                                          <TableColumn fx:id="b4" prefWidth="111.0" text="Brand" />
+                                          <TableColumn fx:id="pc4" prefWidth="58.0" text="Pcs" />
+                                          <TableColumn fx:id="pr4" prefWidth="54.0" text="Price" />
                                        </columns>
                                     </TableView>
                                  </children></AnchorPane>
                         </content>
                       </Tab>
-                        <Tab text="Beverages">
+                        <Tab onSelectionChanged="#handleBeverages" text="Beverages">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TableView prefHeight="565.0" prefWidth="343.0">
+                                    <TableView fx:id="beveragesTable" prefHeight="565.0" prefWidth="343.0">
                                        <columns>
-                                          <TableColumn prefWidth="75.0" text="Name" />
-                                          <TableColumn prefWidth="75.0" text="Brand" />
-                                          <TableColumn prefWidth="110.0" text="Pcs per Pack" />
-                                          <TableColumn prefWidth="81.0" text="Price" />
+                                          <TableColumn fx:id="n5" prefWidth="118.0" text="Name" />
+                                          <TableColumn fx:id="b5" prefWidth="111.0" text="Brand" />
+                                          <TableColumn fx:id="pc5" prefWidth="58.0" text="Pcs" />
+                                          <TableColumn fx:id="pr5" prefWidth="54.0" text="Price" />
                                        </columns>
                                     </TableView>
                                  </children></AnchorPane>
@@ -113,22 +113,18 @@
                   </TabPane>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="398.0" prefWidth="316.0">
+            <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="398.0" prefWidth="404.0">
                <children>
-                  <ButtonBar layoutX="35.0" layoutY="299.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
+                  <ButtonBar layoutX="58.0" layoutY="14.0" prefHeight="40.0" prefWidth="334.0" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
                      <buttons>
-                        <ButtonBar prefHeight="38.0" prefWidth="454.0">
-                           <buttons>
-                              <MenuButton mnemonicParsing="false" text="Shopping">
-                                <items>
-                                  <MenuItem mnemonicParsing="false" onAction="#handleShoppingCart" text="Shopping Cart" />
-                                  <MenuItem mnemonicParsing="false" onAction="#handleAllExpenses" text="All expenses" />
-                                </items>
-                              </MenuButton>
-                              <Button mnemonicParsing="false" onAction="#handleProfile" text="Profile" />
-                              <Button mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
-                           </buttons>
-                        </ButtonBar>
+                        <MenuButton mnemonicParsing="false" text="Shopping">
+                          <items>
+                            <MenuItem mnemonicParsing="false" onAction="#handleShoppingCart" text="Shopping Cart" />
+                            <MenuItem mnemonicParsing="false" onAction="#handleAllExpenses" text="All expenses" />
+                          </items>
+                        </MenuButton>
+                        <Button mnemonicParsing="false" onAction="#handleProfile" text="Profile" />
+                        <Button mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
                      </buttons>
                   </ButtonBar>
                </children></AnchorPane>

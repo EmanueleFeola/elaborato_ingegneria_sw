@@ -16,6 +16,7 @@ public abstract class DaoImpl<T> implements Dao<T>{
 	protected ObservableList<T> objs;
 	protected String filepath; // filepath per storage
 	
+	@SuppressWarnings("unchecked")
 	protected DaoImpl(String filepath){
 		this.filepath = filepath;
 

@@ -5,10 +5,9 @@ import elaborato_ing_sw.dataManager.ManagerDaoImpl;
 import elaborato_ing_sw.dataManager.ProductDaoImpl;
 import elaborato_ing_sw.dataManager.UserDaoImpl;
 import elaborato_ing_sw.model.Manager;
-import elaborato_ing_sw.model.Product;
-import elaborato_ing_sw.model.Section;
 import elaborato_ing_sw.model.User;
 import elaborato_ing_sw.utils.ShowView;
+import elaborato_ing_sw.view.AllExpensesController;
 import elaborato_ing_sw.view.GroceryShoppingController;
 import elaborato_ing_sw.view.LoginController;
 import elaborato_ing_sw.view.ManagerDashboardController;
@@ -50,11 +49,11 @@ public class MainApp extends Application {
         System.out.println("Managers from file: ");
         System.out.println(managerDao.getAllItems());
         
-        Product p1 = new Product("pasta alla cazzo", "barilla", Section.GRAIN_FOODS, 100, 1.50, "img", true);
-        Product p2 = new Product("banane", "fruttilandia", Section.FRUIT, 3, 1.00, "img", true);
+//        Product p1 = new Product("pasta alla cazzo", "barilla", Section.GRAIN_FOODS, 100, 1.50, "img", true);
+//        Product p2 = new Product("banane", "fruttilandia", Section.FRUIT, 3, 1.00, "img", true);
         
-        productDao.addItem(p1);
-        productDao.addItem(p2);
+//        productDao.addItem(p1);
+//        productDao.addItem(p2);
         
         System.out.println("Products from file: ");
         System.out.println(productDao.getAllItems());
@@ -173,7 +172,31 @@ public class MainApp extends Application {
     }
     
     public void showAllExpensesView(User user) {
-    	ShowView.showView("view/AllExpanses.fxml");
+		try {
+			// Load the fxml file and create a new stage for the popup dialog.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/AllExpenses.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			// Create the dialog Stage.
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("All Expenses");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+			
+			// Set the person into the controller.
+			AllExpensesController controller = loader.getController();
+			controller.setLoggedUser(user);
+			controller.setDialogStage(dialogStage);
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}  
     }
     
     public boolean showManagerEditDialog(Manager manager) {
