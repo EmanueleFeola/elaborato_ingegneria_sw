@@ -4,7 +4,7 @@ import elaborato_ing_sw.model.Product;
 
 public class ProductDaoImpl extends DaoImpl<Product>{
 	private static ProductDaoImpl instance;
-	private static String prodcutFilename = "products";
+	private static String productFilename = "products";
 	
 	protected ProductDaoImpl(String filepath) {
 		super(filepath);
@@ -13,7 +13,7 @@ public class ProductDaoImpl extends DaoImpl<Product>{
 	public static ProductDaoImpl getProductDaoImpl()
 	{
 		if(instance == null)
-			instance = new ProductDaoImpl(prodcutFilename);
+			instance = new ProductDaoImpl(productFilename);
 		
 		return (ProductDaoImpl)instance;
 	}

@@ -1,15 +1,12 @@
 package elaborato_ing_sw;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
 import elaborato_ing_sw.dataManager.ManagerDaoImpl;
 import elaborato_ing_sw.dataManager.ProductDaoImpl;
+import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
 import elaborato_ing_sw.dataManager.UserDaoImpl;
 import elaborato_ing_sw.model.Manager;
-import elaborato_ing_sw.model.Product;
-import elaborato_ing_sw.model.Role;
-import elaborato_ing_sw.model.Section;
 import elaborato_ing_sw.model.User;
 import elaborato_ing_sw.utils.ShowView;
 import elaborato_ing_sw.view.AllExpensesController;
@@ -35,6 +32,7 @@ public class MainApp extends Application {
 	private UserDaoImpl userDao = UserDaoImpl.getUserDaoImpl();
 	private ManagerDaoImpl managerDao = ManagerDaoImpl.getManagerDaoImpl();
 	private ProductDaoImpl productDao = ProductDaoImpl.getProductDaoImpl();
+	private ShoppingCartDaoImpl shoppingCartDao = ShoppingCartDaoImpl.getShoppingCartDaoImpl();
 
     @Override
     public void start(Stage primaryStage) {
@@ -62,6 +60,9 @@ public class MainApp extends Application {
         
         System.out.println("Products from file: ");
         System.out.println(productDao.getAllItems());
+        
+        System.out.println("Shopping Cart from file: ");
+        System.out.println(shoppingCartDao.getAllItems());
         
         initRootLayout();
 

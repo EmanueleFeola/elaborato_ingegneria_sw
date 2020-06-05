@@ -9,7 +9,7 @@ public class Product implements Serializable {
 
 	private WriteableObjectProperty<String> name;
 	private WriteableObjectProperty<String> brand;
-	private Section section;
+	private WriteableObjectProperty<Section> section;
 	private WriteableObjectProperty<Integer> pcsPerPack;
 	private WriteableObjectProperty<Double> price;
 	private String iconPath;
@@ -19,7 +19,7 @@ public class Product implements Serializable {
 			boolean isAvailable) {
 		this.name = new WriteableObjectProperty<String>(name);
 		this.brand = new WriteableObjectProperty<String>(brand);
-		this.section = section;
+		this.section = new WriteableObjectProperty<Section>(section);
 		this.pcsPerPack = new WriteableObjectProperty<Integer>(pcsPerPack);
 		this.price = new WriteableObjectProperty<Double>(price);
 		this.iconPath = iconPath;
@@ -48,15 +48,18 @@ public class Product implements Serializable {
 
 	public void setBrand(String brand) {
 		this.brand.set(brand);
-		;
 	}
 
-	public Section getSection() {
+	public WriteableObjectProperty<Section> getSectionProperty() {
 		return section;
+	}
+	
+	public Section getSection() {
+		return section.get();
 	}
 
 	public void setSection(Section section) {
-		this.section = section;
+		this.section.set(section);
 	}
 
 	public int getPcsPerPack() {

@@ -1,22 +1,25 @@
 package elaborato_ing_sw.view;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.function.Predicate;
 
 import elaborato_ing_sw.MainApp;
 import elaborato_ing_sw.dataManager.ProductDaoImpl;
+import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.Section;
 import elaborato_ing_sw.model.User;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.FileChooser;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class GroceryShoppingController {
@@ -31,7 +34,10 @@ public class GroceryShoppingController {
 
 	@FXML
 	private TableColumn<Product, Double> pr0, pr1, pr2, pr3, pr4, pr5;
-
+	
+	@FXML
+	private TabPane tabs;
+	
 	@FXML
 	private Label nameLabel;
 	
@@ -51,6 +57,7 @@ public class GroceryShoppingController {
 	private ImageView image;
 
 	private ProductDaoImpl productDao = ProductDaoImpl.getProductDaoImpl();
+	private ShoppingCartDaoImpl shoppingCartDao = ShoppingCartDaoImpl.getShoppingCartDaoImpl();
 	private MainApp mainApp;
 	private Stage dialogStage;
 	private User loggedUser;
@@ -60,9 +67,37 @@ public class GroceryShoppingController {
 
 	@FXML
 	private void initialize() {
-
+		vegetablesTable.setId("tab1");
+		fruitTable.setId("tab2");
+		meat_fishTable.setId("tab3");
+		grain_foodsTable.setId("tab4");
+		dairy_productsTable.setId("tab5");
+		beveragesTable.setId("tab5");
 	}
+	
+	@FXML
+	private void handleAddToCart() {
+		Tab selectedTab = tabs.getSelectionModel().getSelectedItem();
+		AnchorPane selectedContent = (AnchorPane) selectedTab.getContent();
+		
+		@SuppressWarnings("unchecked")
+		TableView<Product> selectedTable = (TableView<Product>) selectedContent.getChildren().get(0);
+		
+		int selectedIndex = selectedTable.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			shoppingCartDao.addItem(selectedTable.getItems().get(selectedIndex));
+		} else {
+			// Nothing selected.
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.initOwner(MainApp.getPrimaryStage());
+			alert.setTitle("No Selection");
+			alert.setHeaderText("No Product Selected");
+			alert.setContentText("Please select a product in the table.");
 
+			alert.showAndWait();
+		}
+	}
+	
 	private void handleSection
 		(
 			TableColumn<Product, String> f0,

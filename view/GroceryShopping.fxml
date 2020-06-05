@@ -17,13 +17,13 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.GroceryShoppingController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.GroceryShoppingController">
    <children>
       <SplitPane dividerPositions="0.4348370927318296" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
             <AnchorPane prefHeight="398.0" prefWidth="240.0">
                <children>
-                  <TabPane layoutX="48.0" layoutY="106.0" prefHeight="598.0" prefWidth="458.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TabPane fx:id="tabs" layoutX="48.0" layoutY="106.0" prefHeight="598.0" prefWidth="458.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <tabs>
                       <Tab onSelectionChanged="#handleVegetables" text="Vegetables">
                         <content>
@@ -114,13 +114,15 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TableView fx:id="beveragesTable" prefHeight="569.0" prefWidth="344.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <TableView fx:id="beveragesTable" prefHeight="569.0" prefWidth="344.0">
                                        <columns>
                                           <TableColumn fx:id="n5" prefWidth="118.0" text="Name" />
                                           <TableColumn fx:id="b5" prefWidth="111.0" text="Brand" />
-                                          <TableColumn fx:id="pc5" prefWidth="58.0" text="Pcs" />
                                           <TableColumn fx:id="pr5" prefWidth="54.0" text="Price" />
                                        </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
                                     </TableView>
                                  </children></AnchorPane>
                           </content>
@@ -173,6 +175,7 @@
                      <image>
                         <Image url="@images/logo.png" />
                      </image></ImageView>
+                  <Button layoutX="340.0" layoutY="558.0" mnemonicParsing="false" onAction="#handleAddToCart" text="Add to Cart" />
                </children></AnchorPane>
          </items>
       </SplitPane>
