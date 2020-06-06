@@ -1,12 +1,16 @@
 package elaborato_ing_sw;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import elaborato_ing_sw.dataManager.ManagerDaoImpl;
 import elaborato_ing_sw.dataManager.ProductDaoImpl;
 import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
 import elaborato_ing_sw.dataManager.UserDaoImpl;
 import elaborato_ing_sw.model.Manager;
+import elaborato_ing_sw.model.Product;
+import elaborato_ing_sw.model.Role;
+import elaborato_ing_sw.model.Section;
 import elaborato_ing_sw.model.User;
 import elaborato_ing_sw.utils.ShowView;
 import elaborato_ing_sw.view.AllExpensesController;
@@ -14,6 +18,8 @@ import elaborato_ing_sw.view.GroceryShoppingController;
 import elaborato_ing_sw.view.LoginController;
 import elaborato_ing_sw.view.ManagerDashboardController;
 import elaborato_ing_sw.view.ManagerEditDialogController;
+import elaborato_ing_sw.view.ManagerProductsController;
+import elaborato_ing_sw.view.ProductEditDialogController;
 import elaborato_ing_sw.view.ShoppingCartController;
 import elaborato_ing_sw.view.UserProfileController;
 import javafx.application.Application;
@@ -38,26 +44,28 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         MainApp.primaryStage = primaryStage;
         MainApp.primaryStage.setTitle("Shopping Online");
-
-        System.out.println("Users from file: ");
-        System.out.println(userDao.getAllItems());
         
 //        User u1 = new User("test", "test", LocalDate.of(1999, 8, 30), new Credentials("test", "test"), "street", "city", 123, "456");
 //        userDao.addUser(u1);
         
-//        Manager m1 = new Manager("man", "ager", LocalDate.of(1999, 8, 30), "pwd", 12356, Role.ADMIN);
+//        Manager m1 = new Manager("man", "ager", LocalDate.of(1999, 8, 30), "pwd", 123, Role.ADMIN);
 //        System.out.println(m1);
 //        managerDao.addItem(m1);
-          
-        System.out.println("Managers from file: ");
-        System.out.println(managerDao.getAllItems());
-        
+                  
 //        Product p1 = new Product("pasta alla cazzo", "barilla", Section.GRAIN_FOODS, 100, 1.50, "src/elaborato_ing_sw/view/images/test.png", true);
 //        Product p2 = new Product("banane", "fruttilandia", Section.FRUIT, 3, 1.00, "src/elaborato_ing_sw/view/images/test.png", true);
-        
+//        Product p3 = new Product("test product", "test brand", Section.MEAT_FISH, 3, 0.01, "src/elaborato_ing_sw/view/images/test.png", true);
+
 //        productDao.addItem(p1);
 //        productDao.addItem(p2);
+//        productDao.addItem(p3);
+//        
+        System.out.println("Users from file: ");
+        System.out.println(userDao.getAllItems());
         
+        System.out.println("Managers from file: ");
+        System.out.println(managerDao.getAllItems());
+
         System.out.println("Products from file: ");
         System.out.println(productDao.getAllItems());
         
@@ -91,6 +99,12 @@ public class MainApp extends Application {
     public void showLoginView() {
 		FXMLLoader loader = ShowView.showView("view/Login.fxml");
 		LoginController controller = loader.getController();
+		controller.setMainApp(this);
+    }
+    
+    public void showManagerProducts() {
+		FXMLLoader loader = ShowView.showView("view/ManagerProducts.fxml");
+		ManagerProductsController controller = loader.getController();
 		controller.setMainApp(this);
     }
     
@@ -214,7 +228,7 @@ public class MainApp extends Application {
 
 			// Create the dialog Stage.
 			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Edit Manager");
+			dialogStage.setTitle("Edit Managers");
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
@@ -224,6 +238,36 @@ public class MainApp extends Application {
 			ManagerEditDialogController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setManager(manager);
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+			return controller.isOkClicked();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+    
+    public boolean showProductEditDialog(Product product) {
+		try {
+			// Load the fxml file and create a new stage for the popup dialog.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/ProductEditDialog.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			// Create the dialog Stage.
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Edit Products");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+			
+			// Set the person into the controller.
+			ProductEditDialogController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setProduct(product);
 
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();

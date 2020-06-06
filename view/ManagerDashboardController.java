@@ -15,6 +15,7 @@ import elaborato_ing_sw.dataManager.ManagerDaoImpl;
 import elaborato_ing_sw.model.Manager;
 import elaborato_ing_sw.model.Person;
 import elaborato_ing_sw.model.Role;
+import elaborato_ing_sw.utils.ShowView;
 
 public class ManagerDashboardController {
 	@FXML
@@ -36,8 +37,6 @@ public class ManagerDashboardController {
 	private Label serialNumberLabel;
 	@FXML
 	private Label roleLabel;
-	@FXML
-	private Button logoutBtn;
 
 	private ManagerDaoImpl managerDao = ManagerDaoImpl.getManagerDaoImpl();
 	
@@ -160,6 +159,12 @@ public class ManagerDashboardController {
 	private void handleLogout() {
 		mainApp.showLoginView();
 		System.out.println("Logged out successfully");
+	}
+	
+	@FXML
+	private void handleProducts() {
+		mainApp.showManagerProducts();
+		System.out.println("Redirected to manage products view");
 	}
 	
 	public void setMainApp(MainApp mainApp) {

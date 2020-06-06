@@ -11,17 +11,19 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.ManagerDashboardController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.ManagerProductsController">
    <children>
       <SplitPane dividerPositions="0.5" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="managerTable" layoutX="35.0" layoutY="90.0" prefHeight="398.0" prefWidth="296.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="productsTable" layoutX="35.0" layoutY="90.0" prefHeight="398.0" prefWidth="296.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="firstNameColumn" prefWidth="75.0" text="First Name" />
-                      <TableColumn fx:id="lastNameColumn" prefWidth="75.0" text="Last Name" />
-                        <TableColumn fx:id="roleColumn" prefWidth="75.0" text="Role" />
+                      <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Name" />
+                      <TableColumn fx:id="brandColumn" prefWidth="75.0" text="Brand" />
+                        <TableColumn fx:id="sectionColumn" prefWidth="75.0" text="Section" />
+                        <TableColumn fx:id="pcsColumn" prefWidth="75.0" text="Pcs" />
+                        <TableColumn fx:id="priceColumn" prefWidth="75.0" text="Price" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -41,29 +43,31 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="First Name" />
-                        <Label text="Last Name" GridPane.rowIndex="1" />
-                        <Label text="Birthday" GridPane.rowIndex="2" />
-                        <Label text="Serial Number" GridPane.rowIndex="3" />
-                        <Label text="Role" GridPane.rowIndex="4" />
-                        <Label fx:id="firstNameLabel" text="Label" GridPane.columnIndex="1" />
-                        <Label fx:id="lastNameLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label fx:id="birthdayLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label fx:id="serialNumberLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label fx:id="roleLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label text="Name" />
+                        <Label text="Brand" GridPane.rowIndex="1" />
+                        <Label text="Section" GridPane.rowIndex="2" />
+                        <Label text="Pcs" GridPane.rowIndex="3" />
+                        <Label text="Price" GridPane.rowIndex="4" />
+                        <Label fx:id="nameLabel" text="Label" GridPane.columnIndex="1" />
+                        <Label fx:id="brandLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="sectionLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="pcsLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="priceLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label text="Available" GridPane.rowIndex="5" />
+                        <Label fx:id="isAvailable" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                      </children>
                   </GridPane>
                   <ButtonBar buttonMinWidth="35.0" layoutX="9.0" layoutY="344.0" prefHeight="40.0" prefWidth="258.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="10.0">
                     <buttons>
-                      <Button mnemonicParsing="false" onAction="#handleNewManager" prefHeight="26.0" text="New" />
-                        <Button mnemonicParsing="false" onAction="#handleEditManager" text="Edit" />
-                        <Button mnemonicParsing="false" onAction="#handleDeleteManager" prefHeight="26.0" prefWidth="72.0" text="Delete" />
+                      <Button mnemonicParsing="false" onAction="#handleNewProduct" prefHeight="26.0" text="New" />
+                        <Button mnemonicParsing="false" onAction="#handleEditProduct" text="Edit" />
+                        <Button mnemonicParsing="false" onAction="#handleDeleteProduct" prefHeight="26.0" prefWidth="72.0" text="Delete" />
                     </buttons>
                   </ButtonBar>
-                  <Button fx:id="logoutBtn" layoutX="223.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
-                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleProducts" text="Products" />
+                  <Button layoutX="223.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBack" text="Back" />
                </children></AnchorPane>
          </items>
       </SplitPane>
