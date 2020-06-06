@@ -70,16 +70,7 @@ public abstract class DaoImpl<T> implements Dao<T>{
 	public abstract T getItem(String objId);
 
 	@Override
-	public boolean addItem(T item) {
-		if (objs.contains(item))
-			return false;
-
-		objs.add(item);
-
-		updateSource();
-
-		return true;
-	}
+	public abstract boolean addItem(T item);
 
 	@Override
 	public boolean updateItem(T item) {

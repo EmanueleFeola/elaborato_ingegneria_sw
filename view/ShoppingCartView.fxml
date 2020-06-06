@@ -8,19 +8,22 @@
 
 <AnchorPane prefHeight="300.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.ShoppingCartController">
    <children>
-      <ButtonBar layoutX="434.0" layoutY="492.0" prefHeight="40.0" prefWidth="200.0" translateX="-10.0">
+      <ButtonBar layoutX="147.0" layoutY="484.0" prefHeight="40.0" prefWidth="486.0" translateX="-10.0">
         <buttons>
+            <Button mnemonicParsing="false" onAction="#handleAddOne" text="Add One" />
+            <Button mnemonicParsing="false" onAction="#handleRemoveOne" text="Remove One" />
             <Button mnemonicParsing="false" onAction="#handleDeleteProduct" text="Delete" />
             <Button mnemonicParsing="false" onAction="#handleClose" text="Close" />
         </buttons>
       </ButtonBar>
       <TableView fx:id="shoppingCartTable" layoutX="217.0" layoutY="73.0" prefHeight="472.0" prefWidth="617.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <columns>
-          <TableColumn fx:id="name" prefWidth="160.0" text="Name" />
-          <TableColumn fx:id="brand" prefWidth="153.0" text="Brand" />
-            <TableColumn fx:id="section" prefWidth="128.0" text="Section" />
-            <TableColumn fx:id="pcs" prefWidth="89.0" text="Pcs" />
-            <TableColumn fx:id="price" maxWidth="1.7976931348623157E308" prefWidth="82.0" text="Price" />
+          <TableColumn fx:id="name" prefWidth="127.0" text="Name" />
+          <TableColumn fx:id="brand" prefWidth="134.0" text="Brand" />
+            <TableColumn fx:id="section" prefWidth="112.0" text="Section" />
+            <TableColumn fx:id="pcs" prefWidth="65.0" text="Pcs" />
+            <TableColumn fx:id="price" maxWidth="1.7976931348623157E308" prefWidth="91.0" text="Price" />
+            <TableColumn fx:id="quantity" prefWidth="82.0" text="Quantity" />
         </columns>
       </TableView>
    </children>

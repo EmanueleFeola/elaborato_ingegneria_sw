@@ -52,8 +52,8 @@ public class MainApp extends Application {
         System.out.println("Managers from file: ");
         System.out.println(managerDao.getAllItems());
         
-//        Product p1 = new Product("pasta alla cazzo", "barilla", Section.GRAIN_FOODS, 100, 1.50, "src/elaborato_ing_sw/view/images/test.png", true);
-//        Product p2 = new Product("banane", "fruttilandia", Section.FRUIT, 3, 1.00, "src/elaborato_ing_sw/view/images/test.png", true);
+//        Product p1 = new Product("pasta alla cazzo", "barilla", Section.GRAIN_FOODS, 100, 1.50, "src/elaborato_ing_sw/view/images/test.png", true, 1);
+//        Product p2 = new Product("banane", "fruttilandia", Section.FRUIT, 3, 1.00, "src/elaborato_ing_sw/view/images/test.png", true, 1);
         
 //        productDao.addItem(p1);
 //        productDao.addItem(p2);

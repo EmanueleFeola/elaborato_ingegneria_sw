@@ -25,4 +25,20 @@ public class ShoppingCartDaoImpl extends DaoImpl<Product> {
 
 		return null;
 	}
+	
+	@Override
+	public boolean addItem (Product product) {
+		if (objs.contains(product)) {
+			int qty = product.getQuantity();
+			product.setQuantity(++qty);
+			updateSource();
+			return true;
+		}
+
+		objs.add(product);
+
+		updateSource();
+
+		return true;
+	}
 }

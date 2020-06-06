@@ -14,9 +14,10 @@ public class Product implements Serializable {
 	private WriteableObjectProperty<Double> price;
 	private String iconPath;
 	private boolean isAvailable;
+	private WriteableObjectProperty<Integer> quantity;
 
 	public Product(String name, String brand, Section section, int pcsPerPack, double price, String iconPath,
-			boolean isAvailable) {
+			boolean isAvailable, int quantity) {
 		this.name = new WriteableObjectProperty<String>(name);
 		this.brand = new WriteableObjectProperty<String>(brand);
 		this.section = new WriteableObjectProperty<Section>(section);
@@ -24,6 +25,7 @@ public class Product implements Serializable {
 		this.price = new WriteableObjectProperty<Double>(price);
 		this.iconPath = iconPath;
 		this.isAvailable = isAvailable;
+		this.quantity = new WriteableObjectProperty<Integer>(quantity);
 	}
 
 	public String getName() {
@@ -53,7 +55,7 @@ public class Product implements Serializable {
 	public WriteableObjectProperty<Section> getSectionProperty() {
 		return section;
 	}
-	
+
 	public Section getSection() {
 		return section.get();
 	}
@@ -102,6 +104,18 @@ public class Product implements Serializable {
 		this.isAvailable = isAvailable;
 	}
 
+	public int getQuantity() {
+		return quantity.get();
+	}
+
+	public WriteableObjectProperty<Integer> getQuantityProperty() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity.set(quantity);
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		return obj instanceof Product && this.getName().equals(((Product) obj).getName())
@@ -110,7 +124,8 @@ public class Product implements Serializable {
 
 	public String toString() {
 		return "Prodotto [name=" + name + ", brand=" + brand + ", section=" + section + ", pcsPerPack=" + pcsPerPack
-				+ ", price=" + price + ", iconPath=" + iconPath + ", isAvailable=" + isAvailable + "]";
+				+ ", price=" + price + ", iconPath=" + iconPath + ", isAvailable=" + isAvailable + ", quantity="
+				+ quantity + "]";
 	}
 
 }

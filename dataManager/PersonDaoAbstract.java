@@ -16,5 +16,16 @@ public abstract class PersonDaoAbstract extends DaoImpl<Person> {
 
 		return null;
 	}
+	
+	@Override
+	public boolean addItem (Person user) {
+		if (objs.contains(user))
+			return false;
 
+		objs.add(user);
+
+		updateSource();
+
+		return true;
+	}
 }

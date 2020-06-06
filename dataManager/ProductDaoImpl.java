@@ -26,4 +26,16 @@ public class ProductDaoImpl extends DaoImpl<Product>{
 
 		return null;
 	}
+	
+	@Override
+	public boolean addItem (Product product) {
+		if (objs.contains(product))
+			return false;
+
+		objs.add(product);
+
+		updateSource();
+
+		return true;
+	}
 }

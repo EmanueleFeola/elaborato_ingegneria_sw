@@ -25,6 +25,8 @@ public class ShoppingCartController {
 	private TableColumn<Product, Integer> pcs;
 	@FXML
 	private TableColumn<Product, Double> price;
+	@FXML
+	private TableColumn<Product, Integer> quantity;
 	
 	private ShoppingCartDaoImpl shoppingCartDao = ShoppingCartDaoImpl.getShoppingCartDaoImpl();
 	private Stage dialogStage;
@@ -37,6 +39,7 @@ public class ShoppingCartController {
 		section.setCellValueFactory(cellData -> cellData.getValue().getSectionProperty());
 		pcs.setCellValueFactory(cellData -> cellData.getValue().getPcsProperty());
 		price.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
+		quantity.setCellValueFactory(cellData -> cellData.getValue().getQuantityProperty());
 
 		shoppingCartTable.setItems(shoppingCartDao.getAllItems());
 	}
@@ -46,6 +49,52 @@ public class ShoppingCartController {
 		int selectedIndex = shoppingCartTable.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
 			shoppingCartDao.deleteItem(shoppingCartTable.getItems().get(selectedIndex));
+		} else {
+			// Nothing selected.
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.initOwner(MainApp.getPrimaryStage());
+			alert.setTitle("No Selection");
+			alert.setHeaderText("No Person Selected");
+			alert.setContentText("Please select a person in the table.");
+
+			alert.showAndWait();
+		}
+	}
+	
+	@FXML
+	private void handleAddOne() {
+		int selectedIndex = shoppingCartTable.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			int qty = shoppingCartTable.getItems().get(selectedIndex).getQuantity();
+			qty++;
+			Product prod = shoppingCartTable.getItems().get(selectedIndex);
+			prod.setQuantity(qty);
+			shoppingCartDao.updateItem(prod);
+		} else {
+			// Nothing selected.
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.initOwner(MainApp.getPrimaryStage());
+			alert.setTitle("No Selection");
+			alert.setHeaderText("No Person Selected");
+			alert.setContentText("Please select a person in the table.");
+
+			alert.showAndWait();
+		}
+	}
+	
+	@FXML
+	private void handleRemoveOne() {
+		int selectedIndex = shoppingCartTable.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			int qty = shoppingCartTable.getItems().get(selectedIndex).getQuantity();
+			if (qty-1 == 0) {
+				shoppingCartDao.deleteItem(shoppingCartTable.getItems().get(selectedIndex));
+			} else {
+				qty--;
+				Product prod = shoppingCartTable.getItems().get(selectedIndex);
+				prod.setQuantity(qty);
+				shoppingCartDao.updateItem(prod);
+			}
 		} else {
 			// Nothing selected.
 			Alert alert = new Alert(AlertType.WARNING);
