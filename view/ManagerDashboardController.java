@@ -3,7 +3,6 @@ package elaborato_ing_sw.view;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 
 import javafx.scene.control.Label;
@@ -36,8 +35,6 @@ public class ManagerDashboardController {
 	private Label serialNumberLabel;
 	@FXML
 	private Label roleLabel;
-	@FXML
-	private Button logoutBtn;
 
 	private ManagerDaoImpl managerDao = ManagerDaoImpl.getManagerDaoImpl();
 	
@@ -160,6 +157,12 @@ public class ManagerDashboardController {
 	private void handleLogout() {
 		mainApp.showLoginView();
 		System.out.println("Logged out successfully");
+	}
+	
+	@FXML
+	private void handleProducts() {
+		mainApp.showManagerProducts();
+		System.out.println("Redirected to manage products view");
 	}
 	
 	public void setMainApp(MainApp mainApp) {
