@@ -1,17 +1,14 @@
 TODO:
-- un manager puÚ poter aggiungere, modificare ed eliminare prodotti
-    - view come quella per aggiungere, modificare ed eliminare managers
-        - per adesso come path delle immagini mettiamone uno sempre uguale
-- popolare le tabelle dei prodotti in modo che l utente possa selezionarli e vederne i particolari
-- implementare la gestione del carrello per l utente
+- sistemare funzione per validit√† dell'input
+- altre cose che non ricordo perch√® ho cancellato la chat con feola
 
 NOTE:
 - db
     - https://www.swtestacademy.com/database-operations-javafx/
-- nella classe Credentials il campo user deve essere unique, finchË gestiamo con serializable si puÚ evitare di fare il controllo perchË tanto poi useremo un db
+- nella classe Credentials il campo user deve essere unique, finch√® gestiamo con serializable si pu√≤ evitare di fare il controllo perch√® tanto poi useremo un db
 - le properties di javafx non sono serializzabili
     - ho aggiunto una classe (copiato da internet) che permette di serializzarle facendo qualche magia
-    - va bene finchË non implementiamo il db 
+    - va bene finch√® non implementiamo il db 
 - la classe ShowView serve per visualizzare una view che deve stare in primo piano come Login e ManagerDashboard
 - quando l utente modifica il suo profilo bisogna dire al dao di ricaricare la lista di utenti con le robe nuove aggiornate
 - la get di un prodotto viene fatta in base al campo name, mentre la get di una persona viene fatta in base al campo user del campo credentials (credentials.getUser())
