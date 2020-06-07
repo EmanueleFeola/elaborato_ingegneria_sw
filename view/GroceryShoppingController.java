@@ -187,7 +187,7 @@ public class GroceryShoppingController {
 
 	@FXML
 	private void handleShoppingCart() {
-		mainApp.showShoppingCartView();
+		mainApp.showShoppingCartView(loggedUser);
 	}
 
 	@FXML

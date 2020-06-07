@@ -8,11 +8,12 @@
 
 <AnchorPane prefHeight="300.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.ShoppingCartController">
    <children>
-      <ButtonBar layoutX="147.0" layoutY="484.0" prefHeight="40.0" prefWidth="486.0" translateX="-10.0">
+      <ButtonBar layoutX="51.0" layoutY="484.0" prefHeight="40.0" prefWidth="582.0" translateX="-10.0">
         <buttons>
             <Button mnemonicParsing="false" onAction="#handleAddOne" text="Add One" />
             <Button mnemonicParsing="false" onAction="#handleRemoveOne" text="Remove One" />
             <Button mnemonicParsing="false" onAction="#handleDeleteProduct" text="Delete" />
+            <Button mnemonicParsing="false" onAction="#handleDeliver" text="Deliver" />
             <Button mnemonicParsing="false" onAction="#handleClose" text="Close" />
         </buttons>
       </ButtonBar>

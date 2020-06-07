@@ -1,6 +1,8 @@
 package elaborato_ing_sw;
 
 import java.io.IOException;
+
+import elaborato_ing_sw.dataManager.GroceryShoppingDaoImpl;
 import elaborato_ing_sw.dataManager.ManagerDaoImpl;
 import elaborato_ing_sw.dataManager.ProductDaoImpl;
 import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
@@ -10,6 +12,7 @@ import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.User;
 import elaborato_ing_sw.utils.ShowView;
 import elaborato_ing_sw.view.AllExpensesController;
+import elaborato_ing_sw.view.DeliveryController;
 import elaborato_ing_sw.view.GroceryShoppingController;
 import elaborato_ing_sw.view.LoginController;
 import elaborato_ing_sw.view.ManagerDashboardController;
@@ -35,6 +38,7 @@ public class MainApp extends Application {
 	private ManagerDaoImpl managerDao = ManagerDaoImpl.getManagerDaoImpl();
 	private ProductDaoImpl productDao = ProductDaoImpl.getProductDaoImpl();
 	private ShoppingCartDaoImpl shoppingCartDao = ShoppingCartDaoImpl.getShoppingCartDaoImpl();
+	private GroceryShoppingDaoImpl groceryShoppingDao = GroceryShoppingDaoImpl.getGroceryShoppingDaoImpl();
 
     @Override
     public void start(Stage primaryStage) {
@@ -47,9 +51,6 @@ public class MainApp extends Application {
 //        Manager m1 = new Manager("man", "ager", LocalDate.of(1999, 8, 30), "pwd", 123, Role.ADMIN);
 //        System.out.println(m1);
 //        managerDao.addItem(m1);
-                      
-        System.out.println("Managers from file: ");
-        System.out.println(managerDao.getAllItems());
         
 //        Product p1 = new Product("pasta alla cazzo", "barilla", Section.GRAIN_FOODS, 100, 1.50, "src/elaborato_ing_sw/view/images/test.png", true, 1);
 //        Product p2 = new Product("banane", "fruttilandia", Section.FRUIT, 3, 1.00, "src/elaborato_ing_sw/view/images/test.png", true, 1);
@@ -69,6 +70,9 @@ public class MainApp extends Application {
         
         System.out.println("Shopping Cart from file: ");
         System.out.println(shoppingCartDao.getAllItems());
+        
+        System.out.println("Expenses from file: ");
+        System.out.println(groceryShoppingDao.getAllItems());
         
         initRootLayout();
 
@@ -132,7 +136,7 @@ public class MainApp extends Application {
     	
     }
     
-    public void showShoppingCartView() {
+    public void showShoppingCartView(User user) {
     	try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/ShoppingCartView.fxml"));
@@ -147,6 +151,32 @@ public class MainApp extends Application {
 			
 			ShoppingCartController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
+			controller.setMainApp(this);
+			controller.setLoggedUser(user);
+			
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+    	} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    public void showDeliveryView(User user) {
+    	try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/Delivery.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Delivery");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+			
+			DeliveryController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setLoggedUser(user);
 			
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
