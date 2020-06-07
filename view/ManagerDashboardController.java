@@ -14,7 +14,6 @@ import elaborato_ing_sw.dataManager.ManagerDaoImpl;
 import elaborato_ing_sw.model.Manager;
 import elaborato_ing_sw.model.Person;
 import elaborato_ing_sw.model.Role;
-import elaborato_ing_sw.utils.ShowView;
 
 public class ManagerDashboardController {
 	@FXML
