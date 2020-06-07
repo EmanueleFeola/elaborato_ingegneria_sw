@@ -1,12 +1,15 @@
 package elaborato_ing_sw;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import elaborato_ing_sw.dataManager.ManagerDaoImpl;
 import elaborato_ing_sw.dataManager.ProductDaoImpl;
 import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
 import elaborato_ing_sw.dataManager.UserDaoImpl;
 import elaborato_ing_sw.model.Manager;
 import elaborato_ing_sw.model.Product;
+import elaborato_ing_sw.model.Role;
+import elaborato_ing_sw.model.Section;
 import elaborato_ing_sw.model.User;
 import elaborato_ing_sw.utils.ShowView;
 import elaborato_ing_sw.view.AllExpensesController;
@@ -47,17 +50,15 @@ public class MainApp extends Application {
 //        Manager m1 = new Manager("man", "ager", LocalDate.of(1999, 8, 30), "pwd", 123, Role.ADMIN);
 //        System.out.println(m1);
 //        managerDao.addItem(m1);
-                      
-        System.out.println("Managers from file: ");
-        System.out.println(managerDao.getAllItems());
-        
-//        Product p1 = new Product("pasta alla cazzo", "barilla", Section.GRAIN_FOODS, 100, 1.50, "src/elaborato_ing_sw/view/images/test.png", true, 1);
-//        Product p2 = new Product("banane", "fruttilandia", Section.FRUIT, 3, 1.00, "src/elaborato_ing_sw/view/images/test.png", true, 1);
-        
+                  
+//        Product p1 = new Product("pasta alla cazzo", "barilla", Section.GRAIN_FOODS, 100, 1.50, "src/elaborato_ing_sw/view/images/test.png", true);
+//        Product p2 = new Product("banane", "fruttilandia", Section.FRUIT, 3, 1.00, "src/elaborato_ing_sw/view/images/test.png", true);
+//        Product p3 = new Product("test product", "test brand", Section.MEAT_FISH, 3, 0.01, "src/elaborato_ing_sw/view/images/test.png", true);
+
 //        productDao.addItem(p1);
 //        productDao.addItem(p2);
 //        productDao.addItem(p3);
-      
+//        
         System.out.println("Users from file: ");
         System.out.println(userDao.getAllItems());
         

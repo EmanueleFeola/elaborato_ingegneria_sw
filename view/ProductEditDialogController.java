@@ -37,7 +37,6 @@ public class ProductEditDialogController {
 	 */
 	@FXML
 	private void initialize() {
-
 	}
 
 	/**
@@ -58,7 +57,7 @@ public class ProductEditDialogController {
 		product = m;
 		System.out.println("---");
 		System.out.println("product: " + product);
-
+    
 		sectionField.getItems().setAll(Section.values());
 
 		if (product == null) {
@@ -126,7 +125,7 @@ public class ProductEditDialogController {
 
 		if (nameField.getText() == null || nameField.getText().length() == 0)
 			errorMessage += "No valid first name!\n";
-
+    
 		if (brandField.getText() == null || brandField.getText().length() == 0)
 			errorMessage += "No valid last name!\n";
 
