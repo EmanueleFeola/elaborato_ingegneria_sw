@@ -1,10 +1,13 @@
 package elaborato_ing_sw.view;
 
+import java.util.ArrayList;
 import elaborato_ing_sw.MainApp;
 import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.Section;
 import elaborato_ing_sw.model.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
@@ -33,25 +36,36 @@ public class ShoppingCartController {
 	private Stage dialogStage;
 	private MainApp mainApp;
 	private User loggedUser;
+	
+	private String user;
+	private ArrayList<Product> prods;
 
 	@FXML
-	private void initialize() {
-		// Initialize the person table with the two columns.
+	private void initialize() {					
+	}
+	
+	@FXML
+	private void handleTable() {
 		name.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
 		brand.setCellValueFactory(cellData -> cellData.getValue().getBrandProperty());
 		section.setCellValueFactory(cellData -> cellData.getValue().getSectionProperty());
 		pcs.setCellValueFactory(cellData -> cellData.getValue().getPcsProperty());
 		price.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
 		quantity.setCellValueFactory(cellData -> cellData.getValue().getQuantityProperty());
-
-		shoppingCartTable.setItems(shoppingCartDao.getAllItems());
+		
+		this.user = loggedUser.getCredentials().getUser();
+		this.prods = shoppingCartDao.getItem(user).getProducts();
+		
+		ObservableList<Product> products = FXCollections.observableArrayList(prods);
+		shoppingCartTable.setItems(products);
 	}
-
+	
 	@FXML
 	private void handleDeleteProduct() {
 		int selectedIndex = shoppingCartTable.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
-			shoppingCartDao.deleteItem(shoppingCartTable.getItems().get(selectedIndex));
+			prods.remove(shoppingCartTable.getItems().get(selectedIndex));
+			shoppingCartDao.updateSource();
 		} else {
 			// Nothing selected.
 			Alert alert = new Alert(AlertType.WARNING);
@@ -72,7 +86,7 @@ public class ShoppingCartController {
 			qty++;
 			Product prod = shoppingCartTable.getItems().get(selectedIndex);
 			prod.setQuantity(qty);
-			shoppingCartDao.updateItem(prod);
+			shoppingCartDao.updateSource();
 		} else {
 			// Nothing selected.
 			Alert alert = new Alert(AlertType.WARNING);
@@ -91,13 +105,13 @@ public class ShoppingCartController {
 		if (selectedIndex >= 0) {
 			int qty = shoppingCartTable.getItems().get(selectedIndex).getQuantity();
 			if (qty - 1 == 0) {
-				shoppingCartDao.deleteItem(shoppingCartTable.getItems().get(selectedIndex));
+				prods.remove(shoppingCartTable.getItems().get(selectedIndex));
 			} else {
 				qty--;
 				Product prod = shoppingCartTable.getItems().get(selectedIndex);
 				prod.setQuantity(qty);
-				shoppingCartDao.updateItem(prod);
 			}
+			shoppingCartDao.updateSource();
 		} else {
 			// Nothing selected.
 			Alert alert = new Alert(AlertType.WARNING);

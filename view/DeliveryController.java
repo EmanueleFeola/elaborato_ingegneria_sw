@@ -3,9 +3,9 @@ package elaborato_ing_sw.view;
 import java.util.HashMap;
 import java.util.Random;
 
-import elaborato_ing_sw.dataManager.GroceryShoppingDaoImpl;
+import elaborato_ing_sw.dataManager.ExpensesDaoImpl;
 import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
-import elaborato_ing_sw.model.GroceryShopping;
+import elaborato_ing_sw.model.Expense;
 import elaborato_ing_sw.model.Payment;
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.TimeSlot;
@@ -26,11 +26,12 @@ public class DeliveryController {
 	private ChoiceBox<Payment> paymentType;
 	
 	private ShoppingCartDaoImpl shoppingCartDao = ShoppingCartDaoImpl.getShoppingCartDaoImpl();
-	private GroceryShoppingDaoImpl groceryShoppingDao = GroceryShoppingDaoImpl.getGroceryShoppingDaoImpl();
+	private ExpensesDaoImpl groceryShoppingDao = ExpensesDaoImpl.getGroceryShoppingDaoImpl();
 	
 	private boolean okClicked = false;
 	private Stage dialogStage;
 	private User loggedUser;
+	private String user;
 	
 	@FXML
 	private void initialize() {
@@ -47,6 +48,8 @@ public class DeliveryController {
 		if(!isInputValid())
 			return;
 		
+		this.user = loggedUser.getCredentials().getUser();
+		
 		Random rnd = new Random();
 		int id;
 		
@@ -56,7 +59,7 @@ public class DeliveryController {
 		
 		double priceTotPerProd;
 		HashMap<Product, Double> products = new HashMap<Product, Double>();
-		for (Product p : shoppingCartDao.getAllItems()) {
+		for (Product p : shoppingCartDao.getItem(user).getProducts()) {
 			priceTotPerProd = p.getPrice() * p.getQuantity();
 			products.put(p, priceTotPerProd);
 		}
@@ -65,7 +68,7 @@ public class DeliveryController {
 		for (Double prc : products.values())
 			priceTot += prc;
 		
-		GroceryShopping expense = new GroceryShopping(id, deliveryDate.getValue(), timeSlot.getValue(), loggedUser, priceTot, paymentType.getValue(), products);
+		Expense expense = new Expense(id, deliveryDate.getValue(), timeSlot.getValue(), loggedUser, priceTot, paymentType.getValue(), products);
 		
 		groceryShoppingDao.addItem(expense);
 

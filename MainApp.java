@@ -2,7 +2,7 @@ package elaborato_ing_sw;
 
 import java.io.IOException;
 
-import elaborato_ing_sw.dataManager.GroceryShoppingDaoImpl;
+import elaborato_ing_sw.dataManager.ExpensesDaoImpl;
 import elaborato_ing_sw.dataManager.ManagerDaoImpl;
 import elaborato_ing_sw.dataManager.ProductDaoImpl;
 import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
@@ -38,7 +38,7 @@ public class MainApp extends Application {
 	private ManagerDaoImpl managerDao = ManagerDaoImpl.getManagerDaoImpl();
 	private ProductDaoImpl productDao = ProductDaoImpl.getProductDaoImpl();
 	private ShoppingCartDaoImpl shoppingCartDao = ShoppingCartDaoImpl.getShoppingCartDaoImpl();
-	private GroceryShoppingDaoImpl groceryShoppingDao = GroceryShoppingDaoImpl.getGroceryShoppingDaoImpl();
+	private ExpensesDaoImpl groceryShoppingDao = ExpensesDaoImpl.getGroceryShoppingDaoImpl();
 
     @Override
     public void start(Stage primaryStage) {

@@ -102,6 +102,7 @@ public class ProductEditDialogController {
 			product.setPrice(Double.parseDouble(priceField.getText()));
 			product.setIconPath("test.png");
 			product.setAvailable(true);
+			product.setQuantity(1);
 		}
 
 		okClicked = true;

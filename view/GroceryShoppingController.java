@@ -1,6 +1,7 @@
 package elaborato_ing_sw.view;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import elaborato_ing_sw.MainApp;
@@ -8,6 +9,7 @@ import elaborato_ing_sw.dataManager.ProductDaoImpl;
 import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.Section;
+import elaborato_ing_sw.model.ShoppingCart;
 import elaborato_ing_sw.model.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -24,7 +26,8 @@ import javafx.stage.Stage;
 
 public class GroceryShoppingController {
 	@FXML
-	private TableView<Product> vegetablesTable, fruitTable, meat_fishTable, grain_foodsTable, dairy_productsTable, beveragesTable;
+	private TableView<Product> vegetablesTable, fruitTable, meat_fishTable, grain_foodsTable, dairy_productsTable,
+			beveragesTable;
 
 	@FXML
 	private TableColumn<Product, String> n0, n1, n2, n3, n4, n5;
@@ -34,22 +37,22 @@ public class GroceryShoppingController {
 
 	@FXML
 	private TableColumn<Product, Double> pr0, pr1, pr2, pr3, pr4, pr5;
-	
+
 	@FXML
 	private TabPane tabs;
-	
+
 	@FXML
 	private Label nameLabel;
-	
+
 	@FXML
 	private Label brandLabel;
-	
+
 	@FXML
 	private Label priceLabel;
-	
+
 	@FXML
 	private Label npcsLabel;
-	
+
 	@FXML
 	private Label isAvailable;
 
@@ -74,18 +77,33 @@ public class GroceryShoppingController {
 		dairy_productsTable.setId("tab5");
 		beveragesTable.setId("tab5");
 	}
-	
+
 	@FXML
 	private void handleAddToCart() {
 		Tab selectedTab = tabs.getSelectionModel().getSelectedItem();
 		AnchorPane selectedContent = (AnchorPane) selectedTab.getContent();
-		
+
 		@SuppressWarnings("unchecked")
 		TableView<Product> selectedTable = (TableView<Product>) selectedContent.getChildren().get(0);
-		
+
 		int selectedIndex = selectedTable.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
-			shoppingCartDao.addItem(selectedTable.getItems().get(selectedIndex));
+			String user = loggedUser.getCredentials().getUser();
+			ArrayList<Product> prods;
+			if (shoppingCartDao.getItem(user) == null) {
+				prods = new ArrayList<Product>();
+				ShoppingCart cart = new ShoppingCart(prods, loggedUser);
+				shoppingCartDao.addItem(cart);
+			}
+				
+			prods = shoppingCartDao.getItem(user).getProducts();
+			Product p = selectedTable.getItems().get(selectedIndex);
+			if (prods.contains(p)) {
+				System.out.println("Prodotto già inserito, la quantità può essere modificata dal carrello");
+			} else {
+				prods.add(p);
+				shoppingCartDao.updateSource();
+			}
 		} else {
 			// Nothing selected.
 			Alert alert = new Alert(AlertType.WARNING);
@@ -97,20 +115,13 @@ public class GroceryShoppingController {
 			alert.showAndWait();
 		}
 	}
-	
-	private void handleSection
-		(
-			TableColumn<Product, String> f0,
-			TableColumn<Product, String> f1,
-			TableColumn<Product, Double> f2,
-			TableView<Product> tv,
-			Section section
-		)
-	{
+
+	private void handleSection(TableColumn<Product, String> f0, TableColumn<Product, String> f1,
+			TableColumn<Product, Double> f2, TableView<Product> tv, Section section) {
 		f0.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
 		f1.setCellValueFactory(cellData -> cellData.getValue().getBrandProperty());
 		f2.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
-		
+
 		tv.setItems(productDao.getAllItems().filtered(new Predicate<Product>() {
 
 			@Override
@@ -120,12 +131,12 @@ public class GroceryShoppingController {
 				return false;
 			}
 		}));
-		
+
 		tv.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			showProductDetails((Product) newValue);
 		});
 	}
-	
+
 	private void showProductDetails(Product product) {
 		if (product != null) {
 			nameLabel.setText(product.getName());
@@ -133,7 +144,7 @@ public class GroceryShoppingController {
 			priceLabel.setText(String.valueOf(product.getPrice()) + " $");
 			isAvailable.setText(product.isAvailable() ? "Yes" : "No");
 			npcsLabel.setText(String.valueOf(product.getPcsPerPack()));
-			
+
 			File fileImage = new File(product.getIconPath());
 			Image icon = new Image(fileImage.toURI().toString());
 			image.setImage(icon);
@@ -147,7 +158,7 @@ public class GroceryShoppingController {
 			image.setImage(standardLogoImage);
 		}
 	}
-	
+
 	@FXML
 	private void handleVegetables() {
 		handleSection(n0, b0, pr0, vegetablesTable, Section.VEGETABLES);

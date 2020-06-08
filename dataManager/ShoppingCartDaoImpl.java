@@ -1,8 +1,8 @@
 package elaborato_ing_sw.dataManager;
 
-import elaborato_ing_sw.model.Product;
+import elaborato_ing_sw.model.ShoppingCart;
 
-public class ShoppingCartDaoImpl extends DaoImpl<Product> {
+public class ShoppingCartDaoImpl extends DaoImpl<ShoppingCart> {
 	private static ShoppingCartDaoImpl instance;
 	private static String filename = "shopping_cart";
 
@@ -18,27 +18,22 @@ public class ShoppingCartDaoImpl extends DaoImpl<Product> {
 	}
 
 	@Override
-	public Product getItem(String product) {
-		for (Product p : getAllItems())
-			if (p.getName().equals(product))
+	public ShoppingCart getItem(String user) {
+		for (ShoppingCart p : getAllItems())
+			if (p.getUser().getCredentials().getUser().equals(user))
 				return p;
 
 		return null;
 	}
-	
+
 	@Override
-	public boolean addItem (Product product) {
-		if (objs.contains(product)) {
-			int qty = product.getQuantity();
-			product.setQuantity(++qty);
-			updateSource();
-			return true;
+	public boolean addItem(ShoppingCart cart) {
+		if (objs.contains(cart)) {
+			return false;
 		}
 
-		objs.add(product);
-
+		objs.add(cart);
 		updateSource();
-
 		return true;
 	}
 }

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashMap;
 
-public class GroceryShopping implements Serializable{
+public class Expense implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private int id;
@@ -15,7 +15,7 @@ public class GroceryShopping implements Serializable{
 	private double priceTot;
 	private Payment payment;
 	
-	public GroceryShopping(int id, LocalDate deliveryDate, TimeSlot timeSlot, User user, double priceTot, Payment payment) {
+	public Expense(int id, LocalDate deliveryDate, TimeSlot timeSlot, User user, double priceTot, Payment payment) {
 		this.id = id;
 		this.deliveryDate = deliveryDate;
 		this.timeSlot = timeSlot;
@@ -25,7 +25,7 @@ public class GroceryShopping implements Serializable{
 		this.products = new HashMap<Product, Double>();
 	}
 
-	public GroceryShopping(int id, LocalDate deliveryDate, TimeSlot timeSlot, User user, double priceTot, Payment payment, HashMap<Product, Double> products) {
+	public Expense(int id, LocalDate deliveryDate, TimeSlot timeSlot, User user, double priceTot, Payment payment, HashMap<Product, Double> products) {
 		this(id, deliveryDate, timeSlot, user, priceTot, payment);
 		this.products = products;
 	}
@@ -84,12 +84,12 @@ public class GroceryShopping implements Serializable{
 	
 	@Override
 	public boolean equals(Object obj) {
-		return obj instanceof GroceryShopping && this.getId() == ((GroceryShopping) obj).getId();
+		return obj instanceof Expense && this.getId() == ((Expense) obj).getId();
 	}
 
 	@Override
 	public String toString() {
-		return "GroceryShopping [id=" + id + ", deliveryDate=" + deliveryDate + ", timeSlot=" + timeSlot + ", products="
+		return "Expense [id=" + id + ", deliveryDate=" + deliveryDate + ", timeSlot=" + timeSlot + ", products="
 				+ products + ", user=" + user + ", priceTot=" + priceTot + ", payment=" + payment + "]";
 	}
 	

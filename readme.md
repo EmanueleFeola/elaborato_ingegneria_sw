@@ -1,6 +1,8 @@
 TODO:
 - visualizzare le spese nella view rispettiva per un utente
 - aggiungere la gestione spese per i manager
+- sistemare gestione carrello per gli utenti
+- sistemare problemi con la quantità di alcuni prodotti
 - altre cosette...
 
 NOTE:
