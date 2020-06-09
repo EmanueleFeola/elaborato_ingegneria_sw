@@ -4,32 +4,50 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashMap;
 
-public class Expense implements Serializable{
+import elaborato_ing_sw.utils.WriteableObjectProperty;
+
+public class Expense implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private int id;
-	private LocalDate deliveryDate;
-	private TimeSlot timeSlot;
+	private WriteableObjectProperty<LocalDate> deliveryDate;
+	private WriteableObjectProperty<TimeSlot> timeSlot;
 	private HashMap<Product, Double> products;
 	private User user;
-	private double priceTot;
-	private Payment payment;
-	
-	public Expense(int id, LocalDate deliveryDate, TimeSlot timeSlot, User user, double priceTot, Payment payment) {
+	private WriteableObjectProperty<Double> priceTot;
+	private WriteableObjectProperty<Payment> payment;
+	private WriteableObjectProperty<Delivery> delivery;
+
+	public Expense(int id, LocalDate deliveryDate, TimeSlot timeSlot, User user, double priceTot, Payment payment,
+			Delivery delivery) {
 		this.id = id;
-		this.deliveryDate = deliveryDate;
-		this.timeSlot = timeSlot;
+		this.deliveryDate = new WriteableObjectProperty<LocalDate>(deliveryDate);
+		this.timeSlot = new WriteableObjectProperty<TimeSlot>(timeSlot);
 		this.user = user;
-		this.priceTot = priceTot;
-		this.payment = payment;
+		this.priceTot = new WriteableObjectProperty<Double>(priceTot);
+		this.payment = new WriteableObjectProperty<Payment>(payment);
 		this.products = new HashMap<Product, Double>();
+		this.delivery = new WriteableObjectProperty<Delivery>(delivery);
 	}
 
-	public Expense(int id, LocalDate deliveryDate, TimeSlot timeSlot, User user, double priceTot, Payment payment, HashMap<Product, Double> products) {
-		this(id, deliveryDate, timeSlot, user, priceTot, payment);
+	public Expense(int id, LocalDate deliveryDate, TimeSlot timeSlot, User user, double priceTot, Payment payment,
+			Delivery delivery, HashMap<Product, Double> products) {
+		this(id, deliveryDate, timeSlot, user, priceTot, payment, delivery);
 		this.products = products;
 	}
+
+	public Delivery getDelivery() {
+		return delivery.get();
+	}
+
+	public WriteableObjectProperty<Delivery> getDeliveryProperty() {
+		return delivery;
+	}
 	
+	public void setDelivery(Delivery delivery) {
+		this.delivery.set(delivery);
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -39,19 +57,27 @@ public class Expense implements Serializable{
 	}
 
 	public LocalDate getDeliveryDate() {
-		return deliveryDate;
+		return deliveryDate.get();
 	}
 
+	public WriteableObjectProperty<LocalDate> getDateProperty() {
+		return deliveryDate;
+	}
+	
 	public void setDeliveryDate(LocalDate deliveryDate) {
-		this.deliveryDate = deliveryDate;
+		this.deliveryDate.set(deliveryDate);
 	}
 
 	public TimeSlot getTimeSlot() {
-		return timeSlot;
+		return timeSlot.get();
 	}
 
+	public WriteableObjectProperty<TimeSlot> getTimeSlotProperty() {
+		return timeSlot;
+	}
+	
 	public void setTimeSlot(TimeSlot timeSlot) {
-		this.timeSlot = timeSlot;
+		this.timeSlot.set(timeSlot);
 	}
 
 	public HashMap<Product, Double> getProducts() {
@@ -67,21 +93,29 @@ public class Expense implements Serializable{
 	}
 
 	public double getPriceTot() {
+		return priceTot.get();
+	}
+	
+	public WriteableObjectProperty<Double> getPriceTotProperty() {
 		return priceTot;
 	}
 
 	public void setPriceTot(double priceTot) {
-		this.priceTot = priceTot;
+		this.priceTot.set(priceTot);
 	}
 
 	public Payment getPayment() {
-		return payment;
+		return payment.get();
 	}
 
-	public void setPayment(Payment payment) {
-		this.payment = payment;
+	public WriteableObjectProperty<Payment> getPaymentProperty() {
+		return payment;
 	}
 	
+	public void setPayment(Payment payment) {
+		this.payment.set(payment);
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		return obj instanceof Expense && this.getId() == ((Expense) obj).getId();
@@ -90,9 +124,8 @@ public class Expense implements Serializable{
 	@Override
 	public String toString() {
 		return "Expense [id=" + id + ", deliveryDate=" + deliveryDate + ", timeSlot=" + timeSlot + ", products="
-				+ products + ", user=" + user + ", priceTot=" + priceTot + ", payment=" + payment + "]";
+				+ products + ", user=" + user + ", priceTot=" + priceTot + ", payment=" + payment + ", delivery="
+				+ delivery + "]";
 	}
-	
-	
 
 }

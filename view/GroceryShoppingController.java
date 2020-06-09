@@ -90,6 +90,7 @@ public class GroceryShoppingController {
 		if (selectedIndex >= 0) {
 			String user = loggedUser.getCredentials().getUser();
 			ArrayList<Product> prods;
+			
 			if (shoppingCartDao.getItem(user) == null) {
 				prods = new ArrayList<Product>();
 				ShoppingCart cart = new ShoppingCart(prods, loggedUser);

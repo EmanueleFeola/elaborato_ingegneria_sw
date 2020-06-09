@@ -5,6 +5,7 @@ import elaborato_ing_sw.MainApp;
 import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.Section;
+import elaborato_ing_sw.model.ShoppingCart;
 import elaborato_ing_sw.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -54,10 +55,16 @@ public class ShoppingCartController {
 		quantity.setCellValueFactory(cellData -> cellData.getValue().getQuantityProperty());
 		
 		this.user = loggedUser.getCredentials().getUser();
-		this.prods = shoppingCartDao.getItem(user).getProducts();
 		
-		ObservableList<Product> products = FXCollections.observableArrayList(prods);
-		shoppingCartTable.setItems(products);
+		if (shoppingCartDao.getItem(user) == null) {
+			this.prods = new ArrayList<Product>();
+			ShoppingCart cart = new ShoppingCart(prods, loggedUser);
+			shoppingCartDao.addItem(cart);
+		} else {
+			this.prods = shoppingCartDao.getItem(user).getProducts();
+			ObservableList<Product> products = FXCollections.observableArrayList(prods);
+			shoppingCartTable.setItems(products);
+		}
 	}
 	
 	@FXML
@@ -82,9 +89,9 @@ public class ShoppingCartController {
 	private void handleAddOne() {
 		int selectedIndex = shoppingCartTable.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
-			int qty = shoppingCartTable.getItems().get(selectedIndex).getQuantity();
-			qty++;
 			Product prod = shoppingCartTable.getItems().get(selectedIndex);
+			int qty = prod.getQuantity();
+			qty++;
 			prod.setQuantity(qty);
 			shoppingCartDao.updateSource();
 		} else {
@@ -103,12 +110,13 @@ public class ShoppingCartController {
 	private void handleRemoveOne() {
 		int selectedIndex = shoppingCartTable.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
-			int qty = shoppingCartTable.getItems().get(selectedIndex).getQuantity();
+			Product prod = shoppingCartTable.getItems().get(selectedIndex);
+			int qty = prod.getQuantity();
+			
 			if (qty - 1 == 0) {
 				prods.remove(shoppingCartTable.getItems().get(selectedIndex));
 			} else {
 				qty--;
-				Product prod = shoppingCartTable.getItems().get(selectedIndex);
 				prod.setQuantity(qty);
 			}
 			shoppingCartDao.updateSource();

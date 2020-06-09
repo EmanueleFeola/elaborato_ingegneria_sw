@@ -1,8 +1,7 @@
 TODO:
-- visualizzare le spese nella view rispettiva per un utente
+- fare in modo di popolare le tabelle degli utenti senza dover cliccare ogni volta un bottone
+- nella view delle spese per un utente, bisogna poter visualizzare in dettaglio i prodotti di ogni spesa
 - aggiungere la gestione spese per i manager
-- sistemare gestione carrello per gli utenti
-- sistemare problemi con la quantità di alcuni prodotti
 - altre cosette...
 
 NOTE:
