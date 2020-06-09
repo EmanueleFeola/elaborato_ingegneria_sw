@@ -10,7 +10,7 @@ public class ExpensesDaoImpl extends DaoImpl<Expense> {
 		super(filepath);
 	}
 
-	public static ExpensesDaoImpl getGroceryShoppingDaoImpl() {
+	public static ExpensesDaoImpl getExpensesDaoImpl() {
 		if (instance == null)
 			instance = new ExpensesDaoImpl(filename);
 

@@ -3,6 +3,8 @@ package elaborato_ing_sw.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javafx.collections.ObservableList;
+
 public class ShoppingCart implements Serializable {
 	private static final long serialVersionUID = 1L;
 	

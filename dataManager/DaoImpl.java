@@ -66,7 +66,7 @@ public abstract class DaoImpl<T> implements Dao<T>{
 	}
 
 	@Override
-	// NB: l implementazione e diversa se sto trattando un Person oppure un Product
+	// NB: l implementazione dipende da T
 	public abstract T getItem(String objId);
 
 	@Override

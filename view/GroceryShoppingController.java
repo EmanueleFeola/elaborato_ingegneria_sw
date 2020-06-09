@@ -11,8 +11,8 @@ import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.Section;
 import elaborato_ing_sw.model.ShoppingCart;
 import elaborato_ing_sw.model.User;
+import elaborato_ing_sw.utils.AlertUtil;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -24,18 +24,25 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+/**
+ * @author emanuele
+ *
+ */
 public class GroceryShoppingController {
 	@FXML
 	private TableView<Product> vegetablesTable, fruitTable, meat_fishTable, grain_foodsTable, dairy_productsTable,
 			beveragesTable;
 
 	@FXML
+	// name columns for each tab
 	private TableColumn<Product, String> n0, n1, n2, n3, n4, n5;
 
 	@FXML
+	// brand columns for each tab
 	private TableColumn<Product, String> b0, b1, b2, b3, b4, b5;
 
 	@FXML
+	// price columns for each tab
 	private TableColumn<Product, Double> pr0, pr1, pr2, pr3, pr4, pr5;
 
 	@FXML
@@ -70,12 +77,6 @@ public class GroceryShoppingController {
 
 	@FXML
 	private void initialize() {
-		vegetablesTable.setId("tab1");
-		fruitTable.setId("tab2");
-		meat_fishTable.setId("tab3");
-		grain_foodsTable.setId("tab4");
-		dairy_productsTable.setId("tab5");
-		beveragesTable.setId("tab5");
 	}
 
 	@FXML
@@ -89,42 +90,30 @@ public class GroceryShoppingController {
 		int selectedIndex = selectedTable.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
 			String user = loggedUser.getCredentials().getUser();
-			ArrayList<Product> prods;
 			
 			if (shoppingCartDao.getItem(user) == null) {
-				prods = new ArrayList<Product>();
-				ShoppingCart cart = new ShoppingCart(prods, loggedUser);
+				ShoppingCart cart = new ShoppingCart(new ArrayList<Product>(), loggedUser);
 				shoppingCartDao.addItem(cart);
 			}
 				
-			prods = shoppingCartDao.getItem(user).getProducts();
 			Product p = selectedTable.getItems().get(selectedIndex);
-			if (prods.contains(p)) {
-				System.out.println("Prodotto già inserito, la quantità può essere modificata dal carrello");
-			} else {
-				prods.add(p);
-				shoppingCartDao.updateSource();
-			}
-		} else {
-			// Nothing selected.
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.initOwner(MainApp.getPrimaryStage());
-			alert.setTitle("No Selection");
-			alert.setHeaderText("No Product Selected");
-			alert.setContentText("Please select a product in the table.");
-
-			alert.showAndWait();
-		}
+			
+			if (shoppingCartDao.getCartProducts(user).contains(p))
+				AlertUtil.Alert(AlertType.INFORMATION, "Info", "Product already in shopping cart", "Quantity can be modified in the shopping cart");
+			else 
+				shoppingCartDao.addCartProduct(user, p);
+		} else
+			AlertUtil.Alert(AlertType.WARNING, "No Selection", "No Product Selected", "Please select a product in the table");
 	}
 
-	private void handleSection(TableColumn<Product, String> f0, TableColumn<Product, String> f1,
-			TableColumn<Product, Double> f2, TableView<Product> tv, Section section) {
-		f0.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
-		f1.setCellValueFactory(cellData -> cellData.getValue().getBrandProperty());
-		f2.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
+	private void handleSection(TableColumn<Product, String> nameColumn, TableColumn<Product, String> brandColumn,
+			TableColumn<Product, Double> priceColumn, TableView<Product> table, Section section) {
+		nameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
+		brandColumn.setCellValueFactory(cellData -> cellData.getValue().getBrandProperty());
+		priceColumn.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
 
-		tv.setItems(productDao.getAllItems().filtered(new Predicate<Product>() {
-
+		// setta i prodotti per la tab corrente filtrandoli per section
+		table.setItems(productDao.getAllItems().filtered(new Predicate<Product>() {
 			@Override
 			public boolean test(Product p) {
 				if (p.getSection().equals(section))
@@ -133,7 +122,8 @@ public class GroceryShoppingController {
 			}
 		}));
 
-		tv.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+		// add listener on table
+		table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			showProductDetails((Product) newValue);
 		});
 	}
@@ -142,7 +132,7 @@ public class GroceryShoppingController {
 		if (product != null) {
 			nameLabel.setText(product.getName());
 			brandLabel.setText(product.getBrand());
-			priceLabel.setText(String.valueOf(product.getPrice()) + " $");
+			priceLabel.setText(String.valueOf(product.getPrice()) + " �");
 			isAvailable.setText(product.isAvailable() ? "Yes" : "No");
 			npcsLabel.setText(String.valueOf(product.getPcsPerPack()));
 
@@ -199,7 +189,13 @@ public class GroceryShoppingController {
 
 	@FXML
 	private void handleShoppingCart() {
-		mainApp.showShoppingCartView(loggedUser);
+		String user = loggedUser.getCredentials().getUser();
+		
+		// se per l utente "user" il carrello non esiste oppure contiene 0 prodotti non ha senso far andare l utente alla prossima schermata 
+		if(shoppingCartDao.getItem(user) == null || shoppingCartDao.getCartProducts(user).size() == 0)
+			AlertUtil.Alert(AlertType.INFORMATION, "User cart is empty", "Your cart is still empty", "Please add a product to your cart");
+		else
+			mainApp.showShoppingCartView(loggedUser);
 	}
 
 	@FXML

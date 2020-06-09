@@ -38,7 +38,7 @@ public class MainApp extends Application {
 	private ManagerDaoImpl managerDao = ManagerDaoImpl.getManagerDaoImpl();
 	private ProductDaoImpl productDao = ProductDaoImpl.getProductDaoImpl();
 	private ShoppingCartDaoImpl shoppingCartDao = ShoppingCartDaoImpl.getShoppingCartDaoImpl();
-	private ExpensesDaoImpl groceryShoppingDao = ExpensesDaoImpl.getGroceryShoppingDaoImpl();
+	private ExpensesDaoImpl groceryShoppingDao = ExpensesDaoImpl.getExpensesDaoImpl();
 
     @Override
     public void start(Stage primaryStage) {
@@ -137,10 +137,15 @@ public class MainApp extends Application {
     }
     
     public void showShoppingCartView(User user) {
-    	try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/ShoppingCartView.fxml"));
-			AnchorPane page = (AnchorPane) loader.load();
+			AnchorPane page = null;
+			try {
+				page = (AnchorPane) loader.load();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Shopping Cart");
@@ -156,9 +161,6 @@ public class MainApp extends Application {
 			
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
-    	} catch (IOException e) {
-			e.printStackTrace();
-		}
     }
     
     public void showDeliveryView(User user) {

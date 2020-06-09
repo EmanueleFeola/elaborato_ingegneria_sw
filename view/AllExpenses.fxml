@@ -7,12 +7,11 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="390.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.AllExpensesController">
+<AnchorPane prefHeight="390.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.AllExpensesController">
    <children>
       <Accordion layoutX="39.0" layoutY="14.0" />
       <ButtonBar layoutX="330.0" layoutY="350.0" prefHeight="40.0" prefWidth="405.0" AnchorPane.rightAnchor="5.0">
         <buttons>
-            <Button mnemonicParsing="false" onAction="#handleTable" text="Fill" />
           <Button mnemonicParsing="false" prefWidth="144.0" text="View Products" />
             <Button mnemonicParsing="false" onAction="#handleClose" text="Close" />
         </buttons>

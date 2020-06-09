@@ -27,7 +27,7 @@ public class DeliveryController {
 	private ChoiceBox<Payment> paymentType;
 
 	private ShoppingCartDaoImpl shoppingCartDao = ShoppingCartDaoImpl.getShoppingCartDaoImpl();
-	private ExpensesDaoImpl groceryShoppingDao = ExpensesDaoImpl.getGroceryShoppingDaoImpl();
+	private ExpensesDaoImpl expensesDao = ExpensesDaoImpl.getExpensesDaoImpl();
 
 	private boolean okClicked = false;
 	private Stage dialogStage;
@@ -56,7 +56,7 @@ public class DeliveryController {
 
 		do {
 			id = rnd.nextInt();
-		} while (groceryShoppingDao.getItem(user) != null && groceryShoppingDao.getItem(user).getId() == id);
+		} while (expensesDao.getItem(user) != null && expensesDao.getItem(user).getId() == id);
 
 		double priceTotPerProd;
 		HashMap<Product, Double> products = new HashMap<Product, Double>();
@@ -68,12 +68,14 @@ public class DeliveryController {
 		double priceTot = 0;
 		for (Double prc : products.values())
 			priceTot += prc;
-
+		
 		Expense expense = new Expense(id, deliveryDate.getValue(), timeSlot.getValue(), loggedUser, priceTot,
 				paymentType.getValue(), Delivery.CONFERMATA, products);
 
-		groceryShoppingDao.addItem(expense);
+		expensesDao.addItem(expense);
 
+		shoppingCartDao.deleteItem(shoppingCartDao.getItem(user));
+		
 		okClicked = true;
 		dialogStage.close();
 	}

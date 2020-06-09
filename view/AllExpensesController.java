@@ -9,6 +9,8 @@ import elaborato_ing_sw.model.Expense;
 import elaborato_ing_sw.model.Payment;
 import elaborato_ing_sw.model.TimeSlot;
 import elaborato_ing_sw.model.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -17,7 +19,6 @@ import javafx.stage.Stage;
 public class AllExpensesController {
 	@FXML
 	TableView<Expense> expensesTable;
-	
 	@FXML
 	TableColumn<Expense, LocalDate> date;
 	@FXML
@@ -29,11 +30,11 @@ public class AllExpensesController {
 	@FXML
 	TableColumn<Expense, Delivery> delivery;
 	
-	private ExpensesDaoImpl expensesDao = ExpensesDaoImpl.getGroceryShoppingDaoImpl();
-	
+	private ExpensesDaoImpl expensesDao = ExpensesDaoImpl.getExpensesDaoImpl();
+	ObservableList<Expense> tableExpenses;
+
 	private Stage dialogStage;
 	private User loggedUser;
-	
 	private String user;
 
 	@FXML
@@ -49,13 +50,14 @@ public class AllExpensesController {
 		if (expensesDao.getItem(user) == null) {
 			System.out.println("No expenses available");
 		} else {
-			expensesTable.setItems(expensesDao.getAllItems().filtered(new Predicate<Expense>() {
-				
+			this.tableExpenses = FXCollections.observableArrayList(expensesDao.getAllItems().filtered(new Predicate<Expense>() {
 				@Override
-				public boolean test(Expense ex) {
-					return ex.getUser().equals(loggedUser);
+				public boolean test(Expense expense) {
+					return expense.getUser().equals(loggedUser);
 				}
 			}));
+			
+			expensesTable.setItems(this.tableExpenses);
 		}
 	}
 	
@@ -66,6 +68,7 @@ public class AllExpensesController {
 
 	public void setLoggedUser(User loggedUser) {
 		this.loggedUser = loggedUser;
+		handleTable();
 	}
 
 	public void setDialogStage(Stage dialogStage) {

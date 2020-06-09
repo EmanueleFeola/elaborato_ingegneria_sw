@@ -1,5 +1,8 @@
 package elaborato_ing_sw.dataManager;
 
+import java.util.ArrayList;
+
+import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.ShoppingCart;
 
 public class ShoppingCartDaoImpl extends DaoImpl<ShoppingCart> {
@@ -19,21 +22,35 @@ public class ShoppingCartDaoImpl extends DaoImpl<ShoppingCart> {
 
 	@Override
 	public ShoppingCart getItem(String user) {
-		for (ShoppingCart p : getAllItems())
-			if (p.getUser().getCredentials().getUser().equals(user))
-				return p;
+		for (ShoppingCart sp : getAllItems())
+			if (sp.getUser().getCredentials().getUser().equals(user))
+				return sp;
 
 		return null;
 	}
 
 	@Override
 	public boolean addItem(ShoppingCart cart) {
-		if (objs.contains(cart)) {
+		if (objs.contains(cart))
 			return false;
-		}
 
 		objs.add(cart);
 		updateSource();
+		
 		return true;
+	}
+	
+	public ArrayList<Product> getCartProducts(String user){
+		return getItem(user).getProducts();
+	}
+	
+	public void addCartProduct(String user, Product p) {
+		getItem(user).getProducts().add(p);
+		updateSource();
+	}
+	
+	public void removeCartProduct(String user, Product p){
+		getItem(user).getProducts().remove(p);
+		updateSource();
 	}
 }

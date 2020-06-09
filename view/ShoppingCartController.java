@@ -5,12 +5,11 @@ import elaborato_ing_sw.MainApp;
 import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.Section;
-import elaborato_ing_sw.model.ShoppingCart;
 import elaborato_ing_sw.model.User;
+import elaborato_ing_sw.utils.AlertUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
@@ -19,7 +18,6 @@ import javafx.stage.Stage;
 public class ShoppingCartController {
 	@FXML
 	private TableView<Product> shoppingCartTable;
-
 	@FXML
 	private TableColumn<Product, String> name;
 	@FXML
@@ -39,7 +37,15 @@ public class ShoppingCartController {
 	private User loggedUser;
 	
 	private String user;
-	private ArrayList<Product> prods;
+	
+	// non ci dovrebbero essere due campi separati, ma uno unico (dao) che si riflette in automatico sulla view
+	// questo non è possibile perchè il campo products di ShoppinCart e'un arraylist e non un ObservableList
+	// ObservableList non si serialliza nemmeno con la classe magica
+	// si potrebbe risolvere serializzando uno ad uno i prodotti dentro i cart, però bisognerebbe riscrivere i 
+	// metodi di write e read solo per la classe shoppingCart e non ne vale la pena perchè troppo incasinato
+	// questo si puo risolvere con db, dato che in quel caso non serializziamo una minchia
+	private ArrayList<Product> cartProducts;
+	ObservableList<Product> tableProducts;
 
 	@FXML
 	private void initialize() {					
@@ -55,34 +61,19 @@ public class ShoppingCartController {
 		quantity.setCellValueFactory(cellData -> cellData.getValue().getQuantityProperty());
 		
 		this.user = loggedUser.getCredentials().getUser();
-		
-		if (shoppingCartDao.getItem(user) == null) {
-			this.prods = new ArrayList<Product>();
-			ShoppingCart cart = new ShoppingCart(prods, loggedUser);
-			shoppingCartDao.addItem(cart);
-		} else {
-			this.prods = shoppingCartDao.getItem(user).getProducts();
-			ObservableList<Product> products = FXCollections.observableArrayList(prods);
-			shoppingCartTable.setItems(products);
-		}
+		this.cartProducts = shoppingCartDao.getCartProducts(user);
+		this.tableProducts = FXCollections.observableArrayList(cartProducts);
+		shoppingCartTable.setItems(tableProducts);
 	}
 	
 	@FXML
 	private void handleDeleteProduct() {
 		int selectedIndex = shoppingCartTable.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
-			prods.remove(shoppingCartTable.getItems().get(selectedIndex));
-			shoppingCartDao.updateSource();
-		} else {
-			// Nothing selected.
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.initOwner(MainApp.getPrimaryStage());
-			alert.setTitle("No Selection");
-			alert.setHeaderText("No Person Selected");
-			alert.setContentText("Please select a person in the table.");
-
-			alert.showAndWait();
-		}
+			shoppingCartDao.removeCartProduct(user, shoppingCartTable.getItems().get(selectedIndex));
+			tableProducts.remove(selectedIndex);
+		} else
+			AlertUtil.Alert(AlertType.WARNING, "No Selection", "No Product Selected", "Please select a product in the table");
 	}
 
 	@FXML
@@ -94,16 +85,8 @@ public class ShoppingCartController {
 			qty++;
 			prod.setQuantity(qty);
 			shoppingCartDao.updateSource();
-		} else {
-			// Nothing selected.
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.initOwner(MainApp.getPrimaryStage());
-			alert.setTitle("No Selection");
-			alert.setHeaderText("No Person Selected");
-			alert.setContentText("Please select a person in the table.");
-
-			alert.showAndWait();
-		}
+		} else
+			AlertUtil.Alert(AlertType.WARNING, "No Selection", "No Product Selected", "Please select a product in the table");
 	}
 
 	@FXML
@@ -114,22 +97,15 @@ public class ShoppingCartController {
 			int qty = prod.getQuantity();
 			
 			if (qty - 1 == 0) {
-				prods.remove(shoppingCartTable.getItems().get(selectedIndex));
+				shoppingCartDao.removeCartProduct(user, shoppingCartTable.getItems().get(selectedIndex));
+				tableProducts.remove(selectedIndex);
 			} else {
 				qty--;
 				prod.setQuantity(qty);
 			}
 			shoppingCartDao.updateSource();
-		} else {
-			// Nothing selected.
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.initOwner(MainApp.getPrimaryStage());
-			alert.setTitle("No Selection");
-			alert.setHeaderText("No Person Selected");
-			alert.setContentText("Please select a person in the table.");
-
-			alert.showAndWait();
-		}
+		} else
+			AlertUtil.Alert(AlertType.WARNING, "No Selection", "No Product Selected", "Please select a product in the table");
 	}
 
 	@FXML
@@ -147,6 +123,7 @@ public class ShoppingCartController {
 	
 	public void setLoggedUser(User loggedUser) {
 		this.loggedUser = loggedUser;
+		handleTable();
 	}
 	
 	@FXML
