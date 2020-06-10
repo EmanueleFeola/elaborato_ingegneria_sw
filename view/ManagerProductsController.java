@@ -2,7 +2,6 @@ package elaborato_ing_sw.view;
 
 import javafx.fxml.FXML;
 
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 import javafx.scene.control.Label;
@@ -13,6 +12,7 @@ import elaborato_ing_sw.MainApp;
 import elaborato_ing_sw.dataManager.ProductDaoImpl;
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.Section;
+import elaborato_ing_sw.utils.AlertUtil;
 
 public class ManagerProductsController {
 	@FXML
@@ -30,24 +30,24 @@ public class ManagerProductsController {
 
 	@FXML
 	private Label nameLabel;
-	
+
 	@FXML
 	private Label brandLabel;
-	
+
 	@FXML
 	private Label priceLabel;
-	
+
 	@FXML
 	private Label pcsLabel;
-	
+
 	@FXML
 	private Label sectionLabel;
-	
+
 	@FXML
 	private Label isAvailable;
 
 	private ProductDaoImpl productDao = ProductDaoImpl.getProductDaoImpl();
-	
+
 	private MainApp mainApp;
 
 	public ManagerProductsController() {
@@ -97,14 +97,8 @@ public class ManagerProductsController {
 		if (selectedIndex >= 0) {
 			productDao.deleteItem(productsTable.getItems().get(selectedIndex));
 		} else {
-			// Nothing selected.
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.initOwner(MainApp.getPrimaryStage());
-			alert.setTitle("No Selection");
-			alert.setHeaderText("No Person Selected");
-			alert.setContentText("Please select a person in the table.");
-
-			alert.showAndWait();
+			AlertUtil.Alert(AlertType.WARNING, "No Selection", "No Product Selected",
+					"Please select a product in the table.");
 		}
 	}
 
@@ -123,32 +117,26 @@ public class ManagerProductsController {
 	@FXML
 	private void handleEditProduct() {
 		Product selectedManager = (Product) productsTable.getSelectionModel().getSelectedItem();
-		//System.out.println(selectedManager);
+		// System.out.println(selectedManager);
 		if (selectedManager != null) {
 			boolean okClicked = mainApp.showProductEditDialog(selectedManager);
-			
+
 			if (okClicked) {
 				productDao.updateItem(ProductEditDialogController.getProduct());
 				showProductDetails(ProductEditDialogController.getProduct());
 			}
-			
-		} else {
-			// Nothing selected.
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.initOwner(MainApp.getPrimaryStage());
-			alert.setTitle("No Selection");
-			alert.setHeaderText("No Person Selected");
-			alert.setContentText("Please select a person in the table.");
 
-			alert.showAndWait();
+		} else {
+			AlertUtil.Alert(AlertType.WARNING, "No Selection", "No Product Selected",
+					"Please select a product in the table.");
 		}
 	}
-	
+
 	@FXML
 	private void handleBack() {
 		mainApp.showManagerDashboard();
 	}
-	
+
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}

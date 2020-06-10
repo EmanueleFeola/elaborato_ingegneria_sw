@@ -1,13 +1,16 @@
 package elaborato_ing_sw.view;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import java.io.File;
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.Section;
+import elaborato_ing_sw.utils.AlertUtil;
 
 public class ProductEditDialogController {
 
@@ -20,9 +23,11 @@ public class ProductEditDialogController {
 	@FXML
 	private TextField priceField;
 	@FXML
-	private TextField isAvailable; // da trasformare in bottone on off
+	private RadioButton isAvailable;
 	@FXML
 	private ChoiceBox<Section> sectionField;
+	
+	private String iconPath;
 
 	private Stage dialogStage;
 	private static Product product;
@@ -37,7 +42,7 @@ public class ProductEditDialogController {
 	 */
 	@FXML
 	private void initialize() {
-
+		this.iconPath = "src/elaborato_ing_sw/view/images/logo.png";
 	}
 
 	/**
@@ -71,7 +76,7 @@ public class ProductEditDialogController {
 		sectionField.setValue(product.getSection());
 		pcsField.setText(String.valueOf(product.getPcsPerPack()));
 		priceField.setText(String.valueOf(product.getPrice()));
-		isAvailable.setText(product.isAvailable() ? "Si" : "No");
+		isAvailable.setSelected(product.isAvailable());
 	}
 
 	/**
@@ -93,15 +98,16 @@ public class ProductEditDialogController {
 
 		if (product == null) {
 			product = new Product(nameField.getText(), brandField.getText(), sectionField.getValue(),
-					Integer.parseInt(pcsField.getText()), Double.parseDouble(priceField.getText()), "test.png", true, 1);
+					Integer.parseInt(pcsField.getText()), Double.parseDouble(priceField.getText()),
+					iconPath, isAvailable.isSelected(), 1);
 		} else {
 			product.setName(nameField.getText());
 			product.setBrand(brandField.getText());
 			product.setSection(sectionField.getValue());
 			product.setPcsPerPack(Integer.parseInt(pcsField.getText()));
 			product.setPrice(Double.parseDouble(priceField.getText()));
-			product.setIconPath("test.png");
-			product.setAvailable(true);
+			product.setIconPath(iconPath);
+			product.setAvailable(isAvailable.isSelected());
 			product.setQuantity(1);
 		}
 
@@ -115,6 +121,35 @@ public class ProductEditDialogController {
 	@FXML
 	private void handleCancel() {
 		dialogStage.close();
+	}
+
+	@FXML
+	private void handleSetImage() {
+		// path di base per le immagini
+		String imgPath = "src/elaborato_ing_sw/view/images";
+
+		// genero il file chooser
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Select an image");
+
+		// imposto come directory iniziale quella indicata da imgPath
+		fileChooser.setInitialDirectory(new File(imgPath));
+		
+		// aggiungo dei possibili filtri, selezionabili nella parte bassa della finestra
+		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Images", "*.*"),
+				new FileChooser.ExtensionFilter("JPG", "*.jpg"), new FileChooser.ExtensionFilter("PNG", "*.png"));
+
+		// apro la finestra
+		File selectedFile = fileChooser.showOpenDialog(dialogStage);
+
+		// creo il path dell'immagine e lo imposto al prodotto
+		if (selectedFile != null) {
+			System.out.println("File selected: " + selectedFile.getName());
+			this.iconPath = imgPath + "/" + selectedFile.getName();
+			System.out.println("product image set");			
+		} else {
+			System.out.println("File selection cancelled.");
+		}
 	}
 
 	/**
@@ -134,24 +169,16 @@ public class ProductEditDialogController {
 		if (sectionField.getValue() == null)
 			errorMessage += "No valid section!\n";
 
-		if (Integer.parseInt(pcsField.getText()) < 1)
+		if (pcsField.getText().length() == 0 || Integer.parseInt(pcsField.getText()) < 1)
 			errorMessage += "No valid pieces per packet!\n";
 
-		if (Double.parseDouble(priceField.getText()) < 0)
+		if (priceField.getText().length() == 0 || Double.parseDouble(priceField.getText()) < 0)
 			errorMessage += "No valid price!\n";
 
 		if (errorMessage.length() == 0)
 			return true;
 		else {
-			// Show the error message.
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.initOwner(dialogStage);
-			alert.setTitle("Invalid Fields");
-			alert.setHeaderText("Please correct invalid fields");
-			alert.setContentText(errorMessage);
-
-			alert.showAndWait();
-
+			AlertUtil.Alert(AlertType.ERROR, "Invalid Fields", "Please correct invalid fields", errorMessage);
 			return false;
 		}
 	}

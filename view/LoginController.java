@@ -9,8 +9,8 @@ import elaborato_ing_sw.model.Credentials;
 import elaborato_ing_sw.model.Manager;
 import elaborato_ing_sw.model.Person;
 import elaborato_ing_sw.model.User;
+import elaborato_ing_sw.utils.AlertUtil;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -60,11 +60,7 @@ public class LoginController {
 			else
 				mainApp.showGroceryShoppingView((User)p);
 		} else {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.initOwner(MainApp.getPrimaryStage());
-			alert.setTitle("Login Failed");
-			alert.setHeaderText("Please correct invalid fields");
-			alert.showAndWait();
+			AlertUtil.Alert(AlertType.ERROR, "Login Failed", "Please correct invalid fields", null);
 		}
 	}
 	

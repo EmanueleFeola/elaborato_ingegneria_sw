@@ -5,18 +5,7 @@ Prima di andare avanti con nuovo codice sistemiamo il codice scritto fin ora
 
 2- una volta fatto il processo Deliver che il carrello diventa effettivamente una spesa bisogna fare in modo che la view si aggiorni perchè il carrello non c'è piu
 
-3- trovare un modo per evitare di scrivere ogni volta le stesse righe di codice per creare una view
-
-	- vedi tutto il codice ripetuto in mainApp
-	- bisognerebbe guardare se c'è qualche pattern che ci può tornare utile
-	
-4- dove il manager fa insert/edit/delete dei prodotti
-
-    -  sistemare la gestione del campo available in cui bisogna mettere un pulsante on off tipo quello che c'è per fare login as manager
-	-  sistemare la funzione che convalida l input
-	-  acquisire il path dell immagine da disco, nel senso che ti si apre una finestra come se dovessi fare l upload del file e poi ci prendiamo il path
-	    - per adesso l'available e il path dell immagine sono statici quando si crea o modifica un prodotto
-Dopo aver fatto i primi 4 punti...	    
+Dopo aver fatto i primi 2 punti...	    
 - nella view delle spese per un utente, bisogna poter visualizzare in dettaglio i prodotti di ogni spesa
 - aggiungere la gestione spese per i manager
 - carta fedeltà
@@ -25,6 +14,7 @@ Dopo aver fatto i primi 4 punti...
 
 NOTE:
 - db
+    
     - https://www.swtestacademy.com/database-operations-javafx/
 - nella classe Credentials il campo user deve essere unique, finchè gestiamo con serializable si può evitare di fare il controllo perchè tanto poi useremo un db
 shopping cart controller (una volta implementato il db)
@@ -40,4 +30,5 @@ shopping cart controller (una volta implementato il db)
     - va bene finchè non implementiamo il db 
 
 TODO documentazione finale
+
 - sezione con possibili miglioramenti del progetto

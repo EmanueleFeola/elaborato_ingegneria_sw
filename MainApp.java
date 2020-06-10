@@ -10,6 +10,7 @@ import elaborato_ing_sw.dataManager.UserDaoImpl;
 import elaborato_ing_sw.model.Manager;
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.User;
+import elaborato_ing_sw.utils.ShowDialog;
 import elaborato_ing_sw.utils.ShowView;
 import elaborato_ing_sw.view.AllExpensesController;
 import elaborato_ing_sw.view.DeliveryController;
@@ -24,9 +25,7 @@ import elaborato_ing_sw.view.UserProfileController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
@@ -38,27 +37,13 @@ public class MainApp extends Application {
 	private ManagerDaoImpl managerDao = ManagerDaoImpl.getManagerDaoImpl();
 	private ProductDaoImpl productDao = ProductDaoImpl.getProductDaoImpl();
 	private ShoppingCartDaoImpl shoppingCartDao = ShoppingCartDaoImpl.getShoppingCartDaoImpl();
-	private ExpensesDaoImpl groceryShoppingDao = ExpensesDaoImpl.getExpensesDaoImpl();
+	private ExpensesDaoImpl expensesDao = ExpensesDaoImpl.getExpensesDaoImpl();
 
     @Override
     public void start(Stage primaryStage) {
         MainApp.primaryStage = primaryStage;
         MainApp.primaryStage.setTitle("Shopping Online");
-        
-//        User u1 = new User("test", "test", LocalDate.of(1999, 8, 30), new Credentials("test", "test"), "street", "city", 123, "456");
-//        userDao.addUser(u1);
-        
-//        Manager m1 = new Manager("man", "ager", LocalDate.of(1999, 8, 30), "pwd", 123, Role.ADMIN);
-//        System.out.println(m1);
-//        managerDao.addItem(m1);
-        
-//        Product p1 = new Product("pasta alla cazzo", "barilla", Section.GRAIN_FOODS, 100, 1.50, "src/elaborato_ing_sw/view/images/test.png", true, 1);
-//        Product p2 = new Product("banane", "fruttilandia", Section.FRUIT, 3, 1.00, "src/elaborato_ing_sw/view/images/test.png", true, 1);
-        
-//        productDao.addItem(p1);
-//        productDao.addItem(p2);
-//        productDao.addItem(p3);
-      
+
         System.out.println("Users from file: ");
         System.out.println(userDao.getAllItems());
         
@@ -72,7 +57,7 @@ public class MainApp extends Application {
         System.out.println(shoppingCartDao.getAllItems());
         
         System.out.println("Expenses from file: ");
-        System.out.println(groceryShoppingDao.getAllItems());
+        System.out.println(expensesDao.getAllItems());
         
         initRootLayout();
 
@@ -111,80 +96,41 @@ public class MainApp extends Application {
     }
     
     public void showGroceryShoppingView(User user) {
-    	try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/GroceryShopping.fxml"));
-			AnchorPane page = (AnchorPane) loader.load();
-			
-			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Grocery Shopping");
-			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.initOwner(primaryStage);
-			Scene scene = new Scene(page);
-			dialogStage.setScene(scene);
-			
-			GroceryShoppingController controller = loader.getController();
-			controller.setDialogStage(dialogStage);
-			controller.setMainApp(this);
-			controller.setLoggedUser(user);
-			
-			// Show the dialog and wait until the user closes it
-			dialogStage.showAndWait();
-    	} catch (IOException e) {
-			e.printStackTrace();
-		}    	
+    	FXMLLoader loader = ShowDialog.getLoader("view/GroceryShopping.fxml");
     	
+    	Stage dialogStage = ShowDialog.getDialogStage("Grocery Shopping", loader, primaryStage);
+    	
+		GroceryShoppingController controller = loader.getController();
+		controller.setDialogStage(dialogStage);
+		controller.setMainApp(this);
+		controller.setLoggedUser(user);
+
+		dialogStage.showAndWait();
     }
     
     public void showShoppingCartView(User user) {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/ShoppingCartView.fxml"));
-			AnchorPane page = null;
-			try {
-				page = (AnchorPane) loader.load();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Shopping Cart");
-			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.initOwner(primaryStage);
-			Scene scene = new Scene(page);
-			dialogStage.setScene(scene);
-			
-			ShoppingCartController controller = loader.getController();
-			controller.setDialogStage(dialogStage);
-			controller.setMainApp(this);
-			controller.setLoggedUser(user);
-			
-			// Show the dialog and wait until the user closes it
-			dialogStage.showAndWait();
+    	FXMLLoader loader = ShowDialog.getLoader("view/ShoppingCartView.fxml");
+    	
+    	Stage dialogStage = ShowDialog.getDialogStage("Shopping Cart", loader, primaryStage);
+    	
+		ShoppingCartController controller = loader.getController();
+		controller.setDialogStage(dialogStage);
+		controller.setMainApp(this);
+		controller.setLoggedUser(user);
+
+		dialogStage.showAndWait();
     }
     
     public void showDeliveryView(User user) {
-    	try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/Delivery.fxml"));
-			AnchorPane page = (AnchorPane) loader.load();
-			
-			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Delivery");
-			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.initOwner(primaryStage);
-			Scene scene = new Scene(page);
-			dialogStage.setScene(scene);
-			
-			DeliveryController controller = loader.getController();
-			controller.setDialogStage(dialogStage);
-			controller.setLoggedUser(user);
-			
-			// Show the dialog and wait until the user closes it
-			dialogStage.showAndWait();
-    	} catch (IOException e) {
-			e.printStackTrace();
-		}
+    	FXMLLoader loader = ShowDialog.getLoader("view/Delivery.fxml");
+    	
+    	Stage dialogStage = ShowDialog.getDialogStage("Delivery", loader, primaryStage);
+    	
+		DeliveryController controller = loader.getController();
+		controller.setDialogStage(dialogStage);
+		controller.setLoggedUser(user);
+
+		dialogStage.showAndWait();
     }
        
     public void showManagerDashboard() {
@@ -194,119 +140,55 @@ public class MainApp extends Application {
 	}
     
     public void showUserProfileView(User user) {
-		try {
-			// Load the fxml file and create a new stage for the popup dialog.
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/UserProfile.fxml"));
-			AnchorPane page = (AnchorPane) loader.load();
+    	FXMLLoader loader = ShowDialog.getLoader("view/UserProfile.fxml");
+    	
+    	Stage dialogStage = ShowDialog.getDialogStage("Edit User", loader, primaryStage);
+    	
+		UserProfileController controller = loader.getController();
+		controller.setLoggedUser(user);
+		controller.setDialogStage(dialogStage);
 
-			// Create the dialog Stage.
-			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Edit User");
-			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.initOwner(primaryStage);
-			Scene scene = new Scene(page);
-			dialogStage.setScene(scene);
-			
-			// Set the person into the controller.
-			UserProfileController controller = loader.getController();
-			controller.setLoggedUser(user);
-			controller.setDialogStage(dialogStage);
-
-			// Show the dialog and wait until the user closes it
-			dialogStage.showAndWait();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}    	
+		dialogStage.showAndWait();
     }
     
     public void showAllExpensesView(User user) {
-		try {
-			// Load the fxml file and create a new stage for the popup dialog.
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/AllExpenses.fxml"));
-			AnchorPane page = (AnchorPane) loader.load();
+    	FXMLLoader loader = ShowDialog.getLoader("view/AllExpenses.fxml");
+    	
+    	Stage dialogStage = ShowDialog.getDialogStage("All Expenses", loader, primaryStage);
+    	
+		AllExpensesController controller = loader.getController();
+		controller.setLoggedUser(user);
+		controller.setDialogStage(dialogStage);
 
-			// Create the dialog Stage.
-			Stage dialogStage = new Stage();
-			dialogStage.setTitle("All Expenses");
-			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.initOwner(primaryStage);
-			Scene scene = new Scene(page);
-			dialogStage.setScene(scene);
-			
-			// Set the person into the controller.
-			AllExpensesController controller = loader.getController();
-			controller.setLoggedUser(user);
-			controller.setDialogStage(dialogStage);
-
-			// Show the dialog and wait until the user closes it
-			dialogStage.showAndWait();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}  
+		dialogStage.showAndWait();
     }
     
     public boolean showManagerEditDialog(Manager manager) {
-		try {
-			// Load the fxml file and create a new stage for the popup dialog.
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/ManagerEditDialog.fxml"));
-			AnchorPane page = (AnchorPane) loader.load();
+    	FXMLLoader loader = ShowDialog.getLoader("view/ManagerEditDialog.fxml");
+    	
+    	Stage dialogStage = ShowDialog.getDialogStage("Edit Managers", loader, primaryStage);
+    	
+		ManagerEditDialogController controller = loader.getController();
+		controller.setDialogStage(dialogStage);
+		controller.setManager(manager);
 
-			// Create the dialog Stage.
-			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Edit Managers");
-			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.initOwner(primaryStage);
-			Scene scene = new Scene(page);
-			dialogStage.setScene(scene);
-			
-			// Set the person into the controller.
-			ManagerEditDialogController controller = loader.getController();
-			controller.setDialogStage(dialogStage);
-			controller.setManager(manager);
-
-			// Show the dialog and wait until the user closes it
-			dialogStage.showAndWait();
-
-			return controller.isOkClicked();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		}
+		dialogStage.showAndWait();
+		
+		return controller.isOkClicked();
 	}
     
     public boolean showProductEditDialog(Product product) {
-		try {
-			// Load the fxml file and create a new stage for the popup dialog.
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/ProductEditDialog.fxml"));
-			AnchorPane page = (AnchorPane) loader.load();
+    	FXMLLoader loader = ShowDialog.getLoader("view/ProductEditDialog.fxml");
+    	
+    	Stage dialogStage = ShowDialog.getDialogStage("Edit Products", loader, primaryStage);
+    	
+		ProductEditDialogController controller = loader.getController();
+		controller.setDialogStage(dialogStage);
+		controller.setProduct(product);
 
-			// Create the dialog Stage.
-			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Edit Products");
-			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.initOwner(primaryStage);
-			Scene scene = new Scene(page);
-			dialogStage.setScene(scene);
-			
-			// Set the person into the controller.
-			ProductEditDialogController controller = loader.getController();
-			controller.setDialogStage(dialogStage);
-			controller.setProduct(product);
-
-			// Show the dialog and wait until the user closes it
-			dialogStage.showAndWait();
-
-			return controller.isOkClicked();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		}
+		dialogStage.showAndWait();
+		
+		return controller.isOkClicked();
 	}
     
     public static BorderPane getRootLayout() {

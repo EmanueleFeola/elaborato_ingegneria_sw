@@ -1,13 +1,10 @@
 package elaborato_ing_sw.view;
 
-
-import elaborato_ing_sw.MainApp;
 import elaborato_ing_sw.dataManager.UserDaoImpl;
 import elaborato_ing_sw.model.Credentials;
 import elaborato_ing_sw.model.User;
 import elaborato_ing_sw.utils.AlertUtil;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
@@ -41,7 +38,6 @@ public class UserProfileController {
 
 	@FXML
 	private void initialize() {
-		
 	}
 
 	public boolean isOkClicked() {

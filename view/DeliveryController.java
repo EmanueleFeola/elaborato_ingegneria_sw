@@ -11,8 +11,8 @@ import elaborato_ing_sw.model.Payment;
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.TimeSlot;
 import elaborato_ing_sw.model.User;
+import elaborato_ing_sw.utils.AlertUtil;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Alert.AlertType;
@@ -93,15 +93,7 @@ public class DeliveryController {
 		if (errorMessage.length() == 0)
 			return true;
 		else {
-			// Show the error message.
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.initOwner(dialogStage);
-			alert.setTitle("Invalid Fields");
-			alert.setHeaderText("Please correct invalid fields");
-			alert.setContentText(errorMessage);
-
-			alert.showAndWait();
-
+			AlertUtil.Alert(AlertType.ERROR, "Invalid Fields", "Please correct invalid fields", errorMessage);
 			return false;
 		}
 	}

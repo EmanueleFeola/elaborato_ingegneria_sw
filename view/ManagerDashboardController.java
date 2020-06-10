@@ -2,7 +2,6 @@ package elaborato_ing_sw.view;
 
 import javafx.fxml.FXML;
 
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 import javafx.scene.control.Label;
@@ -14,6 +13,7 @@ import elaborato_ing_sw.dataManager.ManagerDaoImpl;
 import elaborato_ing_sw.model.Manager;
 import elaborato_ing_sw.model.Person;
 import elaborato_ing_sw.model.Role;
+import elaborato_ing_sw.utils.AlertUtil;
 
 public class ManagerDashboardController {
 	@FXML
@@ -37,7 +37,7 @@ public class ManagerDashboardController {
 	private Label roleLabel;
 
 	private ManagerDaoImpl managerDao = ManagerDaoImpl.getManagerDaoImpl();
-	
+
 	private MainApp mainApp;
 
 	public ManagerDashboardController() {
@@ -98,14 +98,8 @@ public class ManagerDashboardController {
 		if (selectedIndex >= 0) {
 			managerDao.deleteItem(managerTable.getItems().get(selectedIndex));
 		} else {
-			// Nothing selected.
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.initOwner(MainApp.getPrimaryStage());
-			alert.setTitle("No Selection");
-			alert.setHeaderText("No Person Selected");
-			alert.setContentText("Please select a person in the table.");
-
-			alert.showAndWait();
+			AlertUtil.Alert(AlertType.WARNING, "No Selection", "No Person Selected",
+					"Please select a person in the table.");
 		}
 	}
 
@@ -132,39 +126,33 @@ public class ManagerDashboardController {
 	@FXML
 	private void handleEditManager() {
 		Manager selectedManager = (Manager) managerTable.getSelectionModel().getSelectedItem();
-		//System.out.println(selectedManager);
+		// System.out.println(selectedManager);
 		if (selectedManager != null) {
 			boolean okClicked = mainApp.showManagerEditDialog(selectedManager);
-			
+
 			if (okClicked) {
 				managerDao.updateItem(ManagerEditDialogController.getManager());
 				showManagerDetails(ManagerEditDialogController.getManager());
 			}
-			
-		} else {
-			// Nothing selected.
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.initOwner(MainApp.getPrimaryStage());
-			alert.setTitle("No Selection");
-			alert.setHeaderText("No Person Selected");
-			alert.setContentText("Please select a person in the table.");
 
-			alert.showAndWait();
+		} else {
+			AlertUtil.Alert(AlertType.WARNING, "No Selection", "No Person Selected",
+					"Please select a person in the table.");
 		}
 	}
-	
+
 	@FXML
 	private void handleLogout() {
 		mainApp.showLoginView();
 		System.out.println("Logged out successfully");
 	}
-	
+
 	@FXML
 	private void handleProducts() {
 		mainApp.showManagerProducts();
 		System.out.println("Redirected to manage products view");
 	}
-	
+
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}

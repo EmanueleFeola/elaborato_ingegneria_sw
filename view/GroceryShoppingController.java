@@ -72,7 +72,7 @@ public class GroceryShoppingController {
 	private Stage dialogStage;
 	private User loggedUser;
 
-	private File standardLogoFile = new File("src/elaborato_ing_sw/view/logo.png");
+	private File standardLogoFile = new File("src/elaborato_ing_sw/view/images/logo.png");
 	private Image standardLogoImage = new Image(standardLogoFile.toURI().toString());
 
 	@FXML
@@ -132,7 +132,7 @@ public class GroceryShoppingController {
 		if (product != null) {
 			nameLabel.setText(product.getName());
 			brandLabel.setText(product.getBrand());
-			priceLabel.setText(String.valueOf(product.getPrice()) + " €");
+			priceLabel.setText(String.valueOf(product.getPrice()) + " $");
 			isAvailable.setText(product.isAvailable() ? "Yes" : "No");
 			npcsLabel.setText(String.valueOf(product.getPcsPerPack()));
 

@@ -38,12 +38,6 @@ public class ShoppingCartController {
 	
 	private String user;
 	
-	// non ci dovrebbero essere due campi separati, ma uno unico (dao) che si riflette in automatico sulla view
-	// questo non è possibile perchè il campo products di ShoppinCart e'un arraylist e non un ObservableList
-	// ObservableList non si serialliza nemmeno con la classe magica
-	// si potrebbe risolvere serializzando uno ad uno i prodotti dentro i cart, però bisognerebbe riscrivere i 
-	// metodi di write e read solo per la classe shoppingCart e non ne vale la pena perchè troppo incasinato
-	// questo si puo risolvere con db, dato che in quel caso non serializziamo una minchia
 	private ArrayList<Product> cartProducts;
 	ObservableList<Product> tableProducts;
 
