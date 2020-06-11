@@ -65,7 +65,7 @@ public class GroceryShoppingController {
 
 	@FXML
 	private ImageView image;
-
+	
 	private ProductDaoImpl productDao = ProductDaoImpl.getProductDaoImpl();
 	private ShoppingCartDaoImpl shoppingCartDao = ShoppingCartDaoImpl.getShoppingCartDaoImpl();
 	private MainApp mainApp;
@@ -200,7 +200,7 @@ public class GroceryShoppingController {
 
 	@FXML
 	private void handleProfile() {
-		mainApp.showUserProfileView(loggedUser);
+		this.loggedUser = mainApp.showUserProfileView(loggedUser);
 	}
 
 	@FXML

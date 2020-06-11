@@ -104,7 +104,9 @@ public class ShoppingCartController {
 
 	@FXML
 	private void handleDeliver() {
-		mainApp.showDeliveryView(loggedUser);
+		if (mainApp.showDeliveryView(loggedUser)) {
+			dialogStage.close();
+		}
 	}
 
 	public void setDialogStage(Stage dialogStage) {

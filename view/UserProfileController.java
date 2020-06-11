@@ -52,6 +52,10 @@ public class UserProfileController {
 		this.loggedUser = user;
 		showUserDetails();
 	}
+	
+	public User getLoggedUser() {
+		return this.loggedUser;
+	}
 
 	private void showUserDetails() {
 		if (loggedUser != null) {
@@ -87,7 +91,9 @@ public class UserProfileController {
 		Credentials c = new Credentials(usernameField.getText(), passwordField.getText());        
 		User u = new User(firstNameField.getText(), lastNameField.getText(), birthdayField.getValue(), c, streetField.getText(),
 				cityField.getText(), Integer.parseInt(postalCodeField.getText()), telNumberField.getText());
-				
+			
+		this.setLoggedUser(u);
+		
 		if(loggedUser == null)
 			userDao.addItem(u);			
 		else

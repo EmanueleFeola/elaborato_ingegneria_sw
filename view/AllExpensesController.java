@@ -3,17 +3,20 @@ package elaborato_ing_sw.view;
 import java.time.LocalDate;
 import java.util.function.Predicate;
 
+import elaborato_ing_sw.MainApp;
 import elaborato_ing_sw.dataManager.ExpensesDaoImpl;
 import elaborato_ing_sw.model.Delivery;
 import elaborato_ing_sw.model.Expense;
 import elaborato_ing_sw.model.Payment;
 import elaborato_ing_sw.model.TimeSlot;
 import elaborato_ing_sw.model.User;
+import elaborato_ing_sw.utils.AlertUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class AllExpensesController {
@@ -33,6 +36,7 @@ public class AllExpensesController {
 	private ExpensesDaoImpl expensesDao = ExpensesDaoImpl.getExpensesDaoImpl();
 	ObservableList<Expense> tableExpenses;
 
+	private MainApp mainApp;
 	private Stage dialogStage;
 	private User loggedUser;
 	private String user;
@@ -62,8 +66,22 @@ public class AllExpensesController {
 	}
 	
 	@FXML
+	private void handleProductDetails() {
+		int selectedIndex = expensesTable.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			int id = expensesTable.getItems().get(selectedIndex).getId();
+			mainApp.showDeliveryProductsView(id);
+		} else
+			AlertUtil.Alert(AlertType.WARNING, "No Selection", "No Expense Selected", "Please select an expense in the table");
+	}
+	
+	@FXML
 	private void handleClose() {
 		dialogStage.close();
+	}
+	
+	public void setMainApp(MainApp mainApp) {
+		this.mainApp = mainApp;
 	}
 
 	public void setLoggedUser(User loggedUser) {

@@ -14,6 +14,7 @@ import elaborato_ing_sw.utils.ShowDialog;
 import elaborato_ing_sw.utils.ShowView;
 import elaborato_ing_sw.view.AllExpensesController;
 import elaborato_ing_sw.view.DeliveryController;
+import elaborato_ing_sw.view.DeliveryProductsController;
 import elaborato_ing_sw.view.GroceryShoppingController;
 import elaborato_ing_sw.view.LoginController;
 import elaborato_ing_sw.view.ManagerDashboardController;
@@ -121,7 +122,7 @@ public class MainApp extends Application {
 		dialogStage.showAndWait();
     }
     
-    public void showDeliveryView(User user) {
+    public boolean showDeliveryView(User user) {
     	FXMLLoader loader = ShowDialog.getLoader("view/Delivery.fxml");
     	
     	Stage dialogStage = ShowDialog.getDialogStage("Delivery", loader, primaryStage);
@@ -131,6 +132,8 @@ public class MainApp extends Application {
 		controller.setLoggedUser(user);
 
 		dialogStage.showAndWait();
+		
+		return controller.isOkClicked();
     }
        
     public void showManagerDashboard() {
@@ -139,7 +142,7 @@ public class MainApp extends Application {
 		controller.setMainApp(this);
 	}
     
-    public void showUserProfileView(User user) {
+    public User showUserProfileView(User user) {
     	FXMLLoader loader = ShowDialog.getLoader("view/UserProfile.fxml");
     	
     	Stage dialogStage = ShowDialog.getDialogStage("Edit User", loader, primaryStage);
@@ -149,6 +152,8 @@ public class MainApp extends Application {
 		controller.setDialogStage(dialogStage);
 
 		dialogStage.showAndWait();
+		
+		return controller.getLoggedUser();
     }
     
     public void showAllExpensesView(User user) {
@@ -157,7 +162,20 @@ public class MainApp extends Application {
     	Stage dialogStage = ShowDialog.getDialogStage("All Expenses", loader, primaryStage);
     	
 		AllExpensesController controller = loader.getController();
+		controller.setMainApp(this);
 		controller.setLoggedUser(user);
+		controller.setDialogStage(dialogStage);
+
+		dialogStage.showAndWait();
+    }
+    
+    public void showDeliveryProductsView(int id) {
+    	FXMLLoader loader = ShowDialog.getLoader("view/DeliveryProductsView.fxml");
+    	
+    	Stage dialogStage = ShowDialog.getDialogStage("Expense Products Details", loader, primaryStage);
+    	
+		DeliveryProductsController controller = loader.getController();
+		controller.setExpenseId(id);
 		controller.setDialogStage(dialogStage);
 
 		dialogStage.showAndWait();

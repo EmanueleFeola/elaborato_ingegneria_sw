@@ -6,14 +6,14 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="300.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="300.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.DeliveryProductsController">
    <children>
       <ButtonBar layoutX="51.0" layoutY="484.0" prefHeight="40.0" prefWidth="582.0" translateX="-10.0">
         <buttons>
-            <Button mnemonicParsing="false" text="Close" />
+            <Button mnemonicParsing="false" onAction="#handleClose" text="Close" />
         </buttons>
       </ButtonBar>
-      <TableView fx:id="shoppingCartTable" layoutX="217.0" layoutY="8.0" prefHeight="466.0" prefWidth="613.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <TableView fx:id="productsDetailsTable" layoutX="217.0" layoutY="8.0" prefHeight="466.0" prefWidth="613.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <columns>
           <TableColumn fx:id="name" prefWidth="127.0" text="Name" />
           <TableColumn fx:id="brand" prefWidth="134.0" text="Brand" />

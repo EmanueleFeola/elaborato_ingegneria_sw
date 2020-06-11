@@ -17,6 +17,14 @@ public class ExpensesDaoImpl extends DaoImpl<Expense> {
 		return (ExpensesDaoImpl) instance;
 	}
 
+	public Expense getItemById(int id) {
+		for (Expense e : getAllItems())
+			if (e.getId() == id)
+				return e;
+
+		return null;
+	}
+	
 	@Override
 	public Expense getItem(String user) {
 		for (Expense e : getAllItems())
