@@ -1,7 +1,6 @@
 package elaborato_ing_sw;
 
 import java.io.IOException;
-
 import elaborato_ing_sw.dataManager.ExpensesDaoImpl;
 import elaborato_ing_sw.dataManager.ManagerDaoImpl;
 import elaborato_ing_sw.dataManager.ProductDaoImpl;
@@ -15,10 +14,12 @@ import elaborato_ing_sw.utils.ShowView;
 import elaborato_ing_sw.view.AllExpensesController;
 import elaborato_ing_sw.view.DeliveryController;
 import elaborato_ing_sw.view.DeliveryProductsController;
+import elaborato_ing_sw.view.EditExpenseController;
 import elaborato_ing_sw.view.GroceryShoppingController;
 import elaborato_ing_sw.view.LoginController;
 import elaborato_ing_sw.view.ManagerDashboardController;
 import elaborato_ing_sw.view.ManagerEditDialogController;
+import elaborato_ing_sw.view.ManagerExpensesController;
 import elaborato_ing_sw.view.ManagerProductsController;
 import elaborato_ing_sw.view.ProductEditDialogController;
 import elaborato_ing_sw.view.ShoppingCartController;
@@ -47,6 +48,9 @@ public class MainApp extends Application {
 
         System.out.println("Users from file: ");
         System.out.println(userDao.getAllItems());
+        
+        //Manager manager = new Manager("paolo", "bitta", LocalDate.of(1972, 5, 16), "pwd", 12345, Role.ADMIN);
+        //managerDao.addItem(manager);
         
         System.out.println("Managers from file: ");
         System.out.println(managerDao.getAllItems());
@@ -208,6 +212,30 @@ public class MainApp extends Application {
 		
 		return controller.isOkClicked();
 	}
+    
+    public void showManagerExpensesView() {
+    	FXMLLoader loader = ShowDialog.getLoader("view/ManagerExpenses.fxml");
+    	
+    	Stage dialogStage = ShowDialog.getDialogStage("Manage Expenses", loader, primaryStage);
+    	
+		ManagerExpensesController controller = loader.getController();
+		controller.setMainApp(this);
+		controller.setDialogStage(dialogStage);
+
+		dialogStage.showAndWait();
+    }
+    
+    public void showEditDeliveryStatusView(int id) {
+    	FXMLLoader loader = ShowDialog.getLoader("view/EditDeliveryStatus.fxml");
+    	
+    	Stage dialogStage = ShowDialog.getDialogStage("Expense Status Edit", loader, primaryStage);
+    	
+		EditExpenseController controller = loader.getController();
+		controller.setExpenseId(id);
+		controller.setDialogStage(dialogStage);
+
+		dialogStage.showAndWait();
+    }
     
     public static BorderPane getRootLayout() {
     	return MainApp.rootLayout;

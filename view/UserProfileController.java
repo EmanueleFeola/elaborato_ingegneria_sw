@@ -92,12 +92,13 @@ public class UserProfileController {
 		User u = new User(firstNameField.getText(), lastNameField.getText(), birthdayField.getValue(), c, streetField.getText(),
 				cityField.getText(), Integer.parseInt(postalCodeField.getText()), telNumberField.getText());
 			
-		this.setLoggedUser(u);
 		
 		if(loggedUser == null)
 			userDao.addItem(u);			
 		else
 			userDao.updateItem(u);
+		
+		this.setLoggedUser(u);
 		
 		if (!userDao.updateSource())
 			System.out.println("User non registered");

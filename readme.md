@@ -1,6 +1,5 @@
 TODO:
 
-- aggiungere la gestione spese per i manager
 - carta fedeltà
 - per gestire le immagini usare il pattern proxy
 	- evitare di caricare la stessa img due volte
@@ -23,9 +22,10 @@ shopping cart controller (una volta implementato il db)
 - le properties di javafx non sono serializzabili
     - ho aggiunto una classe (copiato da internet) che permette di serializzarle facendo qualche magia
     - va bene finchè non implementiamo il db 
-    
-- nel DAO delle expenses ho aggiunto un metodo getItemById che mi restituisce una spesa in base all'id univoco. Serve per poter mostrare nel dettaglio i prodotti di ogni spesa.
+
+- [NEW] nel DAO delle expenses ho aggiunto un metodo getItemById che mi restituisce una spesa in base all'id univoco. Serve per poter mostrare nel dettaglio i prodotti di ogni spesa.
     Non si può filtrare le spese in base all'utente perchè quest'ultimo può fare più spese
+- [NEW] ho impostato il campo user di Credentials a WriteableObject per poterlo visualizzare nella tabella delle spese vista dai manager
 
 TODO documentazione finale
 

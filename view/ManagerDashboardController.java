@@ -152,6 +152,11 @@ public class ManagerDashboardController {
 		mainApp.showManagerProducts();
 		System.out.println("Redirected to manage products view");
 	}
+	
+	@FXML
+	private void handleExpenses() {
+		mainApp.showManagerExpensesView();
+	}
 
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
