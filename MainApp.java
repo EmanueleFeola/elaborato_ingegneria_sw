@@ -1,13 +1,17 @@
 package elaborato_ing_sw;
 
 import java.io.IOException;
+import java.time.LocalDate;
+
 import elaborato_ing_sw.dataManager.ExpensesDaoImpl;
 import elaborato_ing_sw.dataManager.ManagerDaoImpl;
 import elaborato_ing_sw.dataManager.ProductDaoImpl;
 import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
 import elaborato_ing_sw.dataManager.UserDaoImpl;
+import elaborato_ing_sw.model.Credentials;
 import elaborato_ing_sw.model.Manager;
 import elaborato_ing_sw.model.Product;
+import elaborato_ing_sw.model.Role;
 import elaborato_ing_sw.model.User;
 import elaborato_ing_sw.utils.ShowDialog;
 import elaborato_ing_sw.utils.ShowView;
@@ -49,9 +53,6 @@ public class MainApp extends Application {
         System.out.println("Users from file: ");
         System.out.println(userDao.getAllItems());
         
-        //Manager manager = new Manager("paolo", "bitta", LocalDate.of(1972, 5, 16), "pwd", 12345, Role.ADMIN);
-        //managerDao.addItem(manager);
-        
         System.out.println("Managers from file: ");
         System.out.println(managerDao.getAllItems());
 
@@ -76,7 +77,7 @@ public class MainApp extends Application {
         try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
+            loader.setLocation(MainApp.class.getResource("view/RootView.fxml"));
             rootLayout = (BorderPane) loader.load();
             
             // Show the scene containing the root layout.
@@ -89,19 +90,19 @@ public class MainApp extends Application {
     }
     
     public void showLoginView() {
-		FXMLLoader loader = ShowView.showView("view/Login.fxml");
+		FXMLLoader loader = ShowView.showView("view/LoginView.fxml");
 		LoginController controller = loader.getController();
 		controller.setMainApp(this);
     }
     
     public void showManagerProducts() {
-		FXMLLoader loader = ShowView.showView("view/ManagerProducts.fxml");
+		FXMLLoader loader = ShowView.showView("view/ManagerProductsView.fxml");
 		ManagerProductsController controller = loader.getController();
 		controller.setMainApp(this);
     }
     
     public void showGroceryShoppingView(User user) {
-    	FXMLLoader loader = ShowDialog.getLoader("view/GroceryShopping.fxml");
+    	FXMLLoader loader = ShowDialog.getLoader("view/GroceryShoppingView.fxml");
     	
     	Stage dialogStage = ShowDialog.getDialogStage("Grocery Shopping", loader, primaryStage);
     	
@@ -127,7 +128,7 @@ public class MainApp extends Application {
     }
     
     public boolean showDeliveryView(User user) {
-    	FXMLLoader loader = ShowDialog.getLoader("view/Delivery.fxml");
+    	FXMLLoader loader = ShowDialog.getLoader("view/DeliveryView.fxml");
     	
     	Stage dialogStage = ShowDialog.getDialogStage("Delivery", loader, primaryStage);
     	
@@ -141,13 +142,13 @@ public class MainApp extends Application {
     }
        
     public void showManagerDashboard() {
-		FXMLLoader loader = ShowView.showView("view/ManagerDashboard.fxml");
+		FXMLLoader loader = ShowView.showView("view/ManagerDashboardView.fxml");
 		ManagerDashboardController controller = loader.getController();
 		controller.setMainApp(this);
 	}
     
     public User showUserProfileView(User user) {
-    	FXMLLoader loader = ShowDialog.getLoader("view/UserProfile.fxml");
+    	FXMLLoader loader = ShowDialog.getLoader("view/UserProfileView.fxml");
     	
     	Stage dialogStage = ShowDialog.getDialogStage("Edit User", loader, primaryStage);
     	
@@ -161,7 +162,7 @@ public class MainApp extends Application {
     }
     
     public void showAllExpensesView(User user) {
-    	FXMLLoader loader = ShowDialog.getLoader("view/AllExpenses.fxml");
+    	FXMLLoader loader = ShowDialog.getLoader("view/AllExpensesView.fxml");
     	
     	Stage dialogStage = ShowDialog.getDialogStage("All Expenses", loader, primaryStage);
     	
@@ -186,7 +187,7 @@ public class MainApp extends Application {
     }
     
     public boolean showManagerEditDialog(Manager manager) {
-    	FXMLLoader loader = ShowDialog.getLoader("view/ManagerEditDialog.fxml");
+    	FXMLLoader loader = ShowDialog.getLoader("view/ManagerEditView.fxml");
     	
     	Stage dialogStage = ShowDialog.getDialogStage("Edit Managers", loader, primaryStage);
     	
@@ -200,7 +201,7 @@ public class MainApp extends Application {
 	}
     
     public boolean showProductEditDialog(Product product) {
-    	FXMLLoader loader = ShowDialog.getLoader("view/ProductEditDialog.fxml");
+    	FXMLLoader loader = ShowDialog.getLoader("view/ProductEditView.fxml");
     	
     	Stage dialogStage = ShowDialog.getDialogStage("Edit Products", loader, primaryStage);
     	
@@ -214,7 +215,7 @@ public class MainApp extends Application {
 	}
     
     public void showManagerExpensesView() {
-    	FXMLLoader loader = ShowDialog.getLoader("view/ManagerExpenses.fxml");
+    	FXMLLoader loader = ShowDialog.getLoader("view/ManagerExpensesView.fxml");
     	
     	Stage dialogStage = ShowDialog.getDialogStage("Manage Expenses", loader, primaryStage);
     	
@@ -226,7 +227,7 @@ public class MainApp extends Application {
     }
     
     public void showEditDeliveryStatusView(int id) {
-    	FXMLLoader loader = ShowDialog.getLoader("view/EditDeliveryStatus.fxml");
+    	FXMLLoader loader = ShowDialog.getLoader("view/EditDeliveryView.fxml");
     	
     	Stage dialogStage = ShowDialog.getDialogStage("Expense Status Edit", loader, primaryStage);
     	

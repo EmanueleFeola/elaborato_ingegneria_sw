@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 public class DeliveryProductsController {
 	@FXML
 	private TableView<Product> productsDetailsTable;
-
 	@FXML
 	private TableColumn<Product, String> name;
 	@FXML
@@ -43,7 +42,6 @@ public class DeliveryProductsController {
 
 		this.prods = FXCollections.observableArrayList(expensesDao.getItemById(expenseId).getProducts().keySet());
 		productsDetailsTable.setItems(prods);
-
 	}
 
 	public void setExpenseId(int id) {

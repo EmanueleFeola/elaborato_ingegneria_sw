@@ -30,21 +30,18 @@ public class ManagerProductsController {
 
 	@FXML
 	private Label nameLabel;
-
 	@FXML
 	private Label brandLabel;
-
 	@FXML
 	private Label priceLabel;
-
 	@FXML
 	private Label pcsLabel;
-
 	@FXML
 	private Label sectionLabel;
-
 	@FXML
-	private Label isAvailable;
+	private Label isAvailableLabel;
+	@FXML
+	private Label iconPathLabel;
 
 	private ProductDaoImpl productDao = ProductDaoImpl.getProductDaoImpl();
 
@@ -55,7 +52,6 @@ public class ManagerProductsController {
 
 	@FXML
 	private void initialize() {
-		// Initialize the person table with the two columns.
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
 		brandColumn.setCellValueFactory(cellData -> cellData.getValue().getBrandProperty());
 		sectionColumn.setCellValueFactory(cellData -> cellData.getValue().getSectionProperty());
@@ -71,23 +67,28 @@ public class ManagerProductsController {
 		productsTable.setItems(productDao.getAllItems());
 	}
 
-	private void showProductDetails(Product m) {
-		if (m != null) {
+	private void showProductDetails(Product p) {
+		if (p != null) {
 			// Fill the labels with info from the m object.
-			nameLabel.setText(m.getName());
-			brandLabel.setText(m.getBrand());
-			sectionLabel.setText(m.getSection().toString());
-			pcsLabel.setText(String.valueOf(m.getPcsPerPack()));
-			priceLabel.setText(String.valueOf(m.getPrice()));
-			isAvailable.setText(m.isAvailable() ? "Si" : "No");
+			nameLabel.setText(p.getName());
+			brandLabel.setText(p.getBrand());
+			sectionLabel.setText(p.getSection().toString());
+			pcsLabel.setText(String.valueOf(p.getPcsPerPack()));
+			priceLabel.setText(String.valueOf(p.getPrice()) + " €");
+			
+			String[] splitFilename = p.getIconPath().split("/");
+			iconPathLabel.setText(splitFilename[splitFilename.length - 1]);
+			
+			isAvailableLabel.setText(p.isAvailable() ? "Si" : "No");
 		} else {
-			// Person is null, remove all the text.
+			// Product is null, remove all the text.
 			nameLabel.setText("");
 			brandLabel.setText("");
 			sectionLabel.setText("");
 			pcsLabel.setText("");
 			priceLabel.setText("");
-			isAvailable.setText("");
+			iconPathLabel.setText("");
+			isAvailableLabel.setText("");
 		}
 	}
 

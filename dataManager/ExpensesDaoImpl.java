@@ -36,9 +36,8 @@ public class ExpensesDaoImpl extends DaoImpl<Expense> {
 	
 	@Override
 	public boolean addItem (Expense expense) {
-		if (objs.contains(expense)) {
+		if (objs.contains(expense))
 			return false;
-		}
 
 		objs.add(expense);
 

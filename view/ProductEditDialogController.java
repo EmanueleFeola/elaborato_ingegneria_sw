@@ -8,6 +8,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
+import java.nio.file.Paths;
+
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.Section;
 import elaborato_ing_sw.utils.AlertUtil;
@@ -23,6 +25,8 @@ public class ProductEditDialogController {
 	@FXML
 	private TextField priceField;
 	@FXML
+	private TextField iconPathField;
+	@FXML
 	private RadioButton isAvailable;
 	@FXML
 	private ChoiceBox<Section> sectionField;
@@ -36,31 +40,19 @@ public class ProductEditDialogController {
 	@SuppressWarnings("unused")
 	private boolean isNewMode; // 1 per new, 0 per edit
 
-	/**
-	 * Initializes the controller class. This method is automatically called after
-	 * the fxml file has been loaded.
-	 */
 	@FXML
 	private void initialize() {
+		// TODO: da mettere come proprietà di default dell oggetto product
+		// evitare di mettere stringhe cablate
 		this.iconPath = "src/elaborato_ing_sw/view/images/logo.png";
 	}
 
-	/**
-	 * Sets the stage of this dialog.
-	 * 
-	 * @param dialogStage
-	 */
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}
 
-	/**
-	 * Sets the person to be edited in the dialog.
-	 * 
-	 * @param person
-	 */
-	public void setProduct(Product m) {
-		product = m;
+	public void setProduct(Product p) {
+		product = p;
 		System.out.println("---");
 		System.out.println("product: " + product);
 
@@ -76,21 +68,14 @@ public class ProductEditDialogController {
 		sectionField.setValue(product.getSection());
 		pcsField.setText(String.valueOf(product.getPcsPerPack()));
 		priceField.setText(String.valueOf(product.getPrice()));
+		iconPathField.setText(product.getIconPath());
 		isAvailable.setSelected(product.isAvailable());
 	}
 
-	/**
-	 * Returns true if the user clicked OK, false otherwise.
-	 * 
-	 * @return
-	 */
 	public boolean isOkClicked() {
 		return okClicked;
 	}
 
-	/**
-	 * Called when the user clicks ok.
-	 */
 	@FXML
 	private void handleOk() {
 		if (!isInputValid())
@@ -110,14 +95,15 @@ public class ProductEditDialogController {
 			product.setAvailable(isAvailable.isSelected());
 			product.setQuantity(1);
 		}
-
+		
+		// aggiorno i campi della view
+		// se ci sono stati cambiamenti, li vedo subito
+		setProduct(product); 
+		
 		okClicked = true;
 		dialogStage.close();
 	}
 
-	/**
-	 * Called when the user clicks cancel.
-	 */
 	@FXML
 	private void handleCancel() {
 		dialogStage.close();
@@ -135,18 +121,22 @@ public class ProductEditDialogController {
 		// imposto come directory iniziale quella indicata da imgPath
 		fileChooser.setInitialDirectory(new File(imgPath));
 		
-		// aggiungo dei possibili filtri, selezionabili nella parte bassa della finestra
-		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Images", "*.*"),
-				new FileChooser.ExtensionFilter("JPG", "*.jpg"), new FileChooser.ExtensionFilter("PNG", "*.png"));
+		// restringo il dominio di selezione dei file {jpg, png}
+		FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
+		fileChooser.getExtensionFilters().add(imageFilter);
 
 		// apro la finestra
 		File selectedFile = fileChooser.showOpenDialog(dialogStage);
-
+		
 		// creo il path dell'immagine e lo imposto al prodotto
 		if (selectedFile != null) {
-			System.out.println("File selected: " + selectedFile.getName());
-			this.iconPath = imgPath + "/" + selectedFile.getName();
-			System.out.println("product image set");			
+			if(Paths.get(imgPath + "/" + selectedFile.getName()).toFile().exists()) {
+				System.out.println("File selected: " + selectedFile.getName());
+				this.iconPath = imgPath + "/" + selectedFile.getName();
+				System.out.println("image path updated successfully");							
+			} else{
+				AlertUtil.Alert(AlertType.ERROR, "Wrong directory", "The selected image is not contained in the application images folder", "Please consider moving the selected image in the application images folder, then try again");
+			}
 		} else {
 			System.out.println("File selection cancelled.");
 		}

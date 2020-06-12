@@ -59,21 +59,19 @@ public class DeliveryController {
 		} while (expensesDao.getItem(user) != null && expensesDao.getItem(user).getId() == id);
 
 		double priceTotPerProd;
+		double priceTot = 0;
+
 		HashMap<Product, Double> products = new HashMap<Product, Double>();
 		for (Product p : shoppingCartDao.getItem(user).getProducts()) {
+			priceTot += p.getPrice() * p.getQuantity();
 			priceTotPerProd = p.getPrice() * p.getQuantity();
 			products.put(p, priceTotPerProd);
 		}
-
-		double priceTot = 0;
-		for (Double prc : products.values())
-			priceTot += prc;
 		
 		Expense expense = new Expense(id, deliveryDate.getValue(), timeSlot.getValue(), loggedUser, priceTot,
 				paymentType.getValue(), Delivery.CONFERMATA, products);
 
 		expensesDao.addItem(expense);
-
 		shoppingCartDao.deleteItem(shoppingCartDao.getItem(user));
 		
 		okClicked = true;
