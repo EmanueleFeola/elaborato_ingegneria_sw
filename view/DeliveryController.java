@@ -1,8 +1,6 @@
 package elaborato_ing_sw.view;
 
 import java.util.HashMap;
-import java.util.Random;
-
 import elaborato_ing_sw.dataManager.ExpensesDaoImpl;
 import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
 import elaborato_ing_sw.model.Delivery;
@@ -51,12 +49,7 @@ public class DeliveryController {
 
 		this.user = loggedUser.getCredentials().getUser();
 
-		Random rnd = new Random();
-		int id;
-
-		do {
-			id = rnd.nextInt();
-		} while (expensesDao.getItem(user) != null && expensesDao.getItem(user).getId() == id);
+		int id = expensesDao.getAllItems().size();
 
 		double priceTotPerProd;
 		double priceTot = 0;

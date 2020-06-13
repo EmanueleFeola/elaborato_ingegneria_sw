@@ -1,13 +1,7 @@
 TODO:
-- [DONE] rinominare le view
-- [DONE] quando manager va nella view prodotti ci deve essere il campo path dell img
-- [DONE] quando un manager seleziona un img per prenderne il path deve poter scegliere solo immagini, non altri tipi di file
-- [DONE] quando un manager seleziona un img per prenderne il path non deve poter selezionare una img esterna alla cartella settata come base, se no puo selezionare un img tipo sul desktop che non sarà disponibile sul pc di qualcun altro (sia di un manager, sia di un user)
-- se un prodotto non è available non può essere aggiunto nel carrello dall'utente, il fatto che sia possibile visualizzarlo e vederne i dettagli è opinabile, secondo me è giusto cosi
-- quando c'è da settare l'id univoco di un oggetto, invece di usare random, mettere un id progressivo (1....N)
-    - si potrebbe anche prendere come id l'indice dell'oggetto nel'array in cui è memorizzato
-        - tanto quando si aggiunge un nuovo ogg ad un array lo si fa in push, quindi quando viene serializzato si mette in coda al file
-- carta fedeltà
+- [DONE] se un prodotto non è available non può essere aggiunto nel carrello dall'utente, il fatto che sia possibile visualizzarlo e vederne i dettagli è opinabile, secondo me è giusto cosi
+- [DONE] quando c'è da settare l'id univoco di un oggetto, invece di usare random, mettere un id progressivo (1....N) -> fatto usando l'indice dell'oggetto nell'array in cui è memorizzato
+- [IN PROGRESS] carta fedeltà
 - per gestire le immagini usare il pattern proxy
 	- evitare di caricare la stessa img due volte
 
@@ -30,9 +24,9 @@ shopping cart controller (una volta implementato il db)
     - ho aggiunto una classe (copiato da internet) che permette di serializzarle facendo qualche magia
     - va bene finchè non implementiamo il db 
 
-- [NEW] nel DAO delle expenses ho aggiunto un metodo getItemById che mi restituisce una spesa in base all'id univoco. Serve per poter mostrare nel dettaglio i prodotti di ogni spesa.
+- nel DAO delle expenses ho aggiunto un metodo getItemById che mi restituisce una spesa in base all'id univoco. Serve per poter mostrare nel dettaglio i prodotti di ogni spesa.
     Non si può filtrare le spese in base all'utente perchè quest'ultimo può fare più spese
-- [NEW] ho impostato il campo user di Credentials a WriteableObject per poterlo visualizzare nella tabella delle spese vista dai manager
+- ho impostato il campo user di Credentials a WriteableObject per poterlo visualizzare nella tabella delle spese vista dai manager
 
 TODO documentazione finale
 

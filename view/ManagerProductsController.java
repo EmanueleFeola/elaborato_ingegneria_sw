@@ -74,7 +74,7 @@ public class ManagerProductsController {
 			brandLabel.setText(p.getBrand());
 			sectionLabel.setText(p.getSection().toString());
 			pcsLabel.setText(String.valueOf(p.getPcsPerPack()));
-			priceLabel.setText(String.valueOf(p.getPrice()) + " €");
+			priceLabel.setText(String.valueOf(p.getPrice()) + " $");
 			
 			String[] splitFilename = p.getIconPath().split("/");
 			iconPathLabel.setText(splitFilename[splitFilename.length - 1]);

@@ -98,7 +98,9 @@ public class GroceryShoppingController {
 				
 			Product p = selectedTable.getItems().get(selectedIndex);
 			
-			if (shoppingCartDao.getCartProducts(user).contains(p))
+			if (!p.isAvailable())
+				AlertUtil.Alert(AlertType.INFORMATION, "Info", "Product not available", null);
+			else if (shoppingCartDao.getCartProducts(user).contains(p))
 				AlertUtil.Alert(AlertType.INFORMATION, "Info", "Product already in shopping cart", "Quantity can be modified in the shopping cart");
 			else 
 				shoppingCartDao.addCartProduct(user, p);

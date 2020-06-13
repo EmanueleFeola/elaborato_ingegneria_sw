@@ -1,17 +1,14 @@
 package elaborato_ing_sw;
 
 import java.io.IOException;
-import java.time.LocalDate;
-
 import elaborato_ing_sw.dataManager.ExpensesDaoImpl;
+import elaborato_ing_sw.dataManager.FidelityCardDaoImpl;
 import elaborato_ing_sw.dataManager.ManagerDaoImpl;
 import elaborato_ing_sw.dataManager.ProductDaoImpl;
 import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
 import elaborato_ing_sw.dataManager.UserDaoImpl;
-import elaborato_ing_sw.model.Credentials;
 import elaborato_ing_sw.model.Manager;
 import elaborato_ing_sw.model.Product;
-import elaborato_ing_sw.model.Role;
 import elaborato_ing_sw.model.User;
 import elaborato_ing_sw.utils.ShowDialog;
 import elaborato_ing_sw.utils.ShowView;
@@ -44,7 +41,8 @@ public class MainApp extends Application {
 	private ProductDaoImpl productDao = ProductDaoImpl.getProductDaoImpl();
 	private ShoppingCartDaoImpl shoppingCartDao = ShoppingCartDaoImpl.getShoppingCartDaoImpl();
 	private ExpensesDaoImpl expensesDao = ExpensesDaoImpl.getExpensesDaoImpl();
-
+	private FidelityCardDaoImpl fcardDao = FidelityCardDaoImpl.getExpensesDaoImpl();
+	
     @Override
     public void start(Stage primaryStage) {
         MainApp.primaryStage = primaryStage;
@@ -52,6 +50,9 @@ public class MainApp extends Application {
 
         System.out.println("Users from file: ");
         System.out.println(userDao.getAllItems());
+        
+        System.out.println("Fidelity Cards from file: ");
+        System.out.println(fcardDao.getAllItems());
         
         System.out.println("Managers from file: ");
         System.out.println(managerDao.getAllItems());
@@ -220,14 +221,15 @@ public class MainApp extends Application {
     	Stage dialogStage = ShowDialog.getDialogStage("Manage Expenses", loader, primaryStage);
     	
 		ManagerExpensesController controller = loader.getController();
-		controller.setMainApp(this);
 		controller.setDialogStage(dialogStage);
+		controller.setMainApp(this);
+		
 
 		dialogStage.showAndWait();
     }
     
     public void showEditDeliveryStatusView(int id) {
-    	FXMLLoader loader = ShowDialog.getLoader("view/EditDeliveryView.fxml");
+    	FXMLLoader loader = ShowDialog.getLoader("view/EditDeliveryStatusView.fxml");
     	
     	Stage dialogStage = ShowDialog.getDialogStage("Expense Status Edit", loader, primaryStage);
     	
