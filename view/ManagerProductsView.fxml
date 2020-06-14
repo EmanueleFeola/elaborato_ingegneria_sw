@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.ManagerProductsController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.ManagerProductsController">
    <children>
       <SplitPane dividerPositions="0.5" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
@@ -70,7 +70,7 @@
                         <Button mnemonicParsing="false" onAction="#handleDeleteProduct" prefHeight="26.0" prefWidth="72.0" text="Delete" />
                     </buttons>
                   </ButtonBar>
-                  <Button layoutX="223.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBack" text="Back" />
+                  <Button layoutX="235.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBack" text="Back" />
                </children></AnchorPane>
          </items>
       </SplitPane>

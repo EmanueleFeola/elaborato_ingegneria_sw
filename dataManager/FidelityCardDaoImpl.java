@@ -10,7 +10,7 @@ public class FidelityCardDaoImpl extends DaoImpl<FidelityCard> {
 		super(filepath);
 	}
 
-	public static FidelityCardDaoImpl getExpensesDaoImpl() {
+	public static FidelityCardDaoImpl getFidelityCardImpl() {
 		if (instance == null)
 			instance = new FidelityCardDaoImpl(filename);
 

@@ -20,6 +20,7 @@ public class EditExpenseController {
 	private void handleOk() {
 		Expense e = expensesDao.getItemById(expenseId);
 		e.setDelivery(status.getValue());
+		expensesDao.updateItem(e);
 		dialogStage.close();
 	}
 	

@@ -16,6 +16,7 @@ import elaborato_ing_sw.view.AllExpensesController;
 import elaborato_ing_sw.view.DeliveryController;
 import elaborato_ing_sw.view.DeliveryProductsController;
 import elaborato_ing_sw.view.EditExpenseController;
+import elaborato_ing_sw.view.FidelityCardController;
 import elaborato_ing_sw.view.GroceryShoppingController;
 import elaborato_ing_sw.view.LoginController;
 import elaborato_ing_sw.view.ManagerDashboardController;
@@ -41,7 +42,7 @@ public class MainApp extends Application {
 	private ProductDaoImpl productDao = ProductDaoImpl.getProductDaoImpl();
 	private ShoppingCartDaoImpl shoppingCartDao = ShoppingCartDaoImpl.getShoppingCartDaoImpl();
 	private ExpensesDaoImpl expensesDao = ExpensesDaoImpl.getExpensesDaoImpl();
-	private FidelityCardDaoImpl fcardDao = FidelityCardDaoImpl.getExpensesDaoImpl();
+	private FidelityCardDaoImpl fcardDao = FidelityCardDaoImpl.getFidelityCardImpl();
 	
     @Override
     public void start(Stage primaryStage) {
@@ -160,6 +161,18 @@ public class MainApp extends Application {
 		dialogStage.showAndWait();
 		
 		return controller.getLoggedUser();
+    }
+    
+    public void showFidelityCardView(User user) {
+    	FXMLLoader loader = ShowDialog.getLoader("view/FidelityCardView.fxml");
+    	
+    	Stage dialogStage = ShowDialog.getDialogStage("Fidelity Card", loader, primaryStage);
+    	
+		FidelityCardController controller = loader.getController();
+		controller.setLoggedUser(user);
+		controller.setDialogStage(dialogStage);
+
+		dialogStage.showAndWait();
     }
     
     public void showAllExpensesView(User user) {

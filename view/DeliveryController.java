@@ -1,10 +1,13 @@
 package elaborato_ing_sw.view;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import elaborato_ing_sw.dataManager.ExpensesDaoImpl;
+import elaborato_ing_sw.dataManager.FidelityCardDaoImpl;
 import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
 import elaborato_ing_sw.model.Delivery;
 import elaborato_ing_sw.model.Expense;
+import elaborato_ing_sw.model.FidelityCard;
 import elaborato_ing_sw.model.Payment;
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.TimeSlot;
@@ -12,6 +15,7 @@ import elaborato_ing_sw.model.User;
 import elaborato_ing_sw.utils.AlertUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
@@ -26,6 +30,7 @@ public class DeliveryController {
 
 	private ShoppingCartDaoImpl shoppingCartDao = ShoppingCartDaoImpl.getShoppingCartDaoImpl();
 	private ExpensesDaoImpl expensesDao = ExpensesDaoImpl.getExpensesDaoImpl();
+	private FidelityCardDaoImpl fcardDao = FidelityCardDaoImpl.getFidelityCardImpl();
 
 	private boolean okClicked = false;
 	private Stage dialogStage;
@@ -34,6 +39,19 @@ public class DeliveryController {
 
 	@FXML
 	private void initialize() {
+		// deliveryDate = new DatePicker(LocalDate.now()); // imposto la data iniziale a
+		// quella odierna
+
+		// faccio in modo che l'utente non possa selezionare una data precedente a
+		// quella odierna
+		deliveryDate.setDayCellFactory(d -> new DateCell() {
+			@Override
+			public void updateItem(LocalDate item, boolean empty) {
+				super.updateItem(item, empty);
+				setDisable(item.isBefore(LocalDate.now()));
+			}
+		});
+
 		timeSlot.getItems().setAll(TimeSlot.values());
 		paymentType.getItems().setAll(Payment.values());
 	}
@@ -60,13 +78,19 @@ public class DeliveryController {
 			priceTotPerProd = p.getPrice() * p.getQuantity();
 			products.put(p, priceTotPerProd);
 		}
-		
+
+		FidelityCard card = fcardDao.getItem(user);
+		double points = card.getPointsTot();
+		points += priceTot;
+		card.setPointsTot(points);
+		fcardDao.updateItem(card);
+
 		Expense expense = new Expense(id, deliveryDate.getValue(), timeSlot.getValue(), loggedUser, priceTot,
 				paymentType.getValue(), Delivery.CONFERMATA, products);
 
 		expensesDao.addItem(expense);
 		shoppingCartDao.deleteItem(shoppingCartDao.getItem(user));
-		
+
 		okClicked = true;
 		dialogStage.close();
 	}
