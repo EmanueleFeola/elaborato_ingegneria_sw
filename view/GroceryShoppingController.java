@@ -1,15 +1,12 @@
 package elaborato_ing_sw.view;
 
-import java.io.File;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import elaborato_ing_sw.MainApp;
-import elaborato_ing_sw.dataManager.FidelityCardDaoImpl;
 import elaborato_ing_sw.dataManager.ProductDaoImpl;
 import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
-import elaborato_ing_sw.model.FidelityCard;
+import elaborato_ing_sw.imageProxy.ProxyImage;
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.Section;
 import elaborato_ing_sw.model.ShoppingCart;
@@ -22,15 +19,10 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-/**
- * @author emanuele
- *
- */
 public class GroceryShoppingController {
 	@FXML
 	private TableView<Product> vegetablesTable, fruitTable, meat_fishTable, grain_foodsTable, dairy_productsTable,
@@ -50,37 +42,30 @@ public class GroceryShoppingController {
 
 	@FXML
 	private TabPane tabs;
-
 	@FXML
 	private Label nameLabel;
-
 	@FXML
 	private Label brandLabel;
-
 	@FXML
 	private Label priceLabel;
-
 	@FXML
 	private Label npcsLabel;
-
 	@FXML
 	private Label isAvailable;
-
 	@FXML
 	private ImageView image;
 	
-	private FidelityCardDaoImpl fcardDao = FidelityCardDaoImpl.getFidelityCardImpl();
 	private ProductDaoImpl productDao = ProductDaoImpl.getProductDaoImpl();
 	private ShoppingCartDaoImpl shoppingCartDao = ShoppingCartDaoImpl.getShoppingCartDaoImpl();
 	private MainApp mainApp;
 	private Stage dialogStage;
 	private User loggedUser;
 	
-	private File standardLogoFile = new File("src/elaborato_ing_sw/view/images/logo.png");
-	private Image standardLogoImage = new Image(standardLogoFile.toURI().toString());
-
+	private ProxyImage proxy; 
+	
 	@FXML
 	private void initialize() {
+		proxy = new ProxyImage();
 	}
 
 	@FXML
@@ -138,21 +123,18 @@ public class GroceryShoppingController {
 		if (product != null) {
 			nameLabel.setText(product.getName());
 			brandLabel.setText(product.getBrand());
-			priceLabel.setText(String.valueOf(product.getPrice()) + " $");
+			priceLabel.setText(String.valueOf(product.getPrice()) + " €");
 			isAvailable.setText(product.isAvailable() ? "Yes" : "No");
 			npcsLabel.setText(String.valueOf(product.getPcsPerPack()));
 
-			File fileImage = new File(product.getIconPath());
-			Image icon = new Image(fileImage.toURI().toString());
-			image.setImage(icon);
+			image.setImage(proxy.getImage(product.getIconPath()));
 		} else {
-			// Person is null, remove all the text.
 			nameLabel.setText("");
 			brandLabel.setText("");
 			priceLabel.setText("");
 			isAvailable.setText("");
 			npcsLabel.setText("");
-			image.setImage(standardLogoImage);
+			image.setImage(proxy.getImage(proxy.getDefaultIconPath()));
 		}
 	}
 
@@ -215,27 +197,8 @@ public class GroceryShoppingController {
 	}
 	
 	@FXML
-	private void handleRequireFidelityCard() {
-		String user = loggedUser.getCredentials().getUser();
-		
-		if (fcardDao.getItem(user) == null) {
-			FidelityCard card = new FidelityCard(fcardDao.getAllItems().size(), LocalDate.now(), 0, loggedUser);
-			fcardDao.addItem(card);
-			AlertUtil.Alert(AlertType.INFORMATION, "Fidelity Card created", "Your Fidelity Card was successfully created", "You can view it in the View section");
-		} else {
-			AlertUtil.Alert(AlertType.WARNING, "Fidelity Card exists", "It seems that you already have a Fidelity Card", "You can view it in the View section");
-		}
-	}
-	
-	@FXML
 	private void handleViewFidelityCard() {
-		String user = loggedUser.getCredentials().getUser();
-		
-		if (fcardDao.getItem(user) != null) {
-			mainApp.showFidelityCardView(loggedUser);
-		} else {
-			AlertUtil.Alert(AlertType.WARNING, "No Fidelity Card found", "It seems that you don't have a Fidelity Card", "You need to require one");
-		}
+		mainApp.showFidelityCardView(loggedUser);
 	}
 
 	public void setLoggedUser(User loggedUser) {

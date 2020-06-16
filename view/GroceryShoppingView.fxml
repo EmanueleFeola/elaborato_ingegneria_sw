@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.GroceryShoppingController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.GroceryShoppingController">
    <children>
       <SplitPane dividerPositions="0.4348370927318296" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
@@ -170,7 +170,6 @@
                   </MenuButton>
                   <MenuButton layoutX="139.0" layoutY="14.0" mnemonicParsing="false" text="Fidelity Card">
                     <items>
-                      <MenuItem mnemonicParsing="false" onAction="#handleRequireFidelityCard" text="Require" />
                       <MenuItem mnemonicParsing="false" onAction="#handleViewFidelityCard" text="View" />
                     </items>
                   </MenuButton>
