@@ -5,6 +5,7 @@ import elaborato_ing_sw.MainApp;
 import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.Section;
+import elaborato_ing_sw.model.SpecialProductProperty;
 import elaborato_ing_sw.model.User;
 import elaborato_ing_sw.utils.AlertUtil;
 import javafx.collections.FXCollections;
@@ -30,6 +31,8 @@ public class ShoppingCartController {
 	private TableColumn<Product, Double> price;
 	@FXML
 	private TableColumn<Product, Integer> quantity;
+	@FXML
+	private TableColumn<Product, SpecialProductProperty> property;
 
 	private ShoppingCartDaoImpl shoppingCartDao = ShoppingCartDaoImpl.getShoppingCartDaoImpl();
 	private Stage dialogStage;
@@ -53,6 +56,7 @@ public class ShoppingCartController {
 		pcs.setCellValueFactory(cellData -> cellData.getValue().getPcsProperty());
 		price.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
 		quantity.setCellValueFactory(cellData -> cellData.getValue().getQuantityProperty());
+		property.setCellValueFactory(cellData -> cellData.getValue().getSpecialProperty());
 		
 		this.user = loggedUser.getCredentials().getUser();
 		this.cartProducts = shoppingCartDao.getCartProducts(user);

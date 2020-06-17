@@ -3,6 +3,7 @@ package elaborato_ing_sw.view;
 import elaborato_ing_sw.dataManager.ExpensesDaoImpl;
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.Section;
+import elaborato_ing_sw.model.SpecialProductProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -25,6 +26,8 @@ public class DeliveryProductsController {
 	private TableColumn<Product, Double> price;
 	@FXML
 	private TableColumn<Product, Integer> quantity;
+	@FXML
+	private TableColumn<Product, SpecialProductProperty> property;
 
 	private ExpensesDaoImpl expensesDao = ExpensesDaoImpl.getExpensesDaoImpl();
 	private Stage dialogStage;
@@ -39,6 +42,7 @@ public class DeliveryProductsController {
 		pcs.setCellValueFactory(cellData -> cellData.getValue().getPcsProperty());
 		price.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
 		quantity.setCellValueFactory(cellData -> cellData.getValue().getQuantityProperty());
+		property.setCellValueFactory(cellData -> cellData.getValue().getSpecialProperty());
 
 		this.prods = FXCollections.observableArrayList(expensesDao.getItemById(expenseId).getProducts().keySet());
 		productsDetailsTable.setItems(prods);

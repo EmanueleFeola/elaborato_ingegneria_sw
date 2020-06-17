@@ -98,9 +98,15 @@ public class MainApp extends Application {
     }
     
     public void showManagerProducts() {
-		FXMLLoader loader = ShowView.showView("view/ManagerProductsView.fxml");
-		ManagerProductsController controller = loader.getController();
+    	FXMLLoader loader = ShowDialog.getLoader("view/ManagerProductsView.fxml");
+    	
+    	Stage dialogStage = ShowDialog.getDialogStage("Manager Products", loader, primaryStage);
+    	
+    	ManagerProductsController controller = loader.getController();
 		controller.setMainApp(this);
+		controller.setDialogStage(dialogStage);
+
+		dialogStage.showAndWait();
     }
     
     public void showGroceryShoppingView(User user) {

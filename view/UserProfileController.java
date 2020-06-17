@@ -1,5 +1,7 @@
 package elaborato_ing_sw.view;
 
+import java.time.LocalDate;
+
 import elaborato_ing_sw.dataManager.UserDaoImpl;
 import elaborato_ing_sw.model.Credentials;
 import elaborato_ing_sw.model.User;
@@ -8,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
@@ -38,6 +41,14 @@ public class UserProfileController {
 
 	@FXML
 	private void initialize() {
+		birthdayField.setDayCellFactory(d -> new DateCell() {
+			@Override
+			public void updateItem(LocalDate item, boolean empty) {
+				super.updateItem(item, empty);
+				LocalDate now = LocalDate.now();
+				setDisable(item.isBefore(now.minusYears(120)) || item.isAfter(now));
+			}
+		});
 	}
 
 	public boolean isOkClicked() {

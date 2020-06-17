@@ -3,7 +3,7 @@ package elaborato_ing_sw.view;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.Alert.AlertType;
-
+import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -12,6 +12,7 @@ import elaborato_ing_sw.MainApp;
 import elaborato_ing_sw.dataManager.ProductDaoImpl;
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.Section;
+import elaborato_ing_sw.model.SpecialProductProperty;
 import elaborato_ing_sw.utils.AlertUtil;
 
 public class ManagerProductsController {
@@ -27,6 +28,8 @@ public class ManagerProductsController {
 	private TableColumn<Product, Integer> pcsColumn;
 	@FXML
 	private TableColumn<Product, Double> priceColumn;
+	@FXML
+	private TableColumn<Product, SpecialProductProperty> property;
 
 	@FXML
 	private Label nameLabel;
@@ -42,10 +45,13 @@ public class ManagerProductsController {
 	private Label isAvailableLabel;
 	@FXML
 	private Label iconPathLabel;
+	@FXML
+	private Label specialLabel;
 
 	private ProductDaoImpl productDao = ProductDaoImpl.getProductDaoImpl();
 
 	private MainApp mainApp;
+	private Stage dialogStage;
 
 	public ManagerProductsController() {
 	}
@@ -57,6 +63,7 @@ public class ManagerProductsController {
 		sectionColumn.setCellValueFactory(cellData -> cellData.getValue().getSectionProperty());
 		pcsColumn.setCellValueFactory(cellData -> cellData.getValue().getPcsProperty());
 		priceColumn.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
+		property.setCellValueFactory(cellData -> cellData.getValue().getSpecialProperty());
 
 		showProductDetails(null);
 
@@ -74,12 +81,13 @@ public class ManagerProductsController {
 			brandLabel.setText(p.getBrand());
 			sectionLabel.setText(p.getSection().toString());
 			pcsLabel.setText(String.valueOf(p.getPcsPerPack()));
-			priceLabel.setText(String.valueOf(p.getPrice()) + " $");
+			priceLabel.setText(String.valueOf(p.getPrice()) + " euro");
 			
 			String[] splitFilename = p.getIconPath().split("/");
 			iconPathLabel.setText(splitFilename[splitFilename.length - 1]);
 			
 			isAvailableLabel.setText(p.isAvailable() ? "Si" : "No");
+			specialLabel.setText(p.getSpecialPty().toString());
 		} else {
 			// Product is null, remove all the text.
 			nameLabel.setText("");
@@ -89,6 +97,7 @@ public class ManagerProductsController {
 			priceLabel.setText("");
 			iconPathLabel.setText("");
 			isAvailableLabel.setText("");
+			specialLabel.setText("");
 		}
 	}
 
@@ -134,11 +143,15 @@ public class ManagerProductsController {
 	}
 
 	@FXML
-	private void handleBack() {
-		mainApp.showManagerDashboard();
+	private void handleClose() {
+		dialogStage.close();
 	}
 
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
+	}
+	
+	public void setDialogStage(Stage dialogStage) {
+		this.dialogStage = dialogStage;
 	}
 }

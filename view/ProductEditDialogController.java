@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.Section;
+import elaborato_ing_sw.model.SpecialProductProperty;
 import elaborato_ing_sw.utils.AlertUtil;
 
 public class ProductEditDialogController {
@@ -30,6 +31,8 @@ public class ProductEditDialogController {
 	private RadioButton isAvailable;
 	@FXML
 	private ChoiceBox<Section> sectionField;
+	@FXML
+	private ChoiceBox<SpecialProductProperty> propertyField;
 	
 	private String iconPath;
 
@@ -42,7 +45,7 @@ public class ProductEditDialogController {
 
 	@FXML
 	private void initialize() {
-		// TODO: da mettere come propriet‡ di default dell oggetto product
+		// TODO: da mettere come propriet√† di default dell oggetto product
 		// evitare di mettere stringhe cablate
 		this.iconPath = "src/elaborato_ing_sw/view/images/logo.png";
 	}
@@ -57,6 +60,7 @@ public class ProductEditDialogController {
 		System.out.println("product: " + product);
 
 		sectionField.getItems().setAll(Section.values());
+		propertyField.getItems().setAll(SpecialProductProperty.values());
 
 		if (product == null) {
 			isNewMode = true;
@@ -70,6 +74,7 @@ public class ProductEditDialogController {
 		priceField.setText(String.valueOf(product.getPrice()));
 		iconPathField.setText(product.getIconPath());
 		isAvailable.setSelected(product.isAvailable());
+		propertyField.setValue(product.getSpecialPty());
 	}
 
 	public boolean isOkClicked() {
@@ -84,7 +89,7 @@ public class ProductEditDialogController {
 		if (product == null) {
 			product = new Product(nameField.getText(), brandField.getText(), sectionField.getValue(),
 					Integer.parseInt(pcsField.getText()), Double.parseDouble(priceField.getText()),
-					iconPath, isAvailable.isSelected(), 1);
+					iconPath, isAvailable.isSelected(), 1, propertyField.getValue());
 		} else {
 			product.setName(nameField.getText());
 			product.setBrand(brandField.getText());
@@ -94,6 +99,7 @@ public class ProductEditDialogController {
 			product.setIconPath(iconPath);
 			product.setAvailable(isAvailable.isSelected());
 			product.setQuantity(1);
+			product.setSpecialPty(propertyField.getValue());
 		}
 		
 		// aggiorno i campi della view
@@ -133,7 +139,8 @@ public class ProductEditDialogController {
 			if(Paths.get(imgPath + "/" + selectedFile.getName()).toFile().exists()) {
 				System.out.println("File selected: " + selectedFile.getName());
 				this.iconPath = imgPath + "/" + selectedFile.getName();
-				System.out.println("image path updated successfully");							
+				System.out.println("image path updated successfully");	
+				iconPathField.setText(iconPath);
 			} else{
 				AlertUtil.Alert(AlertType.ERROR, "Wrong directory", "The selected image is not contained in the application images folder", "Please consider moving the selected image in the application images folder, then try again");
 			}
@@ -164,6 +171,9 @@ public class ProductEditDialogController {
 
 		if (priceField.getText().length() == 0 || Double.parseDouble(priceField.getText()) < 0)
 			errorMessage += "No valid price!\n";
+		
+		if (propertyField.getValue() == null)
+			errorMessage += "No valid property!\n";
 
 		if (errorMessage.length() == 0)
 			return true;

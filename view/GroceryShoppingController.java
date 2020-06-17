@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import elaborato_ing_sw.MainApp;
+import elaborato_ing_sw.dataManager.FidelityCardDaoImpl;
 import elaborato_ing_sw.dataManager.ProductDaoImpl;
 import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
 import elaborato_ing_sw.imageProxy.ProxyImage;
+import elaborato_ing_sw.model.FidelityCard;
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.Section;
 import elaborato_ing_sw.model.ShoppingCart;
+import elaborato_ing_sw.model.SpecialProductProperty;
 import elaborato_ing_sw.model.User;
 import elaborato_ing_sw.utils.AlertUtil;
 import javafx.fxml.FXML;
@@ -19,6 +22,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -53,19 +57,26 @@ public class GroceryShoppingController {
 	@FXML
 	private Label isAvailable;
 	@FXML
+	private Label specialProperty;
+	@FXML
+	private ChoiceBox<SpecialProductProperty> property;
+	@FXML
 	private ImageView image;
-	
+
+	private FidelityCardDaoImpl fcardDao = FidelityCardDaoImpl.getFidelityCardImpl();
 	private ProductDaoImpl productDao = ProductDaoImpl.getProductDaoImpl();
 	private ShoppingCartDaoImpl shoppingCartDao = ShoppingCartDaoImpl.getShoppingCartDaoImpl();
 	private MainApp mainApp;
 	private Stage dialogStage;
 	private User loggedUser;
-	
-	private ProxyImage proxy; 
-	
+
+	private ProxyImage proxy;
+
 	@FXML
 	private void initialize() {
 		proxy = new ProxyImage();
+		property.getItems().setAll(SpecialProductProperty.values());
+		property.setValue(SpecialProductProperty.NONE);
 	}
 
 	@FXML
@@ -79,22 +90,24 @@ public class GroceryShoppingController {
 		int selectedIndex = selectedTable.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
 			String user = loggedUser.getCredentials().getUser();
-			
+
 			if (shoppingCartDao.getItem(user) == null) {
 				ShoppingCart cart = new ShoppingCart(new ArrayList<Product>(), loggedUser);
 				shoppingCartDao.addItem(cart);
 			}
-				
+
 			Product p = selectedTable.getItems().get(selectedIndex);
-			
+
 			if (!p.isAvailable())
 				AlertUtil.Alert(AlertType.INFORMATION, "Info", "Product not available", null);
 			else if (shoppingCartDao.getCartProducts(user).contains(p))
-				AlertUtil.Alert(AlertType.INFORMATION, "Info", "Product already in shopping cart", "Quantity can be modified in the shopping cart");
-			else 
+				AlertUtil.Alert(AlertType.INFORMATION, "Info", "Product already in shopping cart",
+						"Quantity can be modified in the shopping cart");
+			else
 				shoppingCartDao.addCartProduct(user, p);
 		} else
-			AlertUtil.Alert(AlertType.WARNING, "No Selection", "No Product Selected", "Please select a product in the table");
+			AlertUtil.Alert(AlertType.WARNING, "No Selection", "No Product Selected",
+					"Please select a product in the table");
 	}
 
 	private void handleSection(TableColumn<Product, String> nameColumn, TableColumn<Product, String> brandColumn,
@@ -107,7 +120,9 @@ public class GroceryShoppingController {
 		table.setItems(productDao.getAllItems().filtered(new Predicate<Product>() {
 			@Override
 			public boolean test(Product p) {
-				if (p.getSection().equals(section))
+				if (p.getSection().equals(section) && property.getValue().equals(SpecialProductProperty.NONE))
+					return true;
+				else if (p.getSection().equals(section) && p.getSpecialPty().equals(property.getValue()))
 					return true;
 				return false;
 			}
@@ -123,9 +138,10 @@ public class GroceryShoppingController {
 		if (product != null) {
 			nameLabel.setText(product.getName());
 			brandLabel.setText(product.getBrand());
-			priceLabel.setText(String.valueOf(product.getPrice()) + " €");
+			priceLabel.setText(String.valueOf(product.getPrice()) + " euro");
 			isAvailable.setText(product.isAvailable() ? "Yes" : "No");
 			npcsLabel.setText(String.valueOf(product.getPcsPerPack()));
+			specialProperty.setText(product.getSpecialPty().toString());
 
 			image.setImage(proxy.getImage(product.getIconPath()));
 		} else {
@@ -134,6 +150,7 @@ public class GroceryShoppingController {
 			priceLabel.setText("");
 			isAvailable.setText("");
 			npcsLabel.setText("");
+			specialProperty.setText("");
 			image.setImage(proxy.getImage(proxy.getDefaultIconPath()));
 		}
 	}
@@ -178,10 +195,12 @@ public class GroceryShoppingController {
 	@FXML
 	private void handleShoppingCart() {
 		String user = loggedUser.getCredentials().getUser();
-		
-		// se per l utente "user" il carrello non esiste oppure contiene 0 prodotti non ha senso far andare l utente alla prossima schermata 
-		if(shoppingCartDao.getItem(user) == null || shoppingCartDao.getCartProducts(user).size() == 0)
-			AlertUtil.Alert(AlertType.INFORMATION, "User cart is empty", "Your cart is still empty", "Please add a product to your cart");
+
+		// se per l utente "user" il carrello non esiste oppure contiene 0 prodotti non
+		// ha senso far andare l utente alla prossima schermata
+		if (shoppingCartDao.getItem(user) == null || shoppingCartDao.getCartProducts(user).size() == 0)
+			AlertUtil.Alert(AlertType.INFORMATION, "User cart is empty", "Your cart is still empty",
+					"Please add a product to your cart");
 		else
 			mainApp.showShoppingCartView(loggedUser);
 	}
@@ -195,10 +214,25 @@ public class GroceryShoppingController {
 	private void handleAllExpenses() {
 		mainApp.showAllExpensesView(loggedUser);
 	}
-	
+
 	@FXML
 	private void handleViewFidelityCard() {
 		mainApp.showFidelityCardView(loggedUser);
+	}
+
+	@FXML
+	private void handleRemoveFidelityCard() {
+		String user = loggedUser.getCredentials().getUser();
+		FidelityCard card = fcardDao.getItem(user);
+
+		if (card != null) {
+			fcardDao.deleteItem(card);
+			AlertUtil.Alert(AlertType.INFORMATION, "Fidelity Card removed",
+					"Your Fidelity Card was successfully removed", null);
+		} else {
+			AlertUtil.Alert(AlertType.INFORMATION, "Fidelity Card not available", "You don't have a Fidelity Card",
+					"You can get one in the view section");
+		}
 	}
 
 	public void setLoggedUser(User loggedUser) {

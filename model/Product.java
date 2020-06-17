@@ -15,9 +15,10 @@ public class Product implements Serializable {
 	private String iconPath;
 	private boolean isAvailable;
 	private WriteableObjectProperty<Integer> quantity;
+	private WriteableObjectProperty<SpecialProductProperty> specialPty;
 
 	public Product(String name, String brand, Section section, int pcsPerPack, double price, String iconPath,
-			boolean isAvailable, int quantity) {
+			boolean isAvailable, int quantity, SpecialProductProperty specialPty) {
 		this.name = new WriteableObjectProperty<String>(name);
 		this.brand = new WriteableObjectProperty<String>(brand);
 		this.section = new WriteableObjectProperty<Section>(section);
@@ -26,6 +27,7 @@ public class Product implements Serializable {
 		this.iconPath = iconPath;
 		this.isAvailable = isAvailable;
 		this.quantity = new WriteableObjectProperty<Integer>(quantity);
+		this.specialPty = new WriteableObjectProperty<SpecialProductProperty>(specialPty);
 	}
 
 	public String getName() {
@@ -115,6 +117,18 @@ public class Product implements Serializable {
 	public void setQuantity(int quantity) {
 		this.quantity.set(quantity);
 	}
+	
+	public SpecialProductProperty getSpecialPty() {
+		return specialPty.get();
+	}
+
+	public WriteableObjectProperty<SpecialProductProperty> getSpecialProperty() {
+		return specialPty;
+	}
+
+	public void setSpecialPty(SpecialProductProperty property) {
+		this.specialPty.set(property);
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -125,7 +139,7 @@ public class Product implements Serializable {
 	public String toString() {
 		return "Prodotto [name=" + name + ", brand=" + brand + ", section=" + section + ", pcsPerPack=" + pcsPerPack
 				+ ", price=" + price + ", iconPath=" + iconPath + ", isAvailable=" + isAvailable + ", quantity="
-				+ quantity + "]";
+				+ quantity + ",specialProperty=" + specialPty + "]";
 	}
 
 }

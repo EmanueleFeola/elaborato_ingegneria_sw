@@ -48,7 +48,8 @@ public class DeliveryController {
 			@Override
 			public void updateItem(LocalDate item, boolean empty) {
 				super.updateItem(item, empty);
-				setDisable(item.isBefore(LocalDate.now()));
+				LocalDate now = LocalDate.now();
+				setDisable(item.isBefore(now) || item.isAfter(now.plusYears(2)));
 			}
 		});
 

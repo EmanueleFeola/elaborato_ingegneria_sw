@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="294.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.ProductEditDialogController">
+<AnchorPane prefHeight="294.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.ProductEditDialogController">
    <children>
       <GridPane AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <columnConstraints>
@@ -23,6 +23,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -48,6 +49,8 @@
             </TextField>
             <Button mnemonicParsing="false" onAction="#handleSetImage" text="Change" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Label text="Availability" GridPane.rowIndex="6" />
+            <Label text="Special Property" GridPane.rowIndex="7" />
+            <ChoiceBox fx:id="propertyField" prefHeight="26.0" prefWidth="349.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
          </children>
       </GridPane>
       <ButtonBar layoutX="280.0" layoutY="287.0" prefHeight="49.0" prefWidth="210.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="287.0">
