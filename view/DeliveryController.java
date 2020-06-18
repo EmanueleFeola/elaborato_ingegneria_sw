@@ -21,6 +21,10 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class DeliveryController {
+	// costanti subito dopo la classe cosi si vedono subito
+	// cancellare commento dopo visualizzazione
+	private static final int MAX_DELIVERY_YEARS = 2; 
+
 	@FXML
 	private DatePicker deliveryDate;
 	@FXML
@@ -39,17 +43,13 @@ public class DeliveryController {
 
 	@FXML
 	private void initialize() {
-		// deliveryDate = new DatePicker(LocalDate.now()); // imposto la data iniziale a
-		// quella odierna
-
-		// faccio in modo che l'utente non possa selezionare una data precedente a
-		// quella odierna
+		// faccio in modo che l'utente non possa selezionare una data precedente a quella odierna
 		deliveryDate.setDayCellFactory(d -> new DateCell() {
 			@Override
 			public void updateItem(LocalDate item, boolean empty) {
 				super.updateItem(item, empty);
 				LocalDate now = LocalDate.now();
-				setDisable(item.isBefore(now) || item.isAfter(now.plusYears(2)));
+				setDisable(item.isBefore(now) || item.isAfter(now.plusYears(MAX_DELIVERY_YEARS)));
 			}
 		});
 

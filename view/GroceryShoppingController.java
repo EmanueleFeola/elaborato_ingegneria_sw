@@ -15,6 +15,8 @@ import elaborato_ing_sw.model.ShoppingCart;
 import elaborato_ing_sw.model.SpecialProductProperty;
 import elaborato_ing_sw.model.User;
 import elaborato_ing_sw.utils.AlertUtil;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
@@ -59,9 +61,13 @@ public class GroceryShoppingController {
 	@FXML
 	private Label specialProperty;
 	@FXML
+	private Label specialPropertyTitle;
+	@FXML
 	private ChoiceBox<SpecialProductProperty> property;
 	@FXML
 	private ImageView image;
+	
+	SpecialProductProperty filter = SpecialProductProperty.NONE;
 
 	private FidelityCardDaoImpl fcardDao = FidelityCardDaoImpl.getFidelityCardImpl();
 	private ProductDaoImpl productDao = ProductDaoImpl.getProductDaoImpl();
@@ -77,6 +83,20 @@ public class GroceryShoppingController {
 		proxy = new ProxyImage();
 		property.getItems().setAll(SpecialProductProperty.values());
 		property.setValue(SpecialProductProperty.NONE);
+		
+		ChangeListener<SpecialProductProperty> changeListener = new ChangeListener<SpecialProductProperty>() { 
+			@Override
+			public void changed(ObservableValue<? extends SpecialProductProperty> observable, SpecialProductProperty oldValue,
+					SpecialProductProperty newValue) {
+				filter = newValue;
+
+				System.out.println(newValue);
+				// ogni volta che l utente cambia filtro aggiorno i dati della tabella
+				// manca la parte di aggiornamento real time
+			}
+        };
+        
+        property.getSelectionModel().selectedItemProperty().addListener(changeListener);
 	}
 
 	@FXML
@@ -116,14 +136,14 @@ public class GroceryShoppingController {
 		brandColumn.setCellValueFactory(cellData -> cellData.getValue().getBrandProperty());
 		priceColumn.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty());
 
-		// setta i prodotti per la tab corrente filtrandoli per section
 		table.setItems(productDao.getAllItems().filtered(new Predicate<Product>() {
 			@Override
 			public boolean test(Product p) {
-				if (p.getSection().equals(section) && property.getValue().equals(SpecialProductProperty.NONE))
+				if (p.getSection().equals(section) && filter.equals(SpecialProductProperty.NONE))
 					return true;
-				else if (p.getSection().equals(section) && p.getSpecialPty().equals(property.getValue()))
+				else if (p.getSection().equals(section) && p.getSpecialPty().equals(filter))
 					return true;
+
 				return false;
 			}
 		}));
@@ -141,8 +161,17 @@ public class GroceryShoppingController {
 			priceLabel.setText(String.valueOf(product.getPrice()) + " euro");
 			isAvailable.setText(product.isAvailable() ? "Yes" : "No");
 			npcsLabel.setText(String.valueOf(product.getPcsPerPack()));
-			specialProperty.setText(product.getSpecialPty().toString());
-
+			
+			if(product.getSpecialPty() != SpecialProductProperty.NONE) {				
+				specialProperty.setVisible(true);
+				specialProperty.setText(product.getSpecialPty().toString());				
+				specialPropertyTitle.setVisible(true);
+			}
+			else {
+				specialProperty.setVisible(false);
+				specialPropertyTitle.setVisible(false);
+			}
+			
 			image.setImage(proxy.getImage(product.getIconPath()));
 		} else {
 			nameLabel.setText("");
@@ -150,8 +179,8 @@ public class GroceryShoppingController {
 			priceLabel.setText("");
 			isAvailable.setText("");
 			npcsLabel.setText("");
-			specialProperty.setText("");
-			image.setImage(proxy.getImage(proxy.getDefaultIconPath()));
+			specialProperty.setVisible(false); // perchè di default sarebbe none
+			image.setImage(proxy.getImage(Product.getDefaultIconPath()));
 		}
 	}
 

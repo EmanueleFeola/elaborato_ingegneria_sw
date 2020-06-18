@@ -1,8 +1,23 @@
 package elaborato_ing_sw.model;
 
-// ToDo: da capire a cosa serve il ruolo
-
 public enum Role {
-	ADMIN, // capo reparto
-	BOOOOH
+	ADMIN("Admin"), BOOH("Booooh");
+	
+	private String role;
+	
+	private Role(String role) {
+		this.role = role;
+	}
+		 
+	public String toString() {
+		return this.role;
+	}
+	
+	public static Role getValue(String property) {
+		for (Role r : Role.values())
+	      // Use equalsIgnoreCase to make the getValue method a little more robust
+			if (r.toString().equalsIgnoreCase(property))
+				return r;
+		return null;
+	}
 }

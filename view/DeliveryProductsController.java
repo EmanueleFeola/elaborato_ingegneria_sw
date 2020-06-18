@@ -33,9 +33,8 @@ public class DeliveryProductsController {
 	private Stage dialogStage;
 	private int expenseId;
 
-	ObservableList<Product> prods;
-
 	private void handleTable() {
+		System.out.println("ECCOMI QUA");
 		name.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
 		brand.setCellValueFactory(cellData -> cellData.getValue().getBrandProperty());
 		section.setCellValueFactory(cellData -> cellData.getValue().getSectionProperty());
@@ -44,8 +43,8 @@ public class DeliveryProductsController {
 		quantity.setCellValueFactory(cellData -> cellData.getValue().getQuantityProperty());
 		property.setCellValueFactory(cellData -> cellData.getValue().getSpecialProperty());
 
-		this.prods = FXCollections.observableArrayList(expensesDao.getItemById(expenseId).getProducts().keySet());
-		productsDetailsTable.setItems(prods);
+		ObservableList<Product> products = FXCollections.observableArrayList(expensesDao.getItemById(expenseId).getProducts().keySet());		
+		productsDetailsTable.setItems(products);
 	}
 
 	public void setExpenseId(int id) {

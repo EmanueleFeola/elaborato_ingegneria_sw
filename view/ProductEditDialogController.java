@@ -47,7 +47,7 @@ public class ProductEditDialogController {
 	private void initialize() {
 		// TODO: da mettere come proprietà di default dell oggetto product
 		// evitare di mettere stringhe cablate
-		this.iconPath = "src/elaborato_ing_sw/view/images/logo.png";
+		this.iconPath = Product.getDefaultIconPath();
 	}
 
 	public void setDialogStage(Stage dialogStage) {
@@ -118,7 +118,7 @@ public class ProductEditDialogController {
 	@FXML
 	private void handleSetImage() {
 		// path di base per le immagini
-		String imgPath = "src/elaborato_ing_sw/view/images";
+		String imgPath = "src/elaborato_ing_sw/view/images"; // final costant basePath
 
 		// genero il file chooser
 		FileChooser fileChooser = new FileChooser();

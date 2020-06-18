@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.GroceryShoppingController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.GroceryShoppingController">
    <children>
       <SplitPane dividerPositions="0.4348370927318296" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
@@ -159,7 +159,7 @@
                         <Label fx:id="priceLabel" prefHeight="16.0" prefWidth="231.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label fx:id="npcsLabel" prefHeight="16.0" prefWidth="240.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label fx:id="isAvailable" prefHeight="16.0" prefWidth="219.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label text="Special Property" GridPane.rowIndex="5" />
+                        <Label fx:id="specialPropertyTitle" text="Special Property" GridPane.rowIndex="5" />
                         <Label fx:id="specialProperty" prefHeight="16.0" prefWidth="270.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                         <Label text="Visualizza per caratteristica:" GridPane.rowIndex="7" />
                         <ChoiceBox fx:id="property" prefHeight="26.0" prefWidth="224.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />

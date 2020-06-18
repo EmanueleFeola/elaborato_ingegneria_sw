@@ -15,6 +15,10 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 public class UserProfileController {
+	// mettere le costanti subito dopo la dichiarazione della classe cosi si vedono subito
+	// cancellare commento dopo visualizzazione
+	private static final int MAX_AGE = 120;
+
 	@FXML
 	private TextField firstNameField;
 	@FXML
@@ -33,7 +37,7 @@ public class UserProfileController {
 	private TextField usernameField;
 	@FXML
 	private PasswordField passwordField;
-
+	
 	private Stage dialogStage;
 	private boolean okClicked = false;
 	private UserDaoImpl userDao = UserDaoImpl.getUserDaoImpl();
@@ -46,7 +50,7 @@ public class UserProfileController {
 			public void updateItem(LocalDate item, boolean empty) {
 				super.updateItem(item, empty);
 				LocalDate now = LocalDate.now();
-				setDisable(item.isBefore(now.minusYears(120)) || item.isAfter(now));
+				setDisable(item.isBefore(now.minusYears(MAX_AGE)) || item.isAfter(now));
 			}
 		});
 	}
