@@ -1,6 +1,7 @@
 package elaborato_ing_sw.view;
 
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.function.Predicate;
 
 import elaborato_ing_sw.MainApp;
@@ -40,6 +41,32 @@ public class AllExpensesController {
 	private Stage dialogStage;
 	private User loggedUser;
 	private String user;
+	
+	@FXML
+	private void initialize() {
+		// memorizzo la data odierna
+		LocalDate today = LocalDate.now();
+		
+		// memorizzo l'ora del giorno
+		Calendar calendar = Calendar.getInstance();
+		int h = calendar.get(Calendar.HOUR_OF_DAY);
+		
+		for (Expense e : expensesDao.getAllItems()) {
+			// controllo se la data della consegna e' uguale a quella odierna
+			if (e.getDeliveryDate().equals(today)) {
+				TimeSlot ts = e.getTimeSlot();
+				// controllo se l'ora del giorno e' compresa nel timeslot previsto
+				if (ts.getStart() <= h && h <= ts.getEnd()) {
+					// controllo se la spesa era in preparazione
+					// se no una spesa passa da confermata a consegnata skippando uno stato
+					if (e.getDelivery().equals(Delivery.IN_PREPARAZIONE)) {
+						e.setDelivery(Delivery.CONSEGNATA);
+						expensesDao.updateItem(e);
+					}
+				}
+			}
+		}
+	}
 
 	@FXML
 	private void handleTable() {

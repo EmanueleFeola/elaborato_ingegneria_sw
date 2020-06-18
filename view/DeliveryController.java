@@ -1,6 +1,8 @@
 package elaborato_ing_sw.view;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import elaborato_ing_sw.dataManager.ExpensesDaoImpl;
 import elaborato_ing_sw.dataManager.FidelityCardDaoImpl;
@@ -23,7 +25,7 @@ import javafx.stage.Stage;
 public class DeliveryController {
 	// costanti subito dopo la classe cosi si vedono subito
 	// cancellare commento dopo visualizzazione
-	private static final int MAX_DELIVERY_YEARS = 2; 
+	private static final int MAX_DELIVERY_YEARS = 2;
 
 	@FXML
 	private DatePicker deliveryDate;
@@ -43,7 +45,8 @@ public class DeliveryController {
 
 	@FXML
 	private void initialize() {
-		// faccio in modo che l'utente non possa selezionare una data precedente a quella odierna
+		// faccio in modo che l'utente non possa selezionare una data precedente a
+		// quella odierna
 		deliveryDate.setDayCellFactory(d -> new DateCell() {
 			@Override
 			public void updateItem(LocalDate item, boolean empty) {
@@ -54,11 +57,41 @@ public class DeliveryController {
 		});
 
 		timeSlot.getItems().setAll(TimeSlot.values());
+
 		paymentType.getItems().setAll(Payment.values());
 	}
 
 	public boolean isOkClicked() {
 		return okClicked;
+	}
+
+	@FXML
+	private void onDateSelected() {
+		// memorizzo la data odierna
+		LocalDate today = LocalDate.now();
+
+		// memorizzo l'ora del giorno
+		Calendar calendar = Calendar.getInstance();
+		int h = calendar.get(Calendar.HOUR_OF_DAY);
+
+		ArrayList<TimeSlot> newTs = new ArrayList<>();
+
+		// svuoto il choicebox per sicurezza
+		timeSlot.getItems().removeAll(TimeSlot.values());
+
+		// faccio in modo che se un timeslot è già passato non venga visualizzato
+		for (TimeSlot ts : TimeSlot.values()) {
+			if ((deliveryDate.getValue().equals(today)) && ts.getStart() <= h && h <= ts.getEnd())
+				newTs.add(ts);
+			else if (!deliveryDate.getValue().equals(today))
+				newTs.add(ts);
+		}
+
+		if (newTs.size() == 0)
+			AlertUtil.Alert(AlertType.INFORMATION, "No timeslots available",
+					"No more timeslots are available for the selected date", "Please select another delivery date");
+		else
+			timeSlot.getItems().setAll(newTs);
 	}
 
 	@FXML

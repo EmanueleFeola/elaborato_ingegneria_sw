@@ -6,16 +6,31 @@ public enum TimeSlot {
 //	EARLY_AFTERNOON, // 14 - 16
 //	LATE_AFTERNOON // 17 - 18
 
-	EARLY_MORNING("Late afternoon"), LATE_MORNING("Late morning"), EARLY_AFTERNOON("Early afternoon"), LATE_AFTERNOON("Late afternoon");
+	EARLY_MORNING("Early morning", 6, 8),
+	LATE_MORNING("Late morning", 10, 13),
+	EARLY_AFTERNOON("Early afternoon", 14, 16),
+	LATE_AFTERNOON("Late afternoon", 17, 18);
 	
 	private String slot;
+	private int start;
+	private int end;
 	
-	private TimeSlot(String slot) {
+	private TimeSlot(String slot, int start, int end) {
 		this.slot = slot;
+		this.start = start;
+		this.end = end;
 	}
 		 
 	public String toString() {
 		return this.slot;
+	}
+	
+	public int getStart() {
+		return this.start;
+	}
+	
+	public int getEnd() {
+		return this.end;
 	}
 	
 	public static TimeSlot getValue(String property) {

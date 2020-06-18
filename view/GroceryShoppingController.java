@@ -179,7 +179,7 @@ public class GroceryShoppingController {
 			priceLabel.setText("");
 			isAvailable.setText("");
 			npcsLabel.setText("");
-			specialProperty.setVisible(false); // perchè di default sarebbe none
+			specialProperty.setVisible(false); // perchï¿½ di default sarebbe none
 			image.setImage(proxy.getImage(Product.getDefaultIconPath()));
 		}
 	}

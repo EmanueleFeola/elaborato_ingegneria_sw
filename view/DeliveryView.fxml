@@ -26,7 +26,7 @@
             <Label text="Date" />
             <Label text="Time Slot" GridPane.rowIndex="1" />
             <Label text="Payment Type" GridPane.rowIndex="2" />
-            <DatePicker fx:id="deliveryDate" prefHeight="26.0" prefWidth="239.0" GridPane.columnIndex="1" />
+            <DatePicker fx:id="deliveryDate" onAction="#onDateSelected" prefHeight="26.0" prefWidth="239.0" GridPane.columnIndex="1" />
             <ChoiceBox fx:id="timeSlot" prefHeight="26.0" prefWidth="239.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <ChoiceBox fx:id="paymentType" prefHeight="26.0" prefWidth="245.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
