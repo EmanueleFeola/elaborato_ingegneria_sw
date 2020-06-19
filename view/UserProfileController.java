@@ -1,6 +1,7 @@
 package elaborato_ing_sw.view;
 
 import java.time.LocalDate;
+import java.util.regex.Pattern;
 
 import elaborato_ing_sw.dataManager.UserDaoImpl;
 import elaborato_ing_sw.model.Credentials;
@@ -15,8 +16,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 public class UserProfileController {
-	// mettere le costanti subito dopo la dichiarazione della classe cosi si vedono subito
-	// cancellare commento dopo visualizzazione
 	private static final int MAX_AGE = 120;
 
 	@FXML
@@ -34,10 +33,12 @@ public class UserProfileController {
 	@FXML
 	private TextField telNumberField;
 	@FXML
-	private TextField usernameField;
+	private TextField emailField;
 	@FXML
 	private PasswordField passwordField;
-	
+	@FXML
+	private PasswordField confirmPassword;
+
 	private Stage dialogStage;
 	private boolean okClicked = false;
 	private UserDaoImpl userDao = UserDaoImpl.getUserDaoImpl();
@@ -58,16 +59,16 @@ public class UserProfileController {
 	public boolean isOkClicked() {
 		return okClicked;
 	}
-	
+
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}
-	
-	public void setLoggedUser(User user){
+
+	public void setLoggedUser(User user) {
 		this.loggedUser = user;
 		showUserDetails();
 	}
-	
+
 	public User getLoggedUser() {
 		return this.loggedUser;
 	}
@@ -80,10 +81,9 @@ public class UserProfileController {
 			cityField.setText(loggedUser.getCity());
 			telNumberField.setText(loggedUser.getTelNum());
 			postalCodeField.setText(String.valueOf(loggedUser.getPostalCode()));
-			//passwordField.setText("hidden");
 			birthdayField.setValue(loggedUser.getDateOfBirth());
-			usernameField.setText(loggedUser.getCredentials().getUser());
-			usernameField.setDisable(true);
+			emailField.setText(loggedUser.getCredentials().getUser());
+			emailField.setDisable(true);
 		} else {
 			firstNameField.setText("");
 			lastNameField.setText("");
@@ -92,29 +92,30 @@ public class UserProfileController {
 			telNumberField.setText("");
 			postalCodeField.setText("");
 			passwordField.setText("");
+			confirmPassword.setText("");
 			birthdayField.setPromptText("");
-			usernameField.setText("");
-			usernameField.setDisable(false);
+			emailField.setText("");
+			emailField.setDisable(false);
 		}
 	}
-	
+
 	@FXML
 	private void handleOk() {
-		if(!isInputValid())
+		if (!isInputValid())
 			return;
-		
-		Credentials c = new Credentials(usernameField.getText(), passwordField.getText());        
-		User u = new User(firstNameField.getText(), lastNameField.getText(), birthdayField.getValue(), c, streetField.getText(),
-				cityField.getText(), Integer.parseInt(postalCodeField.getText()), telNumberField.getText());
-			
-		
-		if(loggedUser == null)
-			userDao.addItem(u);			
+
+		Credentials c = new Credentials(emailField.getText(), passwordField.getText());
+		User u = new User(firstNameField.getText(), lastNameField.getText(), birthdayField.getValue(), c,
+				streetField.getText(), cityField.getText(), Integer.parseInt(postalCodeField.getText()),
+				telNumberField.getText());
+
+		if (loggedUser == null)
+			userDao.addItem(u);
 		else
 			userDao.updateItem(u);
-		
+
 		this.setLoggedUser(u);
-		
+
 		if (!userDao.updateSource())
 			System.out.println("User non registered");
 
@@ -127,23 +128,18 @@ public class UserProfileController {
 		dialogStage.close();
 	}
 
-	/**
-	 * Validates the user input in the text fields.
-	 * 
-	 * @return true if the input is valid
-	 */
 	private boolean isInputValid() {
 		String errorMessage = "";
 
 		if (firstNameField.getText() == null || firstNameField.getText().length() == 0)
 			errorMessage += "No valid first name!\n";
-		
+
 		if (lastNameField.getText() == null || lastNameField.getText().length() == 0)
 			errorMessage += "No valid last name!\n";
-		
+
 		if (streetField.getText() == null || streetField.getText().length() == 0)
 			errorMessage += "No valid street!\n";
-		
+
 		if (postalCodeField.getText() == null || postalCodeField.getText().length() == 0)
 			errorMessage += "No valid postal code!\n";
 		else {
@@ -164,11 +160,17 @@ public class UserProfileController {
 		if (telNumberField.getText() == null || telNumberField.getText().length() == 0)
 			errorMessage += "No valid telephone number!\n";
 
-		if (usernameField.getText() == null || usernameField.getText().length() == 0)
-			errorMessage += "No valid username!\n";
+		if (!isValid(emailField.getText()))
+			errorMessage += "No valid email!\n";
 
 		if (passwordField.getText() == null || passwordField.getText().length() == 0)
 			errorMessage += "No valid password!\n";
+
+		if (confirmPassword.getText() == null || confirmPassword.getText().length() == 0)
+			errorMessage += "No valid password confirmation!\n";
+
+		if (passwordField.getText().equals(confirmPassword.getText()) == false)
+			errorMessage += "The passwords do not match!\n";
 
 		if (errorMessage.length() == 0)
 			return true;
@@ -176,5 +178,16 @@ public class UserProfileController {
 			AlertUtil.Alert(AlertType.ERROR, "Invalid Fields", "Please correct invalid fields", errorMessage);
 			return false;
 		}
+	}
+
+	// metodo rubato da geeksforgeeks
+	private boolean isValid(String email) {
+		String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z"
+				+ "A-Z]{2,7}$";
+
+		Pattern pat = Pattern.compile(emailRegex);
+		if (email == null)
+			return false;
+		return pat.matcher(email).matches();
 	}
 }

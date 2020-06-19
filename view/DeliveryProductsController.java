@@ -34,7 +34,6 @@ public class DeliveryProductsController {
 	private int expenseId;
 
 	private void handleTable() {
-		System.out.println("ECCOMI QUA");
 		name.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
 		brand.setCellValueFactory(cellData -> cellData.getValue().getBrandProperty());
 		section.setCellValueFactory(cellData -> cellData.getValue().getSectionProperty());

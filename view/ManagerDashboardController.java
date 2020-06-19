@@ -43,10 +43,6 @@ public class ManagerDashboardController {
 	public ManagerDashboardController() {
 	}
 
-	/**
-	 * Initializes the controller class. This method is automatically called after
-	 * the fxml file has been loaded.
-	 */
 	@FXML
 	private void initialize() {
 		// Initialize the person table with the two columns.
@@ -65,12 +61,6 @@ public class ManagerDashboardController {
 		managerTable.setItems(managerDao.getAllItems());
 	}
 
-	/**
-	 * Fills all text fields to show details about the manager. If the specified
-	 * manager is null, all text fields are cleared.
-	 * 
-	 * @param newValue the person or null
-	 */
 	private void showManagerDetails(Manager m) {
 		if (m != null) {
 			// Fill the labels with info from the m object.
@@ -89,9 +79,6 @@ public class ManagerDashboardController {
 		}
 	}
 
-	/**
-	 * Called when the user clicks on the delete button.
-	 */
 	@FXML
 	private void handleDeleteManager() {
 		int selectedIndex = managerTable.getSelectionModel().getSelectedIndex();
@@ -103,10 +90,6 @@ public class ManagerDashboardController {
 		}
 	}
 
-	/**
-	 * Called when the user clicks the new button. Opens a dialog to edit details
-	 * for a new person.
-	 */
 	@FXML
 	private void handleNewManager() {
 		boolean okClicked = mainApp.showManagerEditDialog(null);
@@ -119,10 +102,6 @@ public class ManagerDashboardController {
 		}
 	}
 
-	/**
-	 * Called when the user clicks the edit button. Opens a dialog to edit details
-	 * for the selected person.
-	 */
 	@FXML
 	private void handleEditManager() {
 		Manager selectedManager = (Manager) managerTable.getSelectionModel().getSelectedItem();

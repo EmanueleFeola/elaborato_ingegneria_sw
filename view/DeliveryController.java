@@ -23,8 +23,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class DeliveryController {
-	// costanti subito dopo la classe cosi si vedono subito
-	// cancellare commento dopo visualizzazione
 	private static final int MAX_DELIVERY_YEARS = 2;
 
 	@FXML

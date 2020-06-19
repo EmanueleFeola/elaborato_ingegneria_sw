@@ -21,7 +21,7 @@
             <TableColumn fx:id="priceTot" prefWidth="89.0" text="Total price" />
             <TableColumn fx:id="payment" prefWidth="123.0" text="Payment Type" />
             <TableColumn fx:id="delivery" prefWidth="129.0" text="Status" />
-            <TableColumn fx:id="user" prefWidth="100.0" text="Username" />
+            <TableColumn fx:id="user" prefWidth="100.0" text="User Mail" />
         </columns>
       </TableView>
    </children>

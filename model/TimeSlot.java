@@ -1,11 +1,6 @@
 package elaborato_ing_sw.model;
 
 public enum TimeSlot {
-//	EARLY_MORNING, // 6 - 9
-//	LATE_MORNING,  // 10 - 13
-//	EARLY_AFTERNOON, // 14 - 16
-//	LATE_AFTERNOON // 17 - 18
-
 	EARLY_MORNING("Early morning", 6, 8),
 	LATE_MORNING("Late morning", 10, 13),
 	EARLY_AFTERNOON("Early afternoon", 14, 16),

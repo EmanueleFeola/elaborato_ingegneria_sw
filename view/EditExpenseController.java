@@ -42,5 +42,3 @@ public class EditExpenseController {
 		dialogStage.close();
 	}
 }
-
-

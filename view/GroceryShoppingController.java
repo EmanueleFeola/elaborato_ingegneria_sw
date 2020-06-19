@@ -66,7 +66,7 @@ public class GroceryShoppingController {
 	private ChoiceBox<SpecialProductProperty> property;
 	@FXML
 	private ImageView image;
-	
+
 	SpecialProductProperty filter = SpecialProductProperty.NONE;
 
 	private FidelityCardDaoImpl fcardDao = FidelityCardDaoImpl.getFidelityCardImpl();
@@ -89,12 +89,37 @@ public class GroceryShoppingController {
 			public void changed(ObservableValue<? extends SpecialProductProperty> observable, SpecialProductProperty oldValue,
 					SpecialProductProperty newValue) {
 				filter = newValue;
-
+				
 				System.out.println(newValue);
+				
 				// ogni volta che l utente cambia filtro aggiorno i dati della tabella
 				// manca la parte di aggiornamento real time
+				
+				// funziona una volta sola, circa, quello che intendo e' che se cambio filtro la prima volta 
+				// la tabella corrente si aggiorna, ma se lo cambio una seconda volta rimane non aggiornata
+				// e bisogna cambiare tab per vedere i cambiamenti
+				/*Tab selectedTab = tabs.getSelectionModel().getSelectedItem();
+				AnchorPane selectedContent = (AnchorPane) selectedTab.getContent();
+
+				@SuppressWarnings("unchecked")
+				TableView<Product> selectedTable = (TableView<Product>) selectedContent.getChildren().get(0);
+				System.out.println(selectedTable);
+				
+				ObservableList<Product> filteredProds = selectedTable.getItems().filtered(new Predicate<Product>() {
+					
+					@Override
+					public boolean test(Product p) {
+						if (filter.equals(SpecialProductProperty.NONE))
+							return true;
+						return p.getSpecialPty().equals(filter);
+					}
+				});
+				
+				selectedTable.setItems(filteredProds);*/
 			}
         };
+        
+
         
         property.getSelectionModel().selectedItemProperty().addListener(changeListener);
 	}
@@ -161,17 +186,16 @@ public class GroceryShoppingController {
 			priceLabel.setText(String.valueOf(product.getPrice()) + " euro");
 			isAvailable.setText(product.isAvailable() ? "Yes" : "No");
 			npcsLabel.setText(String.valueOf(product.getPcsPerPack()));
-			
-			if(product.getSpecialPty() != SpecialProductProperty.NONE) {				
+
+			if (product.getSpecialPty() != SpecialProductProperty.NONE) {
 				specialProperty.setVisible(true);
-				specialProperty.setText(product.getSpecialPty().toString());				
+				specialProperty.setText(product.getSpecialPty().toString());
 				specialPropertyTitle.setVisible(true);
-			}
-			else {
+			} else {
 				specialProperty.setVisible(false);
 				specialPropertyTitle.setVisible(false);
 			}
-			
+
 			image.setImage(proxy.getImage(product.getIconPath()));
 		} else {
 			nameLabel.setText("");

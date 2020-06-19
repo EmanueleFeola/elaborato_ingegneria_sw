@@ -1,7 +1,7 @@
 package elaborato_ing_sw.model;
 
 public enum Role {
-	ADMIN("Admin"), BOOH("Booooh");
+	ADMIN("Admin");
 	
 	private String role;
 	

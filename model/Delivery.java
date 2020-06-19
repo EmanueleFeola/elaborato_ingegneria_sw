@@ -1,10 +1,6 @@
 package elaborato_ing_sw.model;
 
 public enum Delivery {
-//	CONFERMATA,
-//	IN_PREPARAZIONE,
-//	CONSEGNATA
-
 	CONFERMATA("Confermata"), IN_PREPARAZIONE("In preparazione"), CONSEGNATA("Consegnata");
 	
 	private String status;

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-// NB: per l utente la mail � memorizzata nel campo user del campo Credentials
+// NB: per l utente la mail e+ memorizzata nel campo user del campo Credentials
 
 public class User extends Person implements Serializable{
 	private static final long serialVersionUID = 1L;

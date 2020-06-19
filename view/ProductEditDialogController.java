@@ -45,8 +45,6 @@ public class ProductEditDialogController {
 
 	@FXML
 	private void initialize() {
-		// TODO: da mettere come proprietà di default dell oggetto product
-		// evitare di mettere stringhe cablate
 		this.iconPath = Product.getDefaultIconPath();
 	}
 
@@ -149,11 +147,6 @@ public class ProductEditDialogController {
 		}
 	}
 
-	/**
-	 * Validates the user input in the text fields.
-	 * 
-	 * @return true if the input is valid
-	 */
 	private boolean isInputValid() {
 		String errorMessage = "";
 

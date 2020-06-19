@@ -8,7 +8,7 @@ import elaborato_ing_sw.utils.WriteableObjectProperty;
 public abstract class Person implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	// SimpleObjectProperty non e' serializzabile, quindi usiamo questo workaround finche' non implementiamo il DB
+	// SimpleObjectProperty non e' serializzabile, quindi usiamo questo workaround
 	protected WriteableObjectProperty<String> name;
 	protected WriteableObjectProperty<String> surname;
 	protected WriteableObjectProperty<LocalDate> dateOfBirth;
