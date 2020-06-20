@@ -7,6 +7,7 @@ import elaborato_ing_sw.MainApp;
 import elaborato_ing_sw.dataManager.FidelityCardDaoImpl;
 import elaborato_ing_sw.dataManager.ProductDaoImpl;
 import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
+import elaborato_ing_sw.dataManager.UserDaoImpl;
 import elaborato_ing_sw.imageProxy.ProxyImage;
 import elaborato_ing_sw.model.FidelityCard;
 import elaborato_ing_sw.model.Product;
@@ -69,6 +70,7 @@ public class GroceryShoppingController {
 
 	SpecialProductProperty filter = SpecialProductProperty.NONE;
 
+	private UserDaoImpl userDao = UserDaoImpl.getUserDaoImpl();
 	private FidelityCardDaoImpl fcardDao = FidelityCardDaoImpl.getFidelityCardImpl();
 	private ProductDaoImpl productDao = ProductDaoImpl.getProductDaoImpl();
 	private ShoppingCartDaoImpl shoppingCartDao = ShoppingCartDaoImpl.getShoppingCartDaoImpl();
@@ -259,8 +261,15 @@ public class GroceryShoppingController {
 	}
 
 	@FXML
-	private void handleProfile() {
+	private void handleViewModifyProfile() {
 		this.loggedUser = mainApp.showUserProfileView(loggedUser);
+	}
+	
+	@FXML
+	private void handleDeleteProfile() {
+		userDao.deleteItem(loggedUser);
+		AlertUtil.Alert(AlertType.INFORMATION, "Account deleted", "Your account was successfully deleted", null);
+		dialogStage.close();
 	}
 
 	@FXML

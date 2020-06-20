@@ -52,18 +52,18 @@ public class AllExpensesController {
 		int h = calendar.get(Calendar.HOUR_OF_DAY);
 		
 		for (Expense e : expensesDao.getAllItems()) {
-			// se mancano massimo 3 giorni alla consegna e lo stato e' ancora CONFERMATA
-			// passa in automatico a IN_PREPARAZIONE
+			// se mancano massimo 3 giorni alla consegna, giorno della consegna escluso, 
+			// e lo stato e' ancora CONFERMATA passa in automatico a IN_PREPARAZIONE
 			// ci sta come roba perchè praticamente se la data di consegna e' prossima ma
 			// il manager si e' dimenticato di cambiare lo stato della spesa, il sistema
 			// lo fa in automatico e quindi la spesa passa in preparazione
-			if (today.getDayOfMonth() - e.getDeliveryDate().getDayOfMonth() <= 3) {
+			if ((e.getDeliveryDate().getDayOfMonth()-1) - today.getDayOfMonth()  <= 3 && !e.getDeliveryDate().equals(today)) {
 				if (e.getDelivery().equals(Delivery.CONFERMATA)) {
 					e.setDelivery(Delivery.IN_PREPARAZIONE);
 					expensesDao.updateItem(e);
 				}
-			// controllo se la data della consegna e' uguale a quella odierna
-			} else 	if (e.getDeliveryDate().equals(today)) {
+				
+			} else if (e.getDeliveryDate().equals(today)) {
 				TimeSlot ts = e.getTimeSlot();
 				// controllo se l'ora del giorno viene dopo l'inizio del timeslot della consegna
 				if (ts.getStart() <= h) {

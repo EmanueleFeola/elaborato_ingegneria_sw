@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.GroceryShoppingController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elaborato_ing_sw.view.GroceryShoppingController">
    <children>
       <SplitPane dividerPositions="0.4348370927318296" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
@@ -182,8 +182,13 @@
                         <MenuItem mnemonicParsing="false" onAction="#handleRemoveFidelityCard" text="Remove" />
                     </items>
                   </MenuButton>
-                  <Button layoutX="280.0" layoutY="14.0" minWidth="75.0" mnemonicParsing="false" onAction="#handleProfile" prefHeight="11.0" text="Profile" />
                   <Button layoutX="370.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
+                  <MenuButton layoutX="276.0" layoutY="14.0" mnemonicParsing="false" text="Profile">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#handleViewModifyProfile" text="View/Modify" />
+                      <MenuItem mnemonicParsing="false" onAction="#handleDeleteProfile" text="Delete" />
+                    </items>
+                  </MenuButton>
                </children></AnchorPane>
          </items>
       </SplitPane>
