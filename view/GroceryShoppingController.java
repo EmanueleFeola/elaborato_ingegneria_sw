@@ -251,8 +251,6 @@ public class GroceryShoppingController {
 	private void handleShoppingCart() {
 		String user = loggedUser.getCredentials().getUser();
 
-		// se per l utente "user" il carrello non esiste oppure contiene 0 prodotti non
-		// ha senso far andare l utente alla prossima schermata
 		if (shoppingCartDao.getItem(user) == null || shoppingCartDao.getCartProducts(user).size() == 0)
 			AlertUtil.Alert(AlertType.INFORMATION, "User cart is empty", "Your cart is still empty",
 					"Please add a product to your cart");
