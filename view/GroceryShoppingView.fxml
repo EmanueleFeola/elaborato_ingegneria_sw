@@ -165,10 +165,6 @@
                         <ChoiceBox fx:id="property" prefHeight="26.0" prefWidth="224.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                      </children>
                   </GridPane>
-                  <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="150.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@images/logo.png" />
-                     </image></ImageView>
                   <Button layoutX="340.0" layoutY="558.0" mnemonicParsing="false" onAction="#handleAddToCart" text="Add to Cart" />
                   <MenuButton layoutX="19.0" layoutY="14.0" mnemonicParsing="false" text="Shopping">
                     <items>
@@ -189,6 +185,10 @@
                       <MenuItem mnemonicParsing="false" onAction="#handleDeleteProfile" text="Delete" />
                     </items>
                   </MenuButton>
+                  <ImageView fx:id="image" fitHeight="179.0" fitWidth="200.0" layoutX="124.0" layoutY="63.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@images/logo.png" />
+                     </image></ImageView>
                </children></AnchorPane>
          </items>
       </SplitPane>
