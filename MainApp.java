@@ -6,7 +6,7 @@ import elaborato_ing_sw.dataManager.ManagerDaoImpl;
 import elaborato_ing_sw.dataManager.ProductDaoImpl;
 import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
 import elaborato_ing_sw.dataManager.UserDaoImpl;
-import elaborato_ing_sw.facadeView.wrapperShowView;
+import elaborato_ing_sw.utils.wrapperShowView;
 import javafx.application.Application;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;

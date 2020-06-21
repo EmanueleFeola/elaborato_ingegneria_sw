@@ -9,11 +9,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 import elaborato_ing_sw.dataManager.ManagerDaoImpl;
-import elaborato_ing_sw.facadeView.wrapperShowView;
 import elaborato_ing_sw.model.Manager;
 import elaborato_ing_sw.model.Person;
 import elaborato_ing_sw.model.Role;
 import elaborato_ing_sw.utils.AlertUtil;
+import elaborato_ing_sw.utils.wrapperShowView;
 
 public class ManagerDashboardController {
 	@FXML

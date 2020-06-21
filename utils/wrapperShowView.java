@@ -1,4 +1,4 @@
-package elaborato_ing_sw.facadeView;
+package elaborato_ing_sw.utils;
 
 import java.io.IOException;
 
@@ -6,8 +6,6 @@ import elaborato_ing_sw.MainApp;
 import elaborato_ing_sw.model.Manager;
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.User;
-import elaborato_ing_sw.utils.ShowDialog;
-import elaborato_ing_sw.utils.ShowView;
 import elaborato_ing_sw.view.AllExpensesController;
 import elaborato_ing_sw.view.DeliveryController;
 import elaborato_ing_sw.view.DeliveryProductsController;

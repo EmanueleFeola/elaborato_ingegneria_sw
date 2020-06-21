@@ -2,12 +2,12 @@ package elaborato_ing_sw.view;
 
 import java.util.ArrayList;
 import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
-import elaborato_ing_sw.facadeView.wrapperShowView;
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.Section;
 import elaborato_ing_sw.model.SpecialProductProperty;
 import elaborato_ing_sw.model.User;
 import elaborato_ing_sw.utils.AlertUtil;
+import elaborato_ing_sw.utils.wrapperShowView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

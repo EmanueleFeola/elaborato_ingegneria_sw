@@ -9,11 +9,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 import elaborato_ing_sw.dataManager.ProductDaoImpl;
-import elaborato_ing_sw.facadeView.wrapperShowView;
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.Section;
 import elaborato_ing_sw.model.SpecialProductProperty;
 import elaborato_ing_sw.utils.AlertUtil;
+import elaborato_ing_sw.utils.wrapperShowView;
 
 public class ManagerProductsController {
 	@FXML
