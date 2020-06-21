@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 
 public class UserProfileController {
 	private static final int MAX_AGE = 120;
+	private static final int MIN_AGE = 18;
 
 	@FXML
 	private TextField firstNameField;
@@ -46,12 +47,12 @@ public class UserProfileController {
 
 	@FXML
 	private void initialize() {
+		LocalDate now = LocalDate.now();
 		birthdayField.setDayCellFactory(d -> new DateCell() {
 			@Override
 			public void updateItem(LocalDate item, boolean empty) {
 				super.updateItem(item, empty);
-				LocalDate now = LocalDate.now();
-				setDisable(item.isBefore(now.minusYears(MAX_AGE)) || item.isAfter(now));
+				setDisable(item.isBefore(now.minusYears(MAX_AGE)) || item.isAfter(now.minusYears(MIN_AGE)));
 			}
 		});
 	}

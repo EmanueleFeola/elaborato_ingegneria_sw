@@ -47,10 +47,10 @@ public class ManagerDashboardController {
 		firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
 		lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().getSurnameProperty());
 		roleColumn.setCellValueFactory(cellData -> cellData.getValue().getRoleProperty());
-
+		
 		// Clear manager details.
 		showManagerDetails(null);
-
+		
 		// Listen for selection changes and show the person details when changed.
 		managerTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			showManagerDetails((Manager) newValue);
@@ -94,7 +94,11 @@ public class ManagerDashboardController {
 
 		if (okClicked) {
 			System.out.println("Hai cliccato OK");
-			managerDao.addItem(ManagerEditDialogController.getManager());
+			if (!managerDao.addItem(ManagerEditDialogController.getManager()))
+				AlertUtil.Alert(AlertType.ERROR, "Registration Failed", "The serial number is not available",
+						"A different serial number must be chosen to perform signup");
+			else
+				AlertUtil.Alert(AlertType.INFORMATION, "Registration Success", "You are now registered", null);
 		} else {
 			System.out.println("Hai cliccato Cancel");
 		}
@@ -128,7 +132,7 @@ public class ManagerDashboardController {
 		wrapperShowView.showManagerProducts();
 		System.out.println("Redirected to manage products view");
 	}
-	
+
 	@FXML
 	private void handleExpenses() {
 		wrapperShowView.showManagerExpensesView();
