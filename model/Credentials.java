@@ -5,13 +5,16 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import elaborato_ing_sw.utils.WriteableObjectProperty;
+
 public class Credentials implements Serializable{
+	private static final long serialVersionUID = 1L;
 	
-	protected String user;
+	protected WriteableObjectProperty<String> user;
 	protected String md5Pwd;
 	
 	public Credentials(String user, String pwd) {
-		this.user = user;
+		this.user = new WriteableObjectProperty<String>(user);
 		this.md5Pwd = Credentials.getMd5(pwd);
 	}
 	
@@ -45,11 +48,15 @@ public class Credentials implements Serializable{
     }
     
 	public String getUser() {
-		return user;
+		return user.get();
 	}
 
+	public WriteableObjectProperty<String> getUsernameProperty() {
+		return user;
+	}
+	
 	public void setUser(String user) {
-		this.user = user;
+		this.user.set(user);
 	}
 
 	public String getMd5Pwd() {
