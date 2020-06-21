@@ -68,8 +68,6 @@ public class GroceryShoppingController {
 	@FXML
 	private ImageView image;
 
-	SpecialProductProperty filter = SpecialProductProperty.NONE;
-
 	private UserDaoImpl userDao = UserDaoImpl.getUserDaoImpl();
 	private FidelityCardDaoImpl fcardDao = FidelityCardDaoImpl.getFidelityCardImpl();
 	private ProductDaoImpl productDao = ProductDaoImpl.getProductDaoImpl();
@@ -80,6 +78,10 @@ public class GroceryShoppingController {
 
 	private ProxyImage proxy;
 
+	// manage real-time filter by special property
+	private SpecialProductProperty filter = SpecialProductProperty.NONE;
+	private TableColumn<Product, String> lastSelectedColumn = n0;
+	
 	@FXML
 	private void initialize() {
 		proxy = new ProxyImage();
@@ -92,36 +94,23 @@ public class GroceryShoppingController {
 					SpecialProductProperty newValue) {
 				filter = newValue;
 				
-				System.out.println(newValue);
-				
-				// ogni volta che l utente cambia filtro aggiorno i dati della tabella
-				// manca la parte di aggiornamento real time
-				
-				// funziona una volta sola, circa, quello che intendo e' che se cambio filtro la prima volta 
-				// la tabella corrente si aggiorna, ma se lo cambio una seconda volta rimane non aggiornata
-				// e bisogna cambiare tab per vedere i cambiamenti
-				/*Tab selectedTab = tabs.getSelectionModel().getSelectedItem();
-				AnchorPane selectedContent = (AnchorPane) selectedTab.getContent();
+				// update column applying filter
 
-				@SuppressWarnings("unchecked")
-				TableView<Product> selectedTable = (TableView<Product>) selectedContent.getChildren().get(0);
-				System.out.println(selectedTable);
-				
-				ObservableList<Product> filteredProds = selectedTable.getItems().filtered(new Predicate<Product>() {
-					
-					@Override
-					public boolean test(Product p) {
-						if (filter.equals(SpecialProductProperty.NONE))
-							return true;
-						return p.getSpecialPty().equals(filter);
-					}
-				});
-				
-				selectedTable.setItems(filteredProds);*/
+				if(lastSelectedColumn.equals(n0))
+					handleVegetables();
+				else if(lastSelectedColumn.equals(n1))
+					handleFruit();
+				else if(lastSelectedColumn.equals(n2))
+					handleMeatFish();
+				else if(lastSelectedColumn.equals(n3))
+					handleGrainFoods();
+				else if(lastSelectedColumn.equals(n4))
+					handleDairyProducts();
+				else
+					handleBeverages();
+	
 			}
         };
-        
-
         
         property.getSelectionModel().selectedItemProperty().addListener(changeListener);
 	}
@@ -179,6 +168,8 @@ public class GroceryShoppingController {
 		table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			showProductDetails((Product) newValue);
 		});
+		
+		lastSelectedColumn = nameColumn;
 	}
 
 	private void showProductDetails(Product product) {
