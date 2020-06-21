@@ -7,7 +7,7 @@ Si vuole progettare un sistema informatico per gestire il servizio di spesa on-l
 
 ### Documentazione
 
-La documentazione è presente nella cartella *src/documentation*
+La documentazione è presente nella cartella *documentation*
 
 ### Struttura delle directory
 
@@ -31,13 +31,13 @@ L'app è rilasciata sotto licenza [MIT](https://opensource.org/licenses/MIT)
 
 ### Autori
 
-Studenti Università di Verona:
+Studenti UniVR:
 
 - Feola Emanuele
 
-- Carra Mattia
-
 - Timofte Robert Octavian
+
+- Carra Mattia
 
 ### Software & Linguaggi utilizzati
 
