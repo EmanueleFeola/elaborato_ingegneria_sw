@@ -43,8 +43,7 @@ public class DeliveryController {
 
 	@FXML
 	private void initialize() {
-		// faccio in modo che l'utente non possa selezionare una data precedente a
-		// quella odierna
+		// faccio in modo che l'utente non possa selezionare una data precedente a quella odierna
 		deliveryDate.setDayCellFactory(d -> new DateCell() {
 			@Override
 			public void updateItem(LocalDate item, boolean empty) {
@@ -55,7 +54,6 @@ public class DeliveryController {
 		});
 
 		timeSlot.getItems().setAll(TimeSlot.values());
-
 		paymentType.getItems().setAll(Payment.values());
 	}
 
@@ -65,10 +63,8 @@ public class DeliveryController {
 
 	@FXML
 	private void onDateSelected() {
-		// memorizzo la data odierna
+		// memorizzo giorno e ora
 		LocalDate today = LocalDate.now();
-
-		// memorizzo l'ora del giorno
 		Calendar calendar = Calendar.getInstance();
 		int h = calendar.get(Calendar.HOUR_OF_DAY);
 
@@ -77,7 +73,7 @@ public class DeliveryController {
 		// svuoto il choicebox per sicurezza
 		timeSlot.getItems().removeAll(TimeSlot.values());
 
-		// faccio in modo che se un timeslot è già passato non venga visualizzato
+		// faccio in modo che se un timeslot e' gia'� passato non venga visualizzato
 		for (TimeSlot ts : TimeSlot.values()) {
 			if ((deliveryDate.getValue().equals(today)) && ts.getStart() <= h && h <= ts.getEnd())
 				newTs.add(ts);

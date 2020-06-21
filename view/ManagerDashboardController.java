@@ -8,8 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-import elaborato_ing_sw.MainApp;
 import elaborato_ing_sw.dataManager.ManagerDaoImpl;
+import elaborato_ing_sw.facadeView.wrapperShowView;
 import elaborato_ing_sw.model.Manager;
 import elaborato_ing_sw.model.Person;
 import elaborato_ing_sw.model.Role;
@@ -37,8 +37,6 @@ public class ManagerDashboardController {
 	private Label roleLabel;
 
 	private ManagerDaoImpl managerDao = ManagerDaoImpl.getManagerDaoImpl();
-
-	private MainApp mainApp;
 
 	public ManagerDashboardController() {
 	}
@@ -92,7 +90,7 @@ public class ManagerDashboardController {
 
 	@FXML
 	private void handleNewManager() {
-		boolean okClicked = mainApp.showManagerEditDialog(null);
+		boolean okClicked = wrapperShowView.showManagerEditDialog(null);
 
 		if (okClicked) {
 			System.out.println("Hai cliccato OK");
@@ -105,9 +103,8 @@ public class ManagerDashboardController {
 	@FXML
 	private void handleEditManager() {
 		Manager selectedManager = (Manager) managerTable.getSelectionModel().getSelectedItem();
-		// System.out.println(selectedManager);
 		if (selectedManager != null) {
-			boolean okClicked = mainApp.showManagerEditDialog(selectedManager);
+			boolean okClicked = wrapperShowView.showManagerEditDialog(selectedManager);
 
 			if (okClicked) {
 				managerDao.updateItem(ManagerEditDialogController.getManager());
@@ -122,22 +119,18 @@ public class ManagerDashboardController {
 
 	@FXML
 	private void handleLogout() {
-		mainApp.showLoginView();
+		wrapperShowView.showLoginView();
 		System.out.println("Logged out successfully");
 	}
 
 	@FXML
 	private void handleProducts() {
-		mainApp.showManagerProducts();
+		wrapperShowView.showManagerProducts();
 		System.out.println("Redirected to manage products view");
 	}
 	
 	@FXML
 	private void handleExpenses() {
-		mainApp.showManagerExpensesView();
-	}
-
-	public void setMainApp(MainApp mainApp) {
-		this.mainApp = mainApp;
+		wrapperShowView.showManagerExpensesView();
 	}
 }

@@ -3,11 +3,11 @@ package elaborato_ing_sw.view;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
-import elaborato_ing_sw.MainApp;
 import elaborato_ing_sw.dataManager.FidelityCardDaoImpl;
 import elaborato_ing_sw.dataManager.ProductDaoImpl;
 import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
 import elaborato_ing_sw.dataManager.UserDaoImpl;
+import elaborato_ing_sw.facadeView.wrapperShowView;
 import elaborato_ing_sw.imageProxy.ProxyImage;
 import elaborato_ing_sw.model.FidelityCard;
 import elaborato_ing_sw.model.Product;
@@ -72,7 +72,6 @@ public class GroceryShoppingController {
 	private FidelityCardDaoImpl fcardDao = FidelityCardDaoImpl.getFidelityCardImpl();
 	private ProductDaoImpl productDao = ProductDaoImpl.getProductDaoImpl();
 	private ShoppingCartDaoImpl shoppingCartDao = ShoppingCartDaoImpl.getShoppingCartDaoImpl();
-	private MainApp mainApp;
 	private Stage dialogStage;
 	private User loggedUser;
 
@@ -196,7 +195,7 @@ public class GroceryShoppingController {
 			priceLabel.setText("");
 			isAvailable.setText("");
 			npcsLabel.setText("");
-			specialProperty.setVisible(false); // perch� di default sarebbe none
+			specialProperty.setVisible(false); // perche' di default sarebbe none
 			image.setImage(proxy.getImage(Product.getDefaultIconPath()));
 		}
 	}
@@ -234,7 +233,7 @@ public class GroceryShoppingController {
 	@FXML
 	private void handleLogout() {
 		dialogStage.close();
-		mainApp.showLoginView();
+		wrapperShowView.showLoginView();
 		System.out.println("Logged out successfully");
 	}
 
@@ -246,12 +245,12 @@ public class GroceryShoppingController {
 			AlertUtil.Alert(AlertType.INFORMATION, "User cart is empty", "Your cart is still empty",
 					"Please add a product to your cart");
 		else
-			mainApp.showShoppingCartView(loggedUser);
+			wrapperShowView.showShoppingCartView(loggedUser);
 	}
 
 	@FXML
 	private void handleViewModifyProfile() {
-		this.loggedUser = mainApp.showUserProfileView(loggedUser);
+		this.loggedUser = wrapperShowView.showUserProfileView(loggedUser);
 	}
 	
 	@FXML
@@ -263,12 +262,12 @@ public class GroceryShoppingController {
 
 	@FXML
 	private void handleAllExpenses() {
-		mainApp.showAllExpensesView(loggedUser);
+		wrapperShowView.showAllExpensesView(loggedUser);
 	}
 
 	@FXML
 	private void handleViewFidelityCard() {
-		mainApp.showFidelityCardView(loggedUser);
+		wrapperShowView.showFidelityCardView(loggedUser);
 	}
 
 	@FXML
@@ -288,10 +287,6 @@ public class GroceryShoppingController {
 
 	public void setLoggedUser(User loggedUser) {
 		this.loggedUser = loggedUser;
-	}
-
-	public void setMainApp(MainApp mainApp) {
-		this.mainApp = mainApp;
 	}
 
 	public void setDialogStage(Stage dialogStage) {

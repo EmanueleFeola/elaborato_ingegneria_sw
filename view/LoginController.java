@@ -2,9 +2,9 @@ package elaborato_ing_sw.view;
 
 import java.io.IOException;
 
-import elaborato_ing_sw.MainApp;
 import elaborato_ing_sw.dataManager.ManagerDaoImpl;
 import elaborato_ing_sw.dataManager.UserDaoImpl;
+import elaborato_ing_sw.facadeView.wrapperShowView;
 import elaborato_ing_sw.model.Credentials;
 import elaborato_ing_sw.model.Manager;
 import elaborato_ing_sw.model.Person;
@@ -28,8 +28,6 @@ public class LoginController {
 	private UserDaoImpl userDao = UserDaoImpl.getUserDaoImpl();
 	private ManagerDaoImpl managerDao = ManagerDaoImpl.getManagerDaoImpl();
 	
-	private MainApp mainApp;
-
 	public LoginController() {
 	}
 
@@ -56,20 +54,16 @@ public class LoginController {
 
 		if (p != null && p.getCredentials().getMd5Pwd().equals(Credentials.getMd5(pwdTextField))) {
 			if (lam)
-				mainApp.showManagerDashboard();
+				wrapperShowView.showManagerDashboard();
 			else
-				mainApp.showGroceryShoppingView((User)p);
+				wrapperShowView.showGroceryShoppingView((User)p);
 		} else {
 			AlertUtil.Alert(AlertType.ERROR, "Login Failed", "Please correct invalid fields", null);
 		}
 	}
 	
-	public void setMainApp(MainApp mainApp) {
-		this.mainApp = mainApp;
-	}
-
 	@FXML
 	private void handleRegistration() throws IOException {
-		mainApp.showUserProfileView(null);
+		wrapperShowView.showUserProfileView(null);
 	}
 }

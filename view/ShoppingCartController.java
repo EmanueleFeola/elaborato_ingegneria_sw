@@ -1,8 +1,8 @@
 package elaborato_ing_sw.view;
 
 import java.util.ArrayList;
-import elaborato_ing_sw.MainApp;
 import elaborato_ing_sw.dataManager.ShoppingCartDaoImpl;
+import elaborato_ing_sw.facadeView.wrapperShowView;
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.Section;
 import elaborato_ing_sw.model.SpecialProductProperty;
@@ -36,7 +36,6 @@ public class ShoppingCartController {
 
 	private ShoppingCartDaoImpl shoppingCartDao = ShoppingCartDaoImpl.getShoppingCartDaoImpl();
 	private Stage dialogStage;
-	private MainApp mainApp;
 	private User loggedUser;
 	
 	private String user;
@@ -108,17 +107,13 @@ public class ShoppingCartController {
 
 	@FXML
 	private void handleDeliver() {
-		if (mainApp.showDeliveryView(loggedUser)) {
+		if (wrapperShowView.showDeliveryView(loggedUser)) {
 			dialogStage.close();
 		}
 	}
 
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
-	}
-
-	public void setMainApp(MainApp mainApp) {
-		this.mainApp = mainApp;
 	}
 	
 	public void setLoggedUser(User loggedUser) {

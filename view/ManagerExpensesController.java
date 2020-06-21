@@ -1,8 +1,8 @@
 package elaborato_ing_sw.view;
 
 import java.time.LocalDate;
-import elaborato_ing_sw.MainApp;
 import elaborato_ing_sw.dataManager.ExpensesDaoImpl;
+import elaborato_ing_sw.facadeView.wrapperShowView;
 import elaborato_ing_sw.model.Delivery;
 import elaborato_ing_sw.model.Expense;
 import elaborato_ing_sw.model.Payment;
@@ -32,7 +32,6 @@ public class ManagerExpensesController {
 	
 	private ExpensesDaoImpl expensesDao = ExpensesDaoImpl.getExpensesDaoImpl();
 
-	private MainApp mainApp;
 	private Stage dialogStage;
 	
 	@FXML
@@ -52,7 +51,7 @@ public class ManagerExpensesController {
 		int selectedIndex = expensesTable.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
 			int id = expensesTable.getItems().get(selectedIndex).getId();
-			mainApp.showEditDeliveryStatusView(id);
+			wrapperShowView.showEditDeliveryStatusView(id);
 		} else
 			AlertUtil.Alert(AlertType.WARNING, "No Selection", "No Expense Selected", "Please select an expense in the table");
 	}
@@ -62,10 +61,6 @@ public class ManagerExpensesController {
 		dialogStage.close();
 	}
 	
-	public void setMainApp(MainApp mainApp) {
-		this.mainApp = mainApp;
-	}
-
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}

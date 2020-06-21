@@ -110,9 +110,15 @@ public class UserProfileController {
 				telNumberField.getText());
 
 		if (loggedUser == null)
-			userDao.addItem(u);
+			if(!userDao.addItem(u))
+				AlertUtil.Alert(AlertType.ERROR, "Registration Failed", "The email address is not available", "A different email must be chosen to perform signup");
+			else
+				AlertUtil.Alert(AlertType.INFORMATION, "Registration Success", "Welcome!", "Perform login and then it's shopping time!!");
 		else
-			userDao.updateItem(u);
+			if(!userDao.updateItem(u))
+				AlertUtil.Alert(AlertType.ERROR, "Update Failed", "An error occured while updating your profile information", "Please try again");
+			else
+				AlertUtil.Alert(AlertType.INFORMATION, "Update Success", "Profile information updated successfully!", "Perform login and then it's shopping time!!");
 
 		this.setLoggedUser(u);
 
@@ -157,8 +163,15 @@ public class UserProfileController {
 		if (birthdayField.getValue() == null)
 			errorMessage += "No valid birthday!\n";
 
-		if (telNumberField.getText() == null || telNumberField.getText().length() == 0)
-			errorMessage += "No valid telephone number!\n";
+		if (telNumberField.getText() == null || telNumberField.getText().length() != 10)
+			errorMessage += "No valid telephone number (must be an integer of 10 digits)!\n";
+		else {
+			try {
+				Integer.parseInt(telNumberField.getText());
+			} catch (NumberFormatException e) {
+				errorMessage += "No valid telephone number (must be an integer of 10 digits)!\n";
+			}
+		}
 
 		if (!isValid(emailField.getText()))
 			errorMessage += "No valid email!\n";
@@ -180,7 +193,7 @@ public class UserProfileController {
 		}
 	}
 
-	// metodo rubato da geeksforgeeks
+	// metodo ispirato da geeksforgeeks
 	private boolean isValid(String email) {
 		String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z"
 				+ "A-Z]{2,7}$";

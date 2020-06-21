@@ -8,8 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-import elaborato_ing_sw.MainApp;
 import elaborato_ing_sw.dataManager.ProductDaoImpl;
+import elaborato_ing_sw.facadeView.wrapperShowView;
 import elaborato_ing_sw.model.Product;
 import elaborato_ing_sw.model.Section;
 import elaborato_ing_sw.model.SpecialProductProperty;
@@ -50,7 +50,6 @@ public class ManagerProductsController {
 
 	private ProductDaoImpl productDao = ProductDaoImpl.getProductDaoImpl();
 
-	private MainApp mainApp;
 	private Stage dialogStage;
 
 	public ManagerProductsController() {
@@ -114,7 +113,7 @@ public class ManagerProductsController {
 
 	@FXML
 	private void handleNewProduct() {
-		boolean okClicked = mainApp.showProductEditDialog(null);
+		boolean okClicked = wrapperShowView.showProductEditDialog(null);
 
 		if (okClicked) {
 			System.out.println("Hai cliccato OK");
@@ -127,9 +126,8 @@ public class ManagerProductsController {
 	@FXML
 	private void handleEditProduct() {
 		Product selectedManager = (Product) productsTable.getSelectionModel().getSelectedItem();
-		// System.out.println(selectedManager);
 		if (selectedManager != null) {
-			boolean okClicked = mainApp.showProductEditDialog(selectedManager);
+			boolean okClicked = wrapperShowView.showProductEditDialog(selectedManager);
 
 			if (okClicked) {
 				productDao.updateItem(ProductEditDialogController.getProduct());
@@ -145,10 +143,6 @@ public class ManagerProductsController {
 	@FXML
 	private void handleClose() {
 		dialogStage.close();
-	}
-
-	public void setMainApp(MainApp mainApp) {
-		this.mainApp = mainApp;
 	}
 	
 	public void setDialogStage(Stage dialogStage) {

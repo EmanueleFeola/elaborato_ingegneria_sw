@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.function.Predicate;
 
-import elaborato_ing_sw.MainApp;
 import elaborato_ing_sw.dataManager.ExpensesDaoImpl;
+import elaborato_ing_sw.facadeView.wrapperShowView;
 import elaborato_ing_sw.model.Delivery;
 import elaborato_ing_sw.model.Expense;
 import elaborato_ing_sw.model.Payment;
@@ -21,6 +21,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class AllExpensesController {
+	private static final int MAX_BEFORE_DELIVERY = 3;
+	
 	@FXML
 	TableView<Expense> expensesTable;
 	@FXML
@@ -37,27 +39,21 @@ public class AllExpensesController {
 	private ExpensesDaoImpl expensesDao = ExpensesDaoImpl.getExpensesDaoImpl();
 	ObservableList<Expense> tableExpenses;
 
-	private MainApp mainApp;
 	private Stage dialogStage;
 	private User loggedUser;
 	private String user;
 	
 	@FXML
 	private void initialize() {
-		// memorizzo la data odierna
+		// get giorno e ora
 		LocalDate today = LocalDate.now();
-		
-		// memorizzo l'ora del giorno
 		Calendar calendar = Calendar.getInstance();
 		int h = calendar.get(Calendar.HOUR_OF_DAY);
 		
 		for (Expense e : expensesDao.getAllItems()) {
 			// se mancano massimo 3 giorni alla consegna, giorno della consegna escluso, 
 			// e lo stato e' ancora CONFERMATA passa in automatico a IN_PREPARAZIONE
-			// ci sta come roba perchè praticamente se la data di consegna e' prossima ma
-			// il manager si e' dimenticato di cambiare lo stato della spesa, il sistema
-			// lo fa in automatico e quindi la spesa passa in preparazione
-			if ((e.getDeliveryDate().getDayOfMonth()-1) - today.getDayOfMonth()  <= 3 && !e.getDeliveryDate().equals(today)) {
+			if ((e.getDeliveryDate().getDayOfMonth()-1) - today.getDayOfMonth() <= MAX_BEFORE_DELIVERY && !e.getDeliveryDate().equals(today)) {
 				if (e.getDelivery().equals(Delivery.CONFERMATA)) {
 					e.setDelivery(Delivery.IN_PREPARAZIONE);
 					expensesDao.updateItem(e);
@@ -107,7 +103,7 @@ public class AllExpensesController {
 		int selectedIndex = expensesTable.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
 			int id = expensesTable.getItems().get(selectedIndex).getId();
-			mainApp.showDeliveryProductsView(id);
+			wrapperShowView.showDeliveryProductsView(id);
 		} else
 			AlertUtil.Alert(AlertType.WARNING, "No Selection", "No Expense Selected", "Please select an expense in the table");
 	}
@@ -117,10 +113,6 @@ public class AllExpensesController {
 		dialogStage.close();
 	}
 	
-	public void setMainApp(MainApp mainApp) {
-		this.mainApp = mainApp;
-	}
-
 	public void setLoggedUser(User loggedUser) {
 		this.loggedUser = loggedUser;
 		handleTable();
