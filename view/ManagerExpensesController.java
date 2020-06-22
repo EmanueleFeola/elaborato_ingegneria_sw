@@ -2,12 +2,12 @@ package elaborato_ing_sw.view;
 
 import java.time.LocalDate;
 import elaborato_ing_sw.dataManager.ExpensesDaoImpl;
-import elaborato_ing_sw.facadeView.wrapperShowView;
 import elaborato_ing_sw.model.Delivery;
 import elaborato_ing_sw.model.Expense;
 import elaborato_ing_sw.model.Payment;
 import elaborato_ing_sw.model.TimeSlot;
 import elaborato_ing_sw.utils.AlertUtil;
+import elaborato_ing_sw.utils.wrapperShowView;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;

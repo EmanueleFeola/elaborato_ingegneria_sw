@@ -18,7 +18,6 @@ public class Credentials implements Serializable{
 		this.md5Pwd = Credentials.getMd5(pwd);
 	}
 	
-	// NB: metodo copiato dall'internet
     public static String getMd5(String input) 
     { 
         try { 

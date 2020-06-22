@@ -3,15 +3,19 @@ package elaborato_ing_sw.view;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import java.time.LocalDate;
 import elaborato_ing_sw.model.Manager;
 import elaborato_ing_sw.model.Role;
 import elaborato_ing_sw.utils.AlertUtil;
 
 public class ManagerEditDialogController {
+	private static final int MAX_AGE = 120;
+	private static final int MIN_AGE = 18;
 
 	@FXML
 	private TextField firstNameField;
@@ -30,8 +34,18 @@ public class ManagerEditDialogController {
 	private Stage dialogStage;
 	private static Manager manager;
 	private boolean okClicked = false;
-
-	private boolean isNewMode; // 1 per new, 0 per edit
+	
+	@FXML
+	private void initialize() {
+		LocalDate now = LocalDate.now();
+		dateOfBirthField.setDayCellFactory(d -> new DateCell() {
+			@Override
+			public void updateItem(LocalDate item, boolean empty) {
+				super.updateItem(item, empty);
+				setDisable(item.isBefore(now.minusYears(MAX_AGE)) || item.isAfter(now.minusYears(MIN_AGE)));
+			}
+		});
+	}
 
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
@@ -43,17 +57,18 @@ public class ManagerEditDialogController {
 		System.out.println("manager: " + manager);
 
 		roleField.getItems().setAll(Role.values());
-
-		if (manager == null) {
-			isNewMode = true;
-			return;
+		
+		if (m == null) {
+			firstNameField.setText("");
+			lastNameField.setText("");
+			dateOfBirthField.setValue(null);
+			serialNumberField.setText("");
+		} else {
+			firstNameField.setText(manager.getName());
+			lastNameField.setText(manager.getSurname());
+			dateOfBirthField.setValue(manager.getDateOfBirth());
+			serialNumberField.setText(Integer.toString(manager.getSerialNumber()));
 		}
-
-		firstNameField.setText(manager.getName());
-		lastNameField.setText(manager.getSurname());
-		dateOfBirthField.setValue(manager.getDateOfBirth());
-		serialNumberField.setText(Integer.toString(manager.getSerialNumber()));
-		passwordField.setDisable(true);
 	}
 
 	public boolean isOkClicked() {
@@ -76,6 +91,7 @@ public class ManagerEditDialogController {
 			manager.setSerialNumber(Integer.parseInt(serialNumberField.getText()));
 			manager.getCredentials().setUser(serialNumberField.getText());
 			manager.setRole((Role) roleField.getValue());
+			manager.getCredentials().setMd5Pwd(passwordField.getText());
 		}
 
 		okClicked = true;
@@ -101,7 +117,7 @@ public class ManagerEditDialogController {
 		if (serialNumberField.getText() == null || serialNumberField.getText().length() == 0)
 			errorMessage += "No valid serial number!\n";
 
-		if (isNewMode && (passwordField.getText() == null || passwordField.getText().length() == 0))
+		if (passwordField.getText() == null || passwordField.getText().length() == 0)
 			errorMessage += "No valid password!\n";
 
 		if (roleField.getValue() == null)

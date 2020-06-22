@@ -43,7 +43,8 @@ public class DeliveryController {
 
 	@FXML
 	private void initialize() {
-		// faccio in modo che l'utente non possa selezionare una data precedente a quella odierna
+		// faccio in modo che l'utente non possa selezionare una data precedente a
+		// quella odierna
 		deliveryDate.setDayCellFactory(d -> new DateCell() {
 			@Override
 			public void updateItem(LocalDate item, boolean empty) {
@@ -73,7 +74,7 @@ public class DeliveryController {
 		// svuoto il choicebox per sicurezza
 		timeSlot.getItems().removeAll(TimeSlot.values());
 
-		// faccio in modo che se un timeslot e' gia'  passato non venga visualizzato
+		// faccio in modo che se un timeslot e' gia'ï¿½ passato non venga visualizzato
 		for (TimeSlot ts : TimeSlot.values()) {
 			if ((deliveryDate.getValue().equals(today)) && ts.getStart() <= h && h <= ts.getEnd())
 				newTs.add(ts);
@@ -107,11 +108,16 @@ public class DeliveryController {
 			products.put(p, priceTotPerProd);
 		}
 
-		FidelityCard card = fcardDao.getItem(user);
-		double points = card.getPointsTot();
-		points += priceTot;
-		card.setPointsTot(points);
-		fcardDao.updateItem(card);
+		if (fcardDao.getItem(user) != null) {
+			FidelityCard card = fcardDao.getItem(user);
+			double points = card.getPointsTot();
+			points += priceTot;
+			card.setPointsTot(points);
+			fcardDao.updateItem(card);
+		} else {
+			AlertUtil.Alert(AlertType.INFORMATION, "No Fidelity Card found", "Your points will not be added",
+					"Please consider requesting a Fidelity Card");
+		}
 
 		Expense expense = new Expense(id, deliveryDate.getValue(), timeSlot.getValue(), loggedUser, priceTot,
 				paymentType.getValue(), Delivery.CONFERMATA, products);
