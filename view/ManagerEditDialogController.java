@@ -57,11 +57,18 @@ public class ManagerEditDialogController {
 		System.out.println("manager: " + manager);
 
 		roleField.getItems().setAll(Role.values());
-
-		firstNameField.setText(manager.getName());
-		lastNameField.setText(manager.getSurname());
-		dateOfBirthField.setValue(manager.getDateOfBirth());
-		serialNumberField.setText(Integer.toString(manager.getSerialNumber()));
+		
+		if (m == null) {
+			firstNameField.setText("");
+			lastNameField.setText("");
+			dateOfBirthField.setValue(null);
+			serialNumberField.setText("");
+		} else {
+			firstNameField.setText(manager.getName());
+			lastNameField.setText(manager.getSurname());
+			dateOfBirthField.setValue(manager.getDateOfBirth());
+			serialNumberField.setText(Integer.toString(manager.getSerialNumber()));
+		}
 	}
 
 	public boolean isOkClicked() {
